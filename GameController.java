@@ -18,7 +18,7 @@ public class GameController {
 		Scanner reader = new Scanner(playerData);
 		while (reader.hasNextLine()) {
 			String[] playerInfo = reader.nextLine().split(",");
-			if(playerInfo[1].equals(name)) {
+			if(playerInfo[0].equals(name)) {
 				c = createCharacter(playerInfo);
 			}	
 		}
@@ -38,18 +38,22 @@ public class GameController {
 	
 	private Character createCharacter(String[] playerInfo) {
 		Character c = null;
+		Weapon weapon = null;
+		int level = 1;
 		String name = playerInfo[0];
-		int hp = Integer.parseInt(playerInfo[1]);
-		int xp = Integer.parseInt(playerInfo[2]);
-		int level = Integer.parseInt(playerInfo[3]);
-		Weapon weapon = new Weapon(Weapon.Type.EXPLOSIVE, playerInfo[5]);
-		String type = playerInfo[6];
+		String type = playerInfo[1];
 		if(type.equals("Player Character")) {
+			int hp = Integer.parseInt(playerInfo[2]);
+			int xp = Integer.parseInt(playerInfo[3]);
+			level = Integer.parseInt(playerInfo[4]);
+			weapon = new Weapon(Weapon.Type.EXPLOSIVE, playerInfo[5]);
 			c = new PlayerCharacter(name, hp, xp, level, weapon);
 		}
-		//else if (type.equals("Mob")) {
-		//	c = new Mob(name, hp, level, weapon);
-		//}
+		else if (type.equals("Mob")) {
+			level = Integer.parseInt(playerInfo[2]);
+			weapon = new Weapon(Weapon.Type.PROJECTILE, playerInfo[4]);
+			c = new Mob(name,level, weapon);
+		}
 		return c;			
 	}
 	

@@ -4,7 +4,7 @@ public class PlayerCharacter extends AbstractCharacter {
 
 	private int xp;
 	
-	public static final int HP_INCREMENT = 100;
+	private static final int HP_INCREMENT = 100;
 	
 	// "Default constructor" - use this for a new character
 	public PlayerCharacter(String name) {
@@ -30,10 +30,6 @@ public class PlayerCharacter extends AbstractCharacter {
 		return xp;
 	}
 	
-	//commands
-	//public void changeName(String newName){
-	//	name = newName;
-	//}
 	
 	public void gainXP (int xp) {
 		xp = Math.abs(xp);
@@ -41,8 +37,8 @@ public class PlayerCharacter extends AbstractCharacter {
 		
 	}
 	
-	//public void changeWeapon(Weapon newWeapon) {
-	//	weapon = newWeapon;
-	//}
+	public void attack(Character q) {
+		q.takeDamage(weapon().damage());
+	}
 
 }

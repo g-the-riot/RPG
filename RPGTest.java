@@ -7,8 +7,10 @@ public class RPGTest {
 	public static void main(String[] args) throws IOException{
 		
 		GameController game = new GameController();
-		game.getCharacter("/Users/Evenie/Desktop/RPG001/PlayerCharacters.txt", "Bob");
-
+		Character c = game.getCharacter("/Users/Evenie/Desktop/RPG/Characters.txt", "Bob");
+		Character d = game.getCharacter("/Users/Evenie/Desktop/RPG/Characters.txt", "Mob");
+		System.out.println(c.name());
+		System.out.println(d.name());
 	}
 
 }

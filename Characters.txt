@@ -1,1 +1,2 @@
-Bob,97,230,3,EXPLOSIVE,Nuclear raisin,Player Character
+Bob,Player Character,97,230,3,EXPLOSIVE,Nuclear raisin
+Mob,Mob,1,PROJECTILE,Pineapple surprise

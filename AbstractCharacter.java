@@ -1,6 +1,6 @@
 package RPG;
 
-public abstract class AbstractCharacter implements Character{
+public abstract class AbstractCharacter implements Character {
 	
 	private String name;
 	private int hp;
@@ -40,6 +40,15 @@ public abstract class AbstractCharacter implements Character{
 		
 	}
 	
+	//commands
+	public void changeName(String newName){
+		name = newName;
+	}
+	
+	public void changeWeapon(Weapon newWeapon) {
+		weapon = newWeapon;
+	}
+	
 	public void takeDamage(int damage) {
 		//handling the error case may obfuscate a problem in the client
 		damage = Math.abs(damage);
@@ -63,7 +72,5 @@ public abstract class AbstractCharacter implements Character{
 		}
 	}
 	
-	public void attack(Character q) {
-		q.takeDamage(weapon.damage());
-	}
+	public abstract void attack(Character q);
 }
