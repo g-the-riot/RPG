@@ -24,7 +24,7 @@
  *   have a (let's say 1 in 5) chance of eating it.  Even if they don't eat it, since they auto-equip all weapons, you;re
  *   debuffing them.  Smart player!
  * 
- * Fairy in a Bottle - this got lost while being deliverred to another game, but hey, we'll take it!  if a
+ * Fairy in a Bottle - this got lost while being delivered to another game, but hey, we'll take it!  if a
  * player's HP hits 0 && they have a Fairy in a Bottle, Score! They get brought back to life at full health.
  * I hope nobody misses these guys...
  * 

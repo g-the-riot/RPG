@@ -75,14 +75,14 @@ public abstract class AbstractCharacter extends BoardObject implements Character
   * distance(Point p)
   * equals() -AVOID COLLISIONS
   * */
- public void move(char d){
-      //currently this only prevents them from going negative, you need to add the upper bounds too
-      int newX=(int)super.getLocation().getX();
+ public void move(char d, room r){
+      //Okay, so the controller is going to have to keep the current room (from an array of rooms) and pass it to this method when it's invoked.
+      int newX=(int)super.getLocation().getX();1
       int newY=(int)super.getLocation().getY();
       
       if(d=='u'){
            newY+=1;
-           if(newY>=0){
+           if(newY>=0&&newY<=r.y){
                 super.getLocation().move(newX,newY);
            }
            else{
@@ -91,7 +91,7 @@ public abstract class AbstractCharacter extends BoardObject implements Character
       }
       else if(d=='d'){
            newY-=1;
-           if(newY>=0){
+           if(newY>=0&&newY<=r.y){
                 super.getLocation().move(newX,newY);
            }
            else{
@@ -100,7 +100,7 @@ public abstract class AbstractCharacter extends BoardObject implements Character
       }
       else if(d=='l'){
            newX-=1;
-           if(newX>=0){
+           if(newX>=0&&newx<=r.x){
                 super.getLocation().move(newX,newY);
            }
            else{
@@ -109,7 +109,7 @@ public abstract class AbstractCharacter extends BoardObject implements Character
       }
       else if(d=='r'){
            newX+=1;
-           if(newX>0){
+           if(newX>0&&nex<=r.x){
            super.getLocation().move(newX,newY);
            }
            else{
