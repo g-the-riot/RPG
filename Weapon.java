@@ -1,33 +1,14 @@
 package RPG;
 
-public class Weapon {
+public interface Weapon {
 
- 	private int damage;
-	private String name;
-	public enum Type {EXPLOSIVE, BLADE, FOOD, MAGIC, PROJECTILE};
-	
-	public Weapon(Type type, String name) {
-		if(type == Type.EXPLOSIVE) {
-			damage = 4;
-		}
-		else if(type == Type.BLADE) {
-			damage = 3;
-		}
-		else if(type == Type.MAGIC) {
-			damage = 2;
-		}
-		else {
-			damage = 1;
-		}
-		this.name = name;
-	}
-
-	public String name() {
-		return name;
-	}
-	
-	public int damage() {
-		return damage;
-	}
-
+     //EXPLOSIVE, BLADE, FOOD, MAGIC, PROJECTILE    
+       
+     public String name();
+     
+     public int damage();
+     
+     public int[][] range();
+     //returns X,Y values of tiles that are in range of the weapon.
+     
 }

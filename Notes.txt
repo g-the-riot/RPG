@@ -1,0 +1,96 @@
+/**
+ * 
+ * Picking up items (as a character):
+ * 
+ * There are two separate array lists, one managed by the room,containing the contents of the room, and one
+ * managed by the individual character.   The character's is their Inventory.  When an object is picked up
+ * by a character, it is added to the character's inventory and removed from the list of room objects.  The 
+ * purpose is twofold (and hopefully obvious) - an object that has been picked up should no longer be able to be
+ * drawn into the room.  Also, bad guys only target items in the room.  They won't go after weapons you're
+ * holding!
+ * 
+ * Consumable ideas:
+ * Time Freeze - mobs don't get to take a turn (static boolean time freeze for mobs check if true before they perform turn)
+ * Pep Bottle - you get extra action points for one turn
+ * Cloak of Invisibilty - Mobs won't target you, only weapons ( can still attack you)
+ * Olive Branch - Mobs can target you, but won't attack
+ * Health restore - 2d array of different edibles each have what HP they restore
+ *     i.e. String[][] stuff={("Gumbo","26"),("Ice Cream", "45"));
+ *     then the item can be randomly generated.  index = random.nextInt(stuff.length); name=stuff[index][0], amountRestored=parseInt(stuff[index][1]);
+ * All Food weapons are also consumable.  Food weapons can be rotten (randomly - let's say a 1 in 10 chance).  Rotten 
+ *   food does damage to player when consumed, and less damage to mobs when you attack with them.  Since mobs only go 
+ *   after Weapons, and no other consumables, this is the only chance they have of healing themselves, and it's got
+ *   a built-in chance to hurt them.  Smart players can pick up food, see it's rotten (using Look!) and drop it off near a mob.  They
+ *   have a (let's say 1 in 5) chance of eating it.  Even if they don't eat it, since they auto-equip all weapons, you;re
+ *   debuffing them.  Smart player!
+ * 
+ * Fairy in a Bottle - this got lost while being deliverred to another game, but hey, we'll take it!  if a
+ * player's HP hits 0 && they have a Fairy in a Bottle, Score! They get brought back to life at full health.
+ * I hope nobody misses these guys...
+ * 
+ * 
+ * Briefly, Mob AI:
+ * 
+ * Mobs move toward their target.  They start their turn with a target of the player character.
+ * 
+ * Calculate distance between itself and all Weapons & PlayerCharacters - (iterating through an array of BoardObjects, (boardStuff[] 
+ * equality check for (boardStuff[i] instanceOf PlayerCharacter || boardStuff[i] instanceOf Weapon)  
+ * 
+ * If a weapon is closer to the mob than the player character, it targets that instead.  Once the loop is finished, the
+ * Mob begins its turn. 
+ * 
+ * it CHECKS to see if it is in range of the player character.  if it is, it ATTACKS.  (range dependent on weapon type)
+ * if it is not in range, it MOVES towards target.  It moves either horizontally (X+-1) or vertically (Y+-1) depending on
+ * which value is shorter - if equidistant, coin toss (i.e. Mob is 4X, 5Y away, it moves Y-1 toward target.  this makes
+ *  it 4x 4y away assuming its not in range of player character, .  The next move we toss a coin
+ * (randumb.nextInt(2)==0)?moveX():moveY()  to determine if we move X or move Y
+ * 
+ * ROOMS;
+ * The room is the object that all BoardObjects exist on.  Rooms aslo have Door objects.  Door objects can 
+ * be locked (t/f), and your character can have gone thruDoor (t/f).  If your character has gone thruDoor, the
+ * Door is also responsible for knowing what Room it is connected to.  
+ * 
+ * 
+ *RANGE:
+ * Range is stored as a 2D array of ints- [i] = x [j]=y.    The length of the array is dependent upon how many
+ * tiles are in range.  Example, a sword and your fists both have a range of 1 -orthogonal:
+ * 
+ * X0X                                                 (x,y+1)
+ * OCO      -or the following are in range:-    (x-1,y) (N/A) (x+1,y)
+ * X0X                                                 (x,y-1)
+ * 
+ * Therefore, the range of both fists and the sword is a 2D array of ints, both with a length of 4:
+ * 
+ * int[][] range = {((int)super.getLocation().getX(),(int)super.getLocation().getY()-1),
+ * ((int)super.getLocation().getX(),(int)super.getLocation().getY()+1),
+ * ((int)super.getLocation().getX()-1.(int)super.getLocation().getY()).
+ * ((int)super.getLocation().getX()+1.(int)super.getLocation().getY())} 
+ * 
+ * NOTE: in order for this to work, the location of every item in the player's inventory must be updated when
+ * they move. So, like, you'll need to implement that.
+ * 
+ * The method that's calling for the range check will deal with whether or not the tile is actually accessible by 
+ * the character - i.e. if (AbstractCharacter.inRange(tile)&&AbstractCharacter.Accessible(tile)) {//do damage}
+ * 
+ * Taking turns:
+ * in a do while loop
+ * Iterate through a list of characters maintained by room.  before each character takes a turn, check to see if
+ * they're dead.  Do this while the player character is alive - AND - thruDoor of the current room's door is false
+ * Because you leave the room duriing a turn, before each turn, check to see if boolean thruDoor is true, and only
+ * allow more turns/movement if you haven't left the room.  Once the do/while loop is over, the nextRoom method
+ * is called.  It gets the nextRoom to be loaded from the door of the current room.  
+ * 
+ * If I feel like being very clever, a room can have an array of doors. when we're checking whether the
+ * character has gone through the door,we'll need to know which one he's gone through.  to do this, the controller
+ * will need to initialize a door object (Polymorphism)! and then check each door's thruDoor value to see if 
+ * it has been changed to true.  that door gets assigned to our door object that we had not initialized and
+ * is returned as the door that has to have its nextRoom loaded from.  That is of course, if I feel like
+ * being clever.
+ * 
+ * Drawing items to the board: 
+ * The display is generated after every step of a character's turn.  
+ * Divide total dimensions of the jPanel/Canvas ?? to the amount of columns/rows and
+ * create a tile background and character with appropriate dimensions  Display this image
+ * at the top left hand point of the position
+ * 
+ * */
