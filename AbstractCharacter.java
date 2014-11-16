@@ -1,6 +1,8 @@
 package RPG;
 
 public abstract class AbstractCharacter implements Character {
+
+	//this is a Test
 	
 	private String name;
 	private int hp;
