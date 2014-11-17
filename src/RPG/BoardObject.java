@@ -30,9 +30,10 @@ abstract class BoardObject{
      }
      
      public BoardObject(String name, String imgPath){
+     	 	this.name=name;	
     	  this.imgPath=imgPath;
           this.location=new Point();
-          this.name=name;
+          
      }
      
      public Point getLocation(){
@@ -41,6 +42,10 @@ abstract class BoardObject{
      
      public String getName(){
           return name;
+     }
+     
+     public String getImgPath(){
+    	 return imgPath;    	 
      }
      
      public void draw(Graphics g){
@@ -53,7 +58,7 @@ abstract class BoardObject{
     	 */
      }
      
-     private Image createImage(){
+     public Image createImage(){
     	    BufferedImage bufferedImage = null;
     	    try {
  			   bufferedImage = ImageIO.read(new File(imgPath));

@@ -19,7 +19,7 @@ import java.io.IOException;
 public class GameWindow {
 	
 	private static BufferedImage img= null;
-	private static BufferedImage player=null;
+	private static BoardObject[] boardObjects = new BoardObject[1];
 
 	private JFrame frame;
 
@@ -28,14 +28,21 @@ public class GameWindow {
 	 */
 	public static void main(String[] args) {
 		
+		boardObjects[0] = new PlayerCharacter(4,2, "Joseph");
+		
 		try {
-			   img = ImageIO.read(new File("C:\\Users\\Gregory\\Documents\\GitHub\\RPG\\src\\RPG\\Assets\\tile.png"));
+			   img = ImageIO.read(new File("Assets/tile.png"));
 			} 
 		catch (IOException e) {
 			}
-						
+		
+		
+	    String basePath = new File("").getAbsolutePath();
+	    System.out.println(basePath);
+
+							
 				
-		PlayerCharacter testCharacter = new PlayerCharacter(4,2, "Joseph");
+		
 		
 		
 		EventQueue.invokeLater(new Runnable() {
@@ -88,6 +95,9 @@ public class GameWindow {
 	       	for(int j=0;j<10;j++){
 	       		g.drawImage(img, i*60,j*60, this);
 	       	}
+	    }
+	    for(int i=0;i<boardObjects.length;i++){
+	    	g.drawImage(boardObjects[i].createImage(),(int)boardObjects[i].getLocation().getX()*60,(int)boardObjects[i].getLocation().getY()*60, this);
 	    }
 	  }
 	}

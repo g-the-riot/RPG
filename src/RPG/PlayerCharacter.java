@@ -16,7 +16,7 @@ public class PlayerCharacter extends AbstractCharacter {
             1,             //level
             new Projectile("Pea shooter"), //weapon
             5, //actionPoints
-            "C:\\Users\\Gregory\\Documents\\GitHub\\RPG\\src\\RPG\\Assets\\player.png"
+            "Assets/player.png"
            ); //weapon
       xp = 0;
  }
@@ -31,7 +31,7 @@ public class PlayerCharacter extends AbstractCharacter {
             level,            //level
             weapon,  //weapon
             5, //actionPoints
-            "C:\\Users\\Gregory\\Documents\\GitHub\\RPG\\src\\RPG\\Assets\\player.png"
+            "Assets/player.png"
            );            
       this.xp = xp;
  }
