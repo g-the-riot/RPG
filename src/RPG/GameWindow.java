@@ -1,18 +1,25 @@
 package RPG;
 import java.awt.EventQueue;
 import java.awt.Graphics;
+
 import javax.swing.JFrame;
+
 import java.awt.CardLayout;
 import java.awt.Dimension;
+
 import javax.swing.JPanel;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
+
 import javax.imageio.ImageIO;
+
 import java.io.IOException;
 
 public class GameWindow {
 	
 	private static BufferedImage img= null;
+	private static BufferedImage player=null;
 
 	private JFrame frame;
 
@@ -25,17 +32,25 @@ public class GameWindow {
 			   img = ImageIO.read(new File("C:\\Users\\Gregory\\Documents\\GitHub\\RPG\\src\\RPG\\Assets\\tile.png"));
 			} catch (IOException e) {
 			}
+						
+		//public PlayerCharacter(int x, int y, String name)
+		
+		PlayerCharacter testCharacter = new PlayerCharacter(4,2, "Joseph");
+		
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					GameWindow window = new GameWindow();
 					window.frame.pack();
 					window.frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+		
 	}
 
 	/**
@@ -50,7 +65,9 @@ public class GameWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setPreferredSize(new Dimension(616,639));; //X value off by 16, y by 39 because of the window.
+		frame.setResizable(false);
+		frame.setPreferredSize(new Dimension(605,628)); // When resizable is true, X value off by 16, y by 39 because of the window.
+		//when false x is off by 5, y by 28)
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));

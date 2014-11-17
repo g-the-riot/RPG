@@ -8,8 +8,8 @@ public class Door extends BoardObject{
 	private boolean locked;
 	private boolean goneThru;
 	
-	public Door (int x, int y, String name){
-		super(x, y, name);
+	public Door (int x, int y, String name, String imgPath){
+		super(x, y, name, imgPath);
 		locked=true;
 		goneThru=false;
 	}

@@ -5,6 +5,8 @@ public class Mob extends AbstractCharacter {
  private static final int HP_INCREMENT = 200;
  //public static boolean timeFreeze=false;
  
+ //int x, int y, String name, int hp, int maxHp, int level, Weapon weapon, int actionPoints, String path
+ 
  public Mob(int x, int y, String name, int level, Weapon weapon) { 
       super(x, //position
             y, //position
@@ -13,7 +15,9 @@ public class Mob extends AbstractCharacter {
             HP_INCREMENT * level,         //maxHp
             level,            //level
             weapon,  //weapon 
-            3 ); //actionPoints           
+            3,
+            null //path to image
+            ); //actionPoints           
  }
 
  // Overriding to remove functionality

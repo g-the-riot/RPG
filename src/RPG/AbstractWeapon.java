@@ -6,13 +6,14 @@ public abstract class AbstractWeapon extends BoardObject implements Weapon, Pick
 
      private int damage;
      
-     public AbstractWeapon(String name, int damage) {
-          super(name);
+     
+     public AbstractWeapon(String name, String imgPath, int damage) {
+          super(name,imgPath);
           this.damage=damage;
      }
                     
-     public AbstractWeapon(int x, int y, String name, int damage) {
-          super(x , y , name);
+     public AbstractWeapon(int x, int y, String name, String imgPath, int damage) {
+          super(x , y , name, imgPath);
           this.damage=damage;
      }
      
@@ -33,8 +34,10 @@ public abstract class AbstractWeapon extends BoardObject implements Weapon, Pick
 
 class Explosive extends AbstractWeapon{
      
+	 
+	
      public Explosive(String name){
-          super(name, 5);          
+          super(name, null, 5);          
      }
      
      @Override
@@ -57,9 +60,11 @@ class Explosive extends AbstractWeapon{
 }
 
 class Blade extends AbstractWeapon{
+	
+	
      
      public Blade(String name){
-          super(name, 4);
+          super(name, null, 4);
      }
      
      @Override
@@ -82,9 +87,11 @@ class Blade extends AbstractWeapon{
 }
 
 class Magic extends AbstractWeapon{
+	
+
      
      public Magic (String name){
-          super(name,3);
+          super(name, null ,3);
      }
      
      @Override
@@ -107,9 +114,11 @@ class Magic extends AbstractWeapon{
 }
 
 class Food extends AbstractWeapon{
+	
+
      
      public Food (String name){
-          super(name,2);
+          super(name, null, 2);
      }
      
      @Override
@@ -132,9 +141,11 @@ class Food extends AbstractWeapon{
 }
 
 class Projectile extends AbstractWeapon{
+	
+
      
      public Projectile (String name){
-          super(name,2);
+          super(name, null, 2);
      }
      
      @Override
@@ -157,6 +168,8 @@ class Projectile extends AbstractWeapon{
 }
 
 class Fists extends AbstractWeapon{
+	
+
 
      private String[] options={"Here is the church... here is the steeple...",
                "You stick your hands in your pockets.  There's a lot of stuff in here!",
@@ -165,7 +178,7 @@ class Fists extends AbstractWeapon{
                "You slap yourself in the face.  You don't know why you do this."};
      
      public Fists(){
-          super("Your Bare Hands",1);
+          super("Your Bare Hands", null, 1);
      }
      
      @Override
