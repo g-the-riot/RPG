@@ -81,7 +81,7 @@ public abstract class AbstractCharacter extends BoardObject implements Character
       int newY=(int)super.getLocation().getY();
       
       if(d=='u'){
-           newY+=1;
+           newY-=1;
            if(newY>=0&&newY<=r.y-1){
                 super.getLocation().move(newX,newY);
            }
@@ -90,7 +90,7 @@ public abstract class AbstractCharacter extends BoardObject implements Character
            }
       }
       else if(d=='d'){
-           newY-=1;
+           newY+=1;
            if(newY>=0&&newY<=r.y-1){
                 super.getLocation().move(newX,newY);
            }

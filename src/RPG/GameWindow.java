@@ -1,14 +1,18 @@
 package RPG;
 import java.awt.EventQueue;
 import java.awt.Graphics;
+import java.awt.Event;
 
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -23,6 +27,8 @@ public class GameWindow {
 	private static BufferedImage wall_n= null;
 	private static BufferedImage[] roomComponents= new BufferedImage[9];
 	private static BoardObject[] boardObjects = new BoardObject[1];
+	private static Room currentRoom;
+
 
 	private JFrame frame;
 
@@ -30,6 +36,7 @@ public class GameWindow {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		currentRoom= new Room(10,10,"test",null);
 		PlayerCharacter test = new PlayerCharacter(4,2, "Joseph");
 		boardObjects[0] = (BoardObject) test;
 		
@@ -40,17 +47,33 @@ public class GameWindow {
 			public void run() {
 				try {
 					GameWindow window = new GameWindow();
+					
 					window.frame.pack();
 					window.frame.setVisible(true);
-					
+		
+					test.move('u', currentRoom);
+					boardObjects[0] = (BoardObject) test;					
+					test.move('l', currentRoom);
+					boardObjects[0] = (BoardObject) test;	
+					window.frame.repaint();
+					test.move('l', currentRoom);
+					boardObjects[0] = (BoardObject) test;	
+					window.frame.repaint();
+					test.move('d', currentRoom);
+					boardObjects[0] = (BoardObject) test;	
+					window.frame.repaint();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
 		
+	
 	}
 
+	
+	
+	
 	/**
 	 * Create the application.
 	 */
@@ -146,28 +169,28 @@ public class GameWindow {
 	    super.paintComponent(g);
 	    //drawImage(Image img, int x, int y, ImageObserver observer) //for now, just set imageobserver to this.
 	    g.drawImage(roomComponents[1],0*px,0*px,this);
-	    g.drawImage(roomComponents[3],9*px,0*px,this);
-	    g.drawImage(roomComponents[5],9*px,9*px,this);
-	    g.drawImage(roomComponents[7],0*px,9*px,this);
+	    g.drawImage(roomComponents[3],(currentRoom.x-1)*px,0*px,this);
+	    g.drawImage(roomComponents[5],(currentRoom.x-1)*px,(currentRoom.y-1)*px,this);
+	    g.drawImage(roomComponents[7],0*px,(currentRoom.y-1)*px,this);
 	    
-	    for(int j=1;j<9;j++){
+	    for(int j=1;j<(currentRoom.y-1);j++){
 	    	g.drawImage(roomComponents[8],0*px,j*px,this);
 	    }
 	    
-	    for(int j=1;j<9;j++){
-	    	g.drawImage(roomComponents[4],9*px,j*px,this);
+	    for(int j=1;j<(currentRoom.y-1);j++){
+	    	g.drawImage(roomComponents[4],(currentRoom.x-1)*px,j*px,this);
 	    }
 	    
-	    for(int i=1;i<9;i++){
+	    for(int i=1;i<(currentRoom.x-1);i++){
 	    	g.drawImage(roomComponents[2],i*px,0*px,this);
 	    }
 	    
-	    for(int i=1;i<9;i++){
-	    	g.drawImage(roomComponents[6],i*px,9*px,this);
+	    for(int i=1;i<(currentRoom.x-1);i++){
+	    	g.drawImage(roomComponents[6],i*px,(currentRoom.y-1)*px,this);
 	    }
 	    
-	    for(int i=1;i<9;i++){
-	       	for(int j=1;j<9;j++){
+	    for(int i=1;i<(currentRoom.x-1);i++){
+	       	for(int j=1;j<(currentRoom.y-1);j++){
 	       			g.drawImage(roomComponents[0],i*px,j*px,this);
 	       		}//and that's the tiles
 	       	}
@@ -177,5 +200,7 @@ public class GameWindow {
 	    }
 	  }
 	}
+	
+	
 
 }
