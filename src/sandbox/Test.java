@@ -12,6 +12,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import java.io.IOException;
+import java.awt.GridLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 
 
 public class Test {
@@ -57,10 +60,24 @@ public class Test {
 		frame.setPreferredSize(new Dimension(616,639));; //X value off by 16, y by 39 because of the window.
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new CardLayout(0, 0));
 		
 		JPanel panel = new DrawJPanel();
-		frame.getContentPane().add(panel, "Room");
+		frame.getContentPane().add(panel);
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[]{434, 0};
+		gridBagLayout.rowHeights = new int[]{130, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		frame.getContentPane().setLayout(gridBagLayout);
+		
+		
+		
+		JPanel panel_1 = new JPanel();
+		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+		gbc_panel_1.fill = GridBagConstraints.BOTH;
+		gbc_panel_1.gridx = 0;
+		gbc_panel_1.gridy = 0;
+		frame.getContentPane().add(panel_1, gbc_panel_1);
 		
 	}
 	

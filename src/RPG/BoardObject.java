@@ -44,15 +44,21 @@ abstract class BoardObject{
      }
      
      public void draw(Graphics g){
+    	 /**
     	 Image img=createImage();
     	 g.drawImage(img,(int)location.getX(),(int)(location).getY(),null);
+    	 
+    	 This is totally the right idea, but it's not the right implementation.  Need to figure this out.
+    	 * 
+    	 */
      }
      
      private Image createImage(){
     	    BufferedImage bufferedImage = null;
     	    try {
  			   bufferedImage = ImageIO.read(new File(imgPath));
- 			} catch (IOException e) {
+ 			} 
+    	    catch (IOException e) {
  			}
     	    return bufferedImage;
     	  }

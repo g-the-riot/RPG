@@ -30,11 +30,11 @@ public class GameWindow {
 		
 		try {
 			   img = ImageIO.read(new File("C:\\Users\\Gregory\\Documents\\GitHub\\RPG\\src\\RPG\\Assets\\tile.png"));
-			} catch (IOException e) {
+			} 
+		catch (IOException e) {
 			}
 						
-		//public PlayerCharacter(int x, int y, String name)
-		
+				
 		PlayerCharacter testCharacter = new PlayerCharacter(4,2, "Joseph");
 		
 		

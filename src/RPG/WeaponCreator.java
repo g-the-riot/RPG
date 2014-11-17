@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class WeaponCreator{
 
-     public static Weapon createWeapon(){
+     public static AbstractWeapon createWeapon(){
          
           final int EXPLOSIVE=0;
           final int BLADE=1;
@@ -12,7 +12,7 @@ public class WeaponCreator{
           final int MAGIC=3;
           final int PROJECTILE=4;
           
-          Weapon w;
+          AbstractWeapon w;
           
           int index =new Random().nextInt(4);
           
