@@ -18,6 +18,7 @@ import java.io.IOException;
 
 public class GameWindow {
 	
+	private static final int px=60;
 	private static BufferedImage tile= null;
 	private static BufferedImage wall_n= null;
 	private static BufferedImage[] roomComponents= new BufferedImage[9];
@@ -29,8 +30,9 @@ public class GameWindow {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		PlayerCharacter test = new PlayerCharacter(4,2, "Joseph");
+		boardObjects[0] = (BoardObject) test;
 		
-		boardObjects[0] = new PlayerCharacter(4,2, "Joseph");
 		
 		loadRoomComponents();
 		
@@ -111,7 +113,7 @@ public class GameWindow {
 		catch (IOException e) {
 			}
 		try {
-			roomComponents[7] = ImageIO.read(new File("Assets/wall_sw.png"));
+			roomComponents[7] = ImageIO.read(new File("Assets/cornersw.png"));
 			} 
 		catch (IOException e) {
 			}
@@ -126,9 +128,9 @@ public class GameWindow {
 	 * [0] tile
 	 * [1] Corner NW (0,0)
 	 * [2] Wall N
-	 * [3] Corner NE (NoOfCol<<Room.X>>, 0)
+	 * [3] Corner NE (NoOfCol<<Room.X>>-1, 0)
 	 * [4] Wall_E
-	 * [5] Corner SE (NoOfCol<<Room.X>>, NoOfRows<<Room.Y>>)
+	 * [5] Corner SE (NoOfCol<<Room.X>>-1, NoOfRows<<Room.Y>>-1)
 	 * [6] Wall S
 	 * [7] Corner SW (0, NoOfRows <<Room.y>>)
 	 * [8] Wall W
@@ -143,48 +145,35 @@ public class GameWindow {
 	  public void paintComponent(Graphics g){
 	    super.paintComponent(g);
 	    //drawImage(Image img, int x, int y, ImageObserver observer) //for now, just set imageobserver to this.
-	    for(int i=0;i<10;i++){
-	       	for(int j=0;j<10;j++){
-	       		
-	       		if(i==0){
-	       			if(j==0){
-	       				g.drawImage(roomComponents[1],i*60,j*60,this);
-		       		}
-	       			else if(j==9){
-		       			g.drawImage(roomComponents[7],i*60,j*60,this);
-		       		}
-	       			else{
-	       				g.drawImage(roomComponents[8],i*60,j*60,this);
-	       			}      			
-	       		}
-	       		
-	       		else if(i==9){
-	       			
-	       			if(j==0){
-		       			g.drawImage(roomComponents[3],i*60,j*60,this);
-		       		}
-	       			else if(j==9){
-		       			g.drawImage(roomComponents[5],i*60,j*60,this);
-		       		}
-	       			
-	       			g.drawImage(roomComponents[4],i*60,j*60,this);
-	       		}
-	       		
-	       		else if(j==0){
-	       			g.drawImage(roomComponents[2],i*60,j*60,this);
-	       		}
-
-	       		else if(j==9){
-	       			g.drawImage(roomComponents[6],i*60,j*60,this);
-	       		}
-	       		else {
-	       			g.drawImage(roomComponents[0],i*60,j*60,this);
-	       		}//and that's the tiles
-
-	       	}//this is a hot mess that's not displaying properly.  I need to chew on this some more.
+	    g.drawImage(roomComponents[1],0*px,0*px,this);
+	    g.drawImage(roomComponents[3],9*px,0*px,this);
+	    g.drawImage(roomComponents[5],9*px,9*px,this);
+	    g.drawImage(roomComponents[7],0*px,9*px,this);
+	    
+	    for(int j=1;j<9;j++){
+	    	g.drawImage(roomComponents[8],0*px,j*px,this);
 	    }
+	    
+	    for(int j=1;j<9;j++){
+	    	g.drawImage(roomComponents[4],9*px,j*px,this);
+	    }
+	    
+	    for(int i=1;i<9;i++){
+	    	g.drawImage(roomComponents[2],i*px,0*px,this);
+	    }
+	    
+	    for(int i=1;i<9;i++){
+	    	g.drawImage(roomComponents[6],i*px,9*px,this);
+	    }
+	    
+	    for(int i=1;i<9;i++){
+	       	for(int j=1;j<9;j++){
+	       			g.drawImage(roomComponents[0],i*px,j*px,this);
+	       		}//and that's the tiles
+	       	}
+	    
 	    for(int i=0;i<boardObjects.length;i++){
-	    	g.drawImage(boardObjects[i].createImage(),(int)boardObjects[i].getLocation().getX()*60,(int)boardObjects[i].getLocation().getY()*60, this);
+	    	g.drawImage(boardObjects[i].createImage(),(int)boardObjects[i].getLocation().getX()*px,(int)boardObjects[i].getLocation().getY()*px, this);
 	    }
 	  }
 	}
