@@ -14,23 +14,25 @@ public class WeaponCreator{
           
           AbstractWeapon w;
           
-          int index =new Random().nextInt(4);
+          Random randumb = new Random();
+          
+          int index = randumb.nextInt(4);
           
           if(index==EXPLOSIVE){
-               w=new Explosive("Boom");
+               w=new Explosive(randumb.nextInt(8)+1,randumb.nextInt(8)+1,"Boom");
           }
           
           else if(index==BLADE){
-               w=new Blade("Shring");
+               w=new Blade(randumb.nextInt(8)+1,randumb.nextInt(8)+1,"Shring");
           }
           else if(index==FOOD){
-               w=new Food("Yum");
+               w=new Food(randumb.nextInt(8)+1,randumb.nextInt(8)+1,"Yum");
           }
           else if(index==MAGIC){
-               w=new Magic("HocusPocus");
+               w=new Magic(randumb.nextInt(8)+1,randumb.nextInt(8)+1,"HocusPocus");
           }
           else{
-               w=new Projectile("Fwip");
+               w=new Projectile(randumb.nextInt(8)+1,randumb.nextInt(8)+1,"Fwip");
           }
           
           return w;

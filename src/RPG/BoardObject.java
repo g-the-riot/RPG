@@ -29,9 +29,9 @@ abstract class BoardObject{
      }
      
      public BoardObject(String name, String imgPath){
-     	 	this.name=name;	
-    	  this.imgPath=imgPath;
-          this.location=new Point();
+     	 this.name=name;	
+     	 this.imgPath=imgPath;
+     	 this.location=new Point();
           
      }
      

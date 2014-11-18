@@ -40,6 +40,10 @@ class Explosive extends AbstractWeapon{
           super(name, "Assets/pickup.png", 5);          
      }
      
+     public Explosive(int x, int y, String name){
+         super(x, y ,name, "Assets/pickup.png", 5);          
+    }
+     
      @Override
      public String toString(){
           return ("I am an explosive weapon "+super.toString());
@@ -66,6 +70,10 @@ class Blade extends AbstractWeapon{
      public Blade(String name){
           super(name, "Assets/pickup.png", 4);
      }
+     
+     public Blade(int x, int y, String name){
+         super(x, y, name, "Assets/pickup.png", 4);
+    }
      
      @Override
      public String toString(){
@@ -94,6 +102,10 @@ class Magic extends AbstractWeapon{
           super(name, "Assets/pickup.png" ,3);
      }
      
+     public Magic (int x, int y, String name){
+         super(x, y, name, "Assets/pickup.png" ,3);
+    }
+     
      @Override
      public String toString(){
           return ("I am a Magic weapon "+super.toString());
@@ -121,6 +133,10 @@ class Food extends AbstractWeapon{
           super(name, "Assets/pickup.png", 2);
      }
      
+     public Food (int x, int y, String name){
+         super(x,y, name, "Assets/pickup.png", 2);
+    }
+     
      @Override
      public String toString(){
           return ("I am Food "+super.toString());
@@ -147,6 +163,10 @@ class Projectile extends AbstractWeapon{
      public Projectile (String name){
           super(name, "Assets/pickup.png", 2);
      }
+     
+     public Projectile (int x, int y, String name){
+         super(x, y, name, "Assets/pickup.png", 2);
+    }
      
      @Override
      public String toString(){
