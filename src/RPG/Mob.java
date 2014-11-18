@@ -16,7 +16,7 @@ public class Mob extends AbstractCharacter {
             level,            //level
             weapon,  //weapon 
             3,
-            null //path to image
+            "Assets/mob.png" //path to image
             ); //actionPoints           
  }
 

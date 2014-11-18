@@ -37,7 +37,7 @@ class Explosive extends AbstractWeapon{
 	 
 	
      public Explosive(String name){
-          super(name, null, 5);          
+          super(name, "Assets/pickup.png", 5);          
      }
      
      @Override
@@ -64,7 +64,7 @@ class Blade extends AbstractWeapon{
 	
      
      public Blade(String name){
-          super(name, null, 4);
+          super(name, "Assets/pickup.png", 4);
      }
      
      @Override
@@ -91,7 +91,7 @@ class Magic extends AbstractWeapon{
 
      
      public Magic (String name){
-          super(name, null ,3);
+          super(name, "Assets/pickup.png" ,3);
      }
      
      @Override
@@ -118,7 +118,7 @@ class Food extends AbstractWeapon{
 
      
      public Food (String name){
-          super(name, null, 2);
+          super(name, "Assets/pickup.png", 2);
      }
      
      @Override
@@ -145,7 +145,7 @@ class Projectile extends AbstractWeapon{
 
      
      public Projectile (String name){
-          super(name, null, 2);
+          super(name, "Assets/pickup.png", 2);
      }
      
      @Override
@@ -178,7 +178,7 @@ class Fists extends AbstractWeapon{
                "You slap yourself in the face.  You don't know why you do this."};
      
      public Fists(){
-          super("Your Bare Hands", null, 1);
+          super("Your Bare Hands", "Assets/pickup.png", 1);
      }
      
      @Override

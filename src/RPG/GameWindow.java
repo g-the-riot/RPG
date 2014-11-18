@@ -15,12 +15,13 @@ import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class GameWindow {
 	
 	private static final int px=60;
 	private static BufferedImage[] roomComponents;
-	private static Object[] boardObjects;
+	private static ArrayList<BoardObject> boardObjects;
 	private static Room currentRoom;
 
 
@@ -33,10 +34,10 @@ public class GameWindow {
 		
 		GameController controller=new GameController();
 		currentRoom= controller.getCurrentRoom();
-		PlayerCharacter test = new PlayerCharacter(4,2, "Joseph");
-		boardObjects=currentRoom.getObjects().toArray();
+		boardObjects=currentRoom.getObjects();
+		PlayerCharacter test =controller.getPlayer();
 		roomComponents=GameIO.loadRoomComponents();
-		Timer timer = new Timer(500,new gameListener());//brb fixing this.
+		//Timer timer = new Timer(500,new gameListener());//brb fixing this.
 			
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -47,18 +48,18 @@ public class GameWindow {
 					window.frame.setVisible(true);
 					
 					test.move('u', currentRoom);
-					boardObjects[0] = (BoardObject) test;					
+					boardObjects.add(0, test);					
 					test.move('l', currentRoom);
-					boardObjects[0] = (BoardObject) test;	
-					timer.start();
+					boardObjects.add(0, test);		
+					//timer.start();
 					
 					test.move('l', currentRoom);
-					boardObjects[0] = (BoardObject) test;	
-					timer.start();
+					boardObjects.add(0, test);		
+					//timer.start();
 					window.frame.repaint();
 					test.move('d', currentRoom);
-					boardObjects[0] = (BoardObject) test;	
-					timer.start();
+					boardObjects.add(0, test);	
+					//timer.start();
 					window.frame.repaint();
 					
 				} catch (Exception e) {
@@ -89,10 +90,10 @@ public class GameWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
 		
-		JPanel panel2= new InventoryPanel();
+		//JPanel panel2= new InventoryPanel();
 		JPanel panel = new RoomPanel();
 		frame.getContentPane().add(panel, "Room");
-		frame.getContentPane().add(panel2, "Inventory");
+		//frame.getContentPane().add(panel2, "Inventory");
 		
 	}
 	
@@ -111,14 +112,16 @@ public class GameWindow {
 	 * @author gtheriot
 	 *
 	 */
-	public class InventoryPanel extends JPanel{
+	
+	
+	//public class InventoryPanel extends JPanel{
 		
-		public void paintComponent(Graphics g){
-			super.paintComponent(g);
-			JLabel test = new JLabel("This is a test");
-			test.paint(g);
-		}
-	}
+		//public void paintComponent(Graphics g){
+		//	super.paintComponent(g);
+			//JLabel test = new JLabel("This is a test");
+			//test.paint(g);
+		//}
+	//}
 	
 	public class RoomPanel extends JPanel
 	{
@@ -154,8 +157,9 @@ public class GameWindow {
 	       		}//and that's the tiles
 	       	}
 	    
-	    for(int i=0;i<boardObjects.length;i++){
-	    	g.drawImage(boardObjects[i].createImage(),(int)boardObjects[i].getLocation().getX()*px,(int)boardObjects[i].getLocation().getY()*px, this);
+	 	    
+	    for(int i=0;i<boardObjects.size();i++){
+	    	g.drawImage(boardObjects.get(i).createImage(),(int)boardObjects.get(i).getLocation().getX()*px,(int)boardObjects.get(i).getLocation().getY()*px, this);
 	    }
 	  }
 	}
@@ -164,9 +168,9 @@ public class GameWindow {
 
 }
 
-class gameListener implements ActionListener{
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		
-	}//closes method
-	}//closes gameListener
+//class gameListener implements ActionListener{
+	//@Override
+	//public void actionPerformed(ActionEvent arg0) {
+//		
+//	}//closes method
+	//}//closes gameListener

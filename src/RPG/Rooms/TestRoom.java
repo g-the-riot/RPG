@@ -9,6 +9,8 @@ public final class TestRoom extends Room {
 		
 	public TestRoom(){
 		super(10, 10, "TestRoom");
+		setDoors();
+		setMobs();
 	}
 
 	@Override

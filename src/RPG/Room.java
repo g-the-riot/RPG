@@ -9,7 +9,7 @@ public abstract class Room{
 	public final int y;
 	public final String id;
 	private boolean roomClear;
-	protected Door[] doors;
+	public Door[] doors;
 	protected Mob[] mobs;
 	private ArrayList<BoardObject> roomObjects= new ArrayList<BoardObject>();
 	
@@ -27,6 +27,10 @@ public abstract class Room{
 	
 	public ArrayList<BoardObject> getObjects(){
 		return roomObjects;
+	}
+	
+	public Door[] getDoors(){
+		return doors;
 	}
 	
 	public void setObjects(PlayerCharacter c, BoardObject[] all){

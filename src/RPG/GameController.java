@@ -17,13 +17,23 @@ public class GameController {
 	
 	public GameController () {
 		setCurrentRoom(rooms[0]);
+		init();
 	}
  
 	/* Returns a Character object with the given name as found in the file at the provided path.
 	 * Assumes all character names are unique.
-	 */     
+	 */
+	
+	private void init(){
+		createCharacter("Joseph");
+		currentRoom.setObjects(player, allItems);
+	}
  
 	public void createCharacter(String name){
+		System.out.println(rooms[0]);
+		System.out.println(rooms[0].doors[0]);
+		System.out.println(rooms[0].doors[0].getLocation());
+		System.out.println(rooms[0].doors[0].getLocation().getX());
 		int x = (int)rooms[0].doors[0].getLocation().getX();
 		int y = (int)rooms[0].doors[0].getLocation().getY();
 		if(x==0){
@@ -41,6 +51,9 @@ public class GameController {
 		player = new PlayerCharacter(x,y,name);
 	}
 	
+	public PlayerCharacter getPlayer(){
+		return player;
+	}
 
  
 	public void takeTurn(Character first, Character second) {
