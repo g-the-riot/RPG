@@ -53,8 +53,9 @@ public abstract class Room{
 		}//adds doors to room
 		
 		for(int i=0; i<randumb.nextInt(4); i++){
-			if(!(all[1] instanceof Character)){
-				roomObjects.add(all[randumb.nextInt(all.length)]);
+			int index = randumb.nextInt(all.length);
+			if(!(all[index] instanceof Character)){
+				roomObjects.add(all[index]);
 			}
 		}//creates a random number of random items on the gameBoard. Minimum of one item, max of 3.
 		
