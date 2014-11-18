@@ -1,5 +1,7 @@
 package RPG;
 
+import java.util.ArrayList;
+
 import RPG.Rooms.*;
 
 // Provides methods to control gameplay
@@ -14,6 +16,7 @@ public class GameController {
 			(WeaponCreator.createWeapon()),};
 	private Room currentRoom;
 	private PlayerCharacter player;
+	private ArrayList<BoardObject> currentObjects;
 	
 	public GameController () {
 		setCurrentRoom(rooms[0]);
@@ -27,6 +30,7 @@ public class GameController {
 	private void init(){
 		createCharacter("Joseph");
 		currentRoom.setObjects(player, allItems);
+		currentObjects=currentRoom.getObjects();
 	}
  
 	public void createCharacter(String name){
@@ -56,8 +60,24 @@ public class GameController {
 	}
 
  
-	public void takeTurn(Character first, Character second) {
-      first.attack(second); 
+	public void takeTurn() {
+		
+		for(int i=0;i<currentObjects.size();i++){
+			
+			if(currentObjects.get(i) instanceof PlayerCharacter){
+				PlayerCharacter q=(PlayerCharacter)currentObjects.get(i);
+				q.takeTurn();
+				currentObjects.set(i, q);
+			}
+			
+			else if(currentObjects.get(i) instanceof Mob){
+				Mob q=(Mob)currentObjects.get(i);
+				q.takeTurn();
+				currentObjects.set(i, q);
+			}
+		
+		}
+		
 	}
  
 	public void reviveCharacter(Character c) {
