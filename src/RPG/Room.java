@@ -1,21 +1,59 @@
 package RPG;
 
-public class Room{
+import java.util.ArrayList;
+import java.util.Random;
+
+public abstract class Room{
 	
 	public final int x;
 	public final int y;
 	public final String id;
 	private boolean roomClear;
-	private Door[] doors;
+	protected Door[] doors;
+	protected Mob[] mobs;
+	private ArrayList<BoardObject> roomObjects= new ArrayList<BoardObject>();
 	
-	public Room(int x, int y, String id, Door[] doors){
+	public Room(int x, int y, String id){
 	
 		this.x=x;
 		this.y=y;
 		this.id=id.toLowerCase();
 		roomClear=false;
-		this.doors=doors;
+	}
 	
+	public abstract void  setDoors();
+	
+	public abstract void setMobs();
+	
+	public ArrayList<BoardObject> getObjects(){
+		return roomObjects;
+	}
+	
+	public void setObjects(PlayerCharacter c, BoardObject[] all){
+		
+		setDoors();
+		
+		setMobs();
+		
+		Random randumb = new Random();
+		
+		roomObjects.add(c);
+		//adds Character to room
+		
+		for(int i=0; i<mobs.length; i++){
+			roomObjects.add(mobs[i]);
+		}//adds mobs to room
+		
+		for(int i=0; i<doors.length; i++){
+			roomObjects.add(doors[i]);
+		}//adds doors to room
+		
+		for(int i=0; i<randumb.nextInt(4); i++){
+			if(!(all[1] instanceof Character)){
+				roomObjects.add(all[randumb.nextInt(all.length)]);
+			}
+		}//creates a random number of random items on the gameBoard. Minimum of one item, max of 3.
+		
 	}
 	
 	/**

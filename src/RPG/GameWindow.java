@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Event;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.Timer;
 
 import java.awt.CardLayout;
@@ -14,19 +15,12 @@ import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-
-import javax.imageio.ImageIO;
-
-import java.io.IOException;
 
 public class GameWindow {
 	
 	private static final int px=60;
-	private static BufferedImage tile= null;
-	private static BufferedImage wall_n= null;
-	private static BufferedImage[] roomComponents= new BufferedImage[9];
-	private static BoardObject[] boardObjects = new BoardObject[1];
+	private static BufferedImage[] roomComponents;
+	private static Object[] boardObjects;
 	private static Room currentRoom;
 
 
@@ -36,13 +30,14 @@ public class GameWindow {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		currentRoom= new Room(10,10,"test",null);
+		
+		GameController controller=new GameController();
+		currentRoom= controller.getCurrentRoom();
 		PlayerCharacter test = new PlayerCharacter(4,2, "Joseph");
-		boardObjects[0] = (BoardObject) test;
-		
-		
-		loadRoomComponents();
-		
+		boardObjects=currentRoom.getObjects().toArray();
+		roomComponents=GameIO.loadRoomComponents();
+		Timer timer = new Timer(500,new gameListener());//brb fixing this.
+			
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -50,27 +45,28 @@ public class GameWindow {
 					
 					window.frame.pack();
 					window.frame.setVisible(true);
-		
+					
 					test.move('u', currentRoom);
 					boardObjects[0] = (BoardObject) test;					
 					test.move('l', currentRoom);
 					boardObjects[0] = (BoardObject) test;	
-					window.frame.repaint();
+					timer.start();
+					
 					test.move('l', currentRoom);
 					boardObjects[0] = (BoardObject) test;	
+					timer.start();
 					window.frame.repaint();
 					test.move('d', currentRoom);
 					boardObjects[0] = (BoardObject) test;	
+					timer.start();
 					window.frame.repaint();
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-		});
-		
-	
-	}
-
+		});		
+	}//closes main
 	
 	
 	
@@ -93,59 +89,14 @@ public class GameWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
 		
-		JPanel panel = new DrawJPanel();
+		JPanel panel2= new InventoryPanel();
+		JPanel panel = new RoomPanel();
 		frame.getContentPane().add(panel, "Room");
+		frame.getContentPane().add(panel2, "Inventory");
 		
 	}
 	
-	private static void loadRoomComponents(){
-		
-		try {
-			roomComponents[0] = ImageIO.read(new File("Assets/tile.png"));
-			} 
-		catch (IOException e) {
-			}
-		try {
-			roomComponents[1] = ImageIO.read(new File("Assets/cornernw.png"));
-			} 
-		catch (IOException e) {
-			}
-		try {
-			roomComponents[2] = ImageIO.read(new File("Assets/wall_n.png"));
-			} 
-		catch (IOException e) {
-			}
-		try {
-			roomComponents[3] = ImageIO.read(new File("Assets/cornerne.png"));
-			} 
-		catch (IOException e) {
-			}
-		try {
-			roomComponents[4] = ImageIO.read(new File("Assets/wall_e.png"));
-			} 
-		catch (IOException e) {
-			}
-		try {
-			roomComponents[5] = ImageIO.read(new File("Assets/cornerse.png"));
-			} 
-		catch (IOException e) {
-			}
-		try {
-			roomComponents[6] = ImageIO.read(new File("Assets/wall_s.png"));
-			} 
-		catch (IOException e) {
-			}
-		try {
-			roomComponents[7] = ImageIO.read(new File("Assets/cornersw.png"));
-			} 
-		catch (IOException e) {
-			}
-		try {
-			roomComponents[8] = ImageIO.read(new File("Assets/wall_w.png"));
-			} 
-		catch (IOException e) {
-			}
-	}
+	
 	
 	/**
 	 * [0] tile
@@ -160,8 +111,16 @@ public class GameWindow {
 	 * @author gtheriot
 	 *
 	 */
+	public class InventoryPanel extends JPanel{
+		
+		public void paintComponent(Graphics g){
+			super.paintComponent(g);
+			JLabel test = new JLabel("This is a test");
+			test.paint(g);
+		}
+	}
 	
-	public class DrawJPanel extends JPanel
+	public class RoomPanel extends JPanel
 	{
 	  //may need to have an array of images that this can access...  
 	  
@@ -201,6 +160,13 @@ public class GameWindow {
 	  }
 	}
 	
-	
+
 
 }
+
+class gameListener implements ActionListener{
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		
+	}//closes method
+	}//closes gameListener

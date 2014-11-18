@@ -1,8 +1,11 @@
 package RPG;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+
+import javax.imageio.ImageIO;
 
 public class GameIO{
 
@@ -70,5 +73,58 @@ public class GameIO{
      }
      return c;   
  }
+ 
+ public static BufferedImage[] loadRoomComponents(){
+	 
+	 BufferedImage[] roomComponents= new BufferedImage[9];
+	 
+		try {
+			roomComponents[0] = ImageIO.read(new File("Assets/tile.png"));
+			} 
+		catch (IOException e) {
+			}
+		try {
+			roomComponents[1] = ImageIO.read(new File("Assets/cornernw.png"));
+			} 
+		catch (IOException e) {
+			}
+		try {
+			roomComponents[2] = ImageIO.read(new File("Assets/wall_n.png"));
+			} 
+		catch (IOException e) {
+			}
+		try {
+			roomComponents[3] = ImageIO.read(new File("Assets/cornerne.png"));
+			} 
+		catch (IOException e) {
+			}
+		try {
+			roomComponents[4] = ImageIO.read(new File("Assets/wall_e.png"));
+			} 
+		catch (IOException e) {
+			}
+		try {
+			roomComponents[5] = ImageIO.read(new File("Assets/cornerse.png"));
+			} 
+		catch (IOException e) {
+			}
+		try {
+			roomComponents[6] = ImageIO.read(new File("Assets/wall_s.png"));
+			} 
+		catch (IOException e) {
+			}
+		try {
+			roomComponents[7] = ImageIO.read(new File("Assets/cornersw.png"));
+			} 
+		catch (IOException e) {
+			}
+		try {
+			roomComponents[8] = ImageIO.read(new File("Assets/wall_w.png"));
+			} 
+		catch (IOException e) {
+			}
+		
+		return roomComponents;
+	}
 
 }

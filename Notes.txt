@@ -93,4 +93,6 @@
  * create a tile background and character with appropriate dimensions  Display this image
  * at the top left hand point of the position
  * 
+ * Okay, so rooms can stay at the level of abstraction that they're currently at and each individual room just needs to pass it 
+ * an array of Mobs and Doors -or- each individual room can be a concrete class that has its rooms and doors coded in.  
  * */
