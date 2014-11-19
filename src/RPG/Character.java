@@ -11,7 +11,7 @@ public interface Character {
  
  public boolean isDead();
  
- public Weapon weapon();
+ public AbstractWeapon getWeapon();
  
  /*
   * Reduces this PlayerCharacter's hp by the given damage

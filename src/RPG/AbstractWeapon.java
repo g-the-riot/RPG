@@ -1,5 +1,7 @@
 package RPG;
 
+import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class AbstractWeapon extends BoardObject implements Weapon, Pickup {
@@ -58,8 +60,26 @@ class Explosive extends AbstractWeapon{
      }
      
      @Override
-     public int[][] range(){
-    	 return null;    	 
+     public Point[] getRange(Point p){
+    	 ArrayList<Point> range = new ArrayList<Point>();
+    	 
+    	 if((p.getX()-1)!=0){
+    		range.add(new Point((int)p.getX()-1,(int)p.getY()));
+    	 }
+    	 
+    	 if((p.getX()+1)!=9){
+    		range.add(new Point((int)p.getX()+1,(int)p.getY()));
+    	 }
+    	 
+    	 if((p.getY()-1)!=0){
+    		range.add(new Point((int)p.getX(),(int)p.getY()-1));
+    	 }
+    	 
+    	 if((p.getY()+1)!=9){
+    		range.add(new Point((int)p.getX(),(int)p.getY()+1));
+    	 }    	  	
+    	 
+    	 return range.toArray(new Point[range.size()]);	 
      }
 }
 
@@ -89,8 +109,26 @@ class Blade extends AbstractWeapon{
      }
      
      @Override
-     public int[][] range(){
-    	 return null;    	 
+     public Point[] getRange(Point p){
+    	 ArrayList<Point> range = new ArrayList<Point>();
+    	 
+    	 if((p.getX()-1)!=0){
+    		range.add(new Point((int)p.getX()-1,(int)p.getY()));
+    	 }
+    	 
+    	 if((p.getX()+1)!=9){
+    		range.add(new Point((int)p.getX()+1,(int)p.getY()));
+    	 }
+    	 
+    	 if((p.getY()-1)!=0){
+    		range.add(new Point((int)p.getX(),(int)p.getY()-1));
+    	 }
+    	 
+    	 if((p.getY()+1)!=9){
+    		range.add(new Point((int)p.getX(),(int)p.getY()+1));
+    	 }    	  	
+    	 
+    	 return range.toArray(new Point[range.size()]);	 
      }
 }
 
@@ -120,8 +158,26 @@ class Magic extends AbstractWeapon{
      }
      
      @Override
-     public int[][] range(){
-    	 return null;    	 
+     public Point[] getRange(Point p){
+    	 ArrayList<Point> range = new ArrayList<Point>();
+    	 
+    	 if((p.getX()-1)!=0){
+    		range.add(new Point((int)p.getX()-1,(int)p.getY()));
+    	 }
+    	 
+    	 if((p.getX()+1)!=9){
+    		range.add(new Point((int)p.getX()+1,(int)p.getY()));
+    	 }
+    	 
+    	 if((p.getY()-1)!=0){
+    		range.add(new Point((int)p.getX(),(int)p.getY()-1));
+    	 }
+    	 
+    	 if((p.getY()+1)!=9){
+    		range.add(new Point((int)p.getX(),(int)p.getY()+1));
+    	 }    	  	
+    	 
+    	 return range.toArray(new Point[range.size()]);	 
      }
 }
 
@@ -151,8 +207,26 @@ class Food extends AbstractWeapon{
      }
      
      @Override
-     public int[][] range(){
-    	 return null;    	 
+     public Point[] getRange(Point p){
+    	 ArrayList<Point> range = new ArrayList<Point>();
+    	 
+    	 if((p.getX()-1)!=0){
+    		range.add(new Point((int)p.getX()-1,(int)p.getY()));
+    	 }
+    	 
+    	 if((p.getX()+1)!=9){
+    		range.add(new Point((int)p.getX()+1,(int)p.getY()));
+    	 }
+    	 
+    	 if((p.getY()-1)!=0){
+    		range.add(new Point((int)p.getX(),(int)p.getY()-1));
+    	 }
+    	 
+    	 if((p.getY()+1)!=9){
+    		range.add(new Point((int)p.getX(),(int)p.getY()+1));
+    	 }    	  	
+    	 
+    	 return range.toArray(new Point[range.size()]);	 
      }
 }
 
@@ -182,8 +256,26 @@ class Projectile extends AbstractWeapon{
      }
      
      @Override
-     public int[][] range(){
-    	 return null;    	 
+     public Point[] getRange(Point p){
+    	 ArrayList<Point> range = new ArrayList<Point>();
+    	 
+    	 if((p.getX()-1)!=0){
+    		range.add(new Point((int)p.getX()-1,(int)p.getY()));
+    	 }
+    	 
+    	 if((p.getX()+1)!=9){
+    		range.add(new Point((int)p.getX()+1,(int)p.getY()));
+    	 }
+    	 
+    	 if((p.getY()-1)!=0){
+    		range.add(new Point((int)p.getX(),(int)p.getY()-1));
+    	 }
+    	 
+    	 if((p.getY()+1)!=9){
+    		range.add(new Point((int)p.getX(),(int)p.getY()+1));
+    	 }    	  	
+    	 
+    	 return range.toArray(new Point[range.size()]);	 
      }
 }
 
@@ -217,7 +309,25 @@ class Fists extends AbstractWeapon{
      }
      
      @Override
-     public int[][] range(){
-    	 return null;    	 
+     public Point[] getRange(Point p){
+    	 ArrayList<Point> range = new ArrayList<Point>();
+    	 
+    	 if((p.getX()-1)!=0){
+    		range.add(new Point((int)p.getX()-1,(int)p.getY()));
+    	 }
+    	 
+    	 if((p.getX()+1)!=9){
+    		range.add(new Point((int)p.getX()+1,(int)p.getY()));
+    	 }
+    	 
+    	 if((p.getY()-1)!=0){
+    		range.add(new Point((int)p.getX(),(int)p.getY()-1));
+    	 }
+    	 
+    	 if((p.getY()+1)!=9){
+    		range.add(new Point((int)p.getX(),(int)p.getY()+1));
+    	 }    	  	
+    	 
+    	 return range.toArray(new Point[range.size()]);	 
      }
 }

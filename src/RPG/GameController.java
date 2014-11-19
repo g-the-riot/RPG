@@ -72,7 +72,7 @@ public class GameController {
 			
 			else if(currentObjects.get(i) instanceof Mob){
 				Mob q=(Mob)currentObjects.get(i);
-				q.takeTurn();
+				q.takeTurn(currentRoom);
 				currentObjects.set(i, q);
 			}
 		

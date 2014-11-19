@@ -6,7 +6,7 @@ public abstract class AbstractCharacter extends BoardObject implements Character
      private int hp;
      private int maxHp;
      private int level;
-     private Weapon weapon;
+     private AbstractWeapon weapon;
      private int actionPoints;
 
  public AbstractCharacter(int x, int y, String name, int hp, int maxHp, int level, AbstractWeapon weapon, int actionPoints, String path) {
@@ -15,7 +15,7 @@ public abstract class AbstractCharacter extends BoardObject implements Character
       this.hp = hp;
       this.level = level;
       this.weapon = weapon; 
-      this.actionPoints=actionPoints;
+      this.setActionPoints(actionPoints);
  }
  
  public String name() {
@@ -37,12 +37,12 @@ public abstract class AbstractCharacter extends BoardObject implements Character
   
  }
  
- public Weapon weapon() {
+ public AbstractWeapon getWeapon() {
   return weapon;
   
  }
  
- public void changeWeapon(Weapon newWeapon) {
+ public void changeWeapon(AbstractWeapon newWeapon) {
       weapon = newWeapon;
  }
  
@@ -119,4 +119,12 @@ public abstract class AbstractCharacter extends BoardObject implements Character
  };
  
  public abstract void attack(Character q);
+
+public int getActionPoints() {
+	return actionPoints;
+}
+
+public void setActionPoints(int actionPoints) {
+	this.actionPoints = actionPoints;
+}
 }

@@ -1,19 +1,10 @@
 package RPG;
-import java.awt.EventQueue;
+
 import java.awt.Graphics;
-import java.awt.Event;
-
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.Timer;
-
 import java.awt.CardLayout;
 import java.awt.Dimension;
-
 import javax.swing.JPanel;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -28,66 +19,17 @@ public class GameWindow {
 	
 	public static JFrame frame;
 
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		
-//		GameController controller=new GameController();
-//		currentRoom= controller.getCurrentRoom();
-//		boardObjects=currentRoom.getObjects();
-//		PlayerCharacter test =controller.getPlayer();
-//		roomComponents=GameIO.loadRoomComponents();
-//		//Timer timer = new Timer(500,new gameListener());//brb fixing this.
-//			
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					GameWindow window = new GameWindow();
-//					
-//					window.frame.pack();
-//					window.frame.setVisible(true);
-//					
-//					test.move('u', currentRoom);
-//					boardObjects.add(0, test);					
-//					test.move('l', currentRoom);
-//					boardObjects.add(0, test);		
-//					//timer.start();
-//					
-//					test.move('l', currentRoom);
-//					boardObjects.add(0, test);		
-//					//timer.start();
-//					window.frame.repaint();
-//					test.move('d', currentRoom);
-//					boardObjects.add(0, test);	
-//					//timer.start();
-//					window.frame.repaint();
-//					
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});		
-//	}//closes main
-	
-	
-	
-	/**
-	 * Create the application.
-	 */
 	public GameWindow() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		
 		currentRoom= controller.getCurrentRoom();
 		boardObjects=currentRoom.getObjects();
 		test =controller.getPlayer();
 		roomComponents=GameIO.loadRoomComponents();
+		
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setPreferredSize(new Dimension(605,628)); // When resizable is true, X value off by 16, y by 39 because of the window.
@@ -176,9 +118,3 @@ public class GameWindow {
 
 }
 
-//class gameListener implements ActionListener{
-	//@Override
-	//public void actionPerformed(ActionEvent arg0) {
-//		
-//	}//closes method
-	//}//closes gameListener

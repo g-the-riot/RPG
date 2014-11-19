@@ -25,7 +25,7 @@ public class GameIO{
  
  private AbstractCharacter createCharacter(String[] playerInfo) {
      AbstractCharacter c = null;
-     Weapon weapon = null;
+     AbstractWeapon weapon = null;
      int level = 1;
      String name = playerInfo[0];
      String type = playerInfo[1];

@@ -32,19 +32,24 @@ public class Test implements ActionListener{
 			
 			GameWindow a = new GameWindow();
 			GameWindow.test.move('u',GameWindow.currentRoom);
-			Timer timer= new Timer(15000, new Test());
-			timer.setInitialDelay(1500);
-			timer.start();
-			GameWindow.test.move('l',GameWindow.currentRoom);
-			timer.start();
-			GameWindow.test.move('l',GameWindow.currentRoom);
-			timer.start();
+//			Timer timer= new Timer(15000, new Test());
+//			timer.setInitialDelay(1500);
+//			timer.start();
+//			GameWindow.test.move('l',GameWindow.currentRoom);
+//			timer.start();
+//			GameWindow.test.move('l',GameWindow.currentRoom);
+//			timer.start();
+			GameWindow.controller.takeTurn();
+			GameWindow.controller.takeTurn();
+			GameWindow.controller.takeTurn();
+			GameWindow.controller.takeTurn();
 			
 		}
 		
 		
 		@Override
 			public void actionPerformed(ActionEvent e) {
+			
 				GameWindow.frame.repaint();
 				GameWindow.test.move('l',GameWindow.currentRoom);
 			}//closes method

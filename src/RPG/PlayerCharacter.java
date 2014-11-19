@@ -56,7 +56,7 @@ public class PlayerCharacter extends AbstractCharacter {
  }
  
  public void attack(Character q) {
-      q.takeDamage(weapon().damage());
+      q.takeDamage(getWeapon().damage());
  }
  
  public void drop(Pickup p){
@@ -68,41 +68,54 @@ public class PlayerCharacter extends AbstractCharacter {
  @Override
  public void takeTurn(Room r){
 	 Scanner input = new Scanner(System.in);
-	 int menuChoice = menu();
+
+	 int currentAP=this.getActionPoints();
 	 
-	 if(menuChoice==1){
-		 System.out.println("Choose: U/D/L/R");
-		 char direction =input.next().charAt(0);
-		 move(direction, r);
-	 }
-	 else if(menuChoice==2){
-		 System.out.println("Which enemy?");
-		 for(int i=0; i<r.getObjects().size(); i++){
-			 if(r.getObjects().get(i) instanceof Mob){
-				 Mob q = (Mob)r.getObjects().get(i);
-				 System.out.println((i+1)+".) "+q.getName());
-			 }
+	 do{
+		 int menuChoice = menu();
+	 
+		 if(menuChoice==1){
+			 System.out.println("Choose: U/D/L/R");
+			 char direction =input.next().charAt(0);
+			 move(direction, r);
+			 currentAP--;
 		 }
-		 int makeAChoice=input.nextInt();
-		 Mob q=(Mob)r.getObjects().get(makeAChoice);
-		 attack(q);
-		 r.getObjects().set(makeAChoice, q);
+		 else if(menuChoice==2){
+			 System.out.println("Which enemy?");
+			 for(int i=0; i<r.getObjects().size(); i++){
+				 if(r.getObjects().get(i) instanceof Mob){
+					 Mob q = (Mob)r.getObjects().get(i);
+					 System.out.println((i+1)+".) "+q.getName());
+				 }
+			 }
+			 int makeAChoice=input.nextInt();
+			 Mob q=(Mob)r.getObjects().get(makeAChoice);
+			 attack(q);
+			 r.getObjects().set(makeAChoice, q);
+			 currentAP--;
+		 }
+		 else{
+			 //TODO: create an inventory implementation.
+		 }
+		 GameWindow.frame.repaint();
 	 }
-	 else{
-		 
-	 }
+	 while(currentAP>0);
 	 
 	 input.close();
 	 
  };
  
  private int menu(){
+	 
+	 Scanner input = new Scanner(System.in);
+	 
 	 System.out.println("Make a choice:");
 	 System.out.println("1. Move");
 	 System.out.println("2. Attack");
 	 System.out.println("3. Inventory");
-	 
-	 return new Scanner(System.in).nextInt();
+ 
+ 
+	 return input.nextInt();
  }
  
 }
