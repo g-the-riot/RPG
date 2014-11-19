@@ -28,7 +28,7 @@ public interface Character {
  
  public void pickUp(Pickup p);
 
- public void takeTurn();
+ public void takeTurn(Room r);
  
  public void move(char d, Room r);
 }

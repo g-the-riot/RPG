@@ -9,7 +9,7 @@ public abstract class AbstractCharacter extends BoardObject implements Character
      private Weapon weapon;
      private int actionPoints;
 
- public AbstractCharacter(int x, int y, String name, int hp, int maxHp, int level, Weapon weapon, int actionPoints, String path) {
+ public AbstractCharacter(int x, int y, String name, int hp, int maxHp, int level, AbstractWeapon weapon, int actionPoints, String path) {
       super(x , y , name, path);
       this.maxHp = maxHp;
       this.hp = hp;

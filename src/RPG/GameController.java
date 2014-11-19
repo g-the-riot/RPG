@@ -52,7 +52,7 @@ public class GameController {
 		else{
 			y-=1;
 		}
-		player = new PlayerCharacter(x,y,name);
+		player = new PlayerCharacter(x,y,name, WeaponCreator.createWeapon());
 	}
 	
 	public PlayerCharacter getPlayer(){
@@ -66,7 +66,7 @@ public class GameController {
 			
 			if(currentObjects.get(i) instanceof PlayerCharacter){
 				PlayerCharacter q=(PlayerCharacter)currentObjects.get(i);
-				q.takeTurn();
+				q.takeTurn(currentRoom);
 				currentObjects.set(i, q);
 			}
 			

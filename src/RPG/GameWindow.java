@@ -22,52 +22,53 @@ public class GameWindow {
 	private static final int px=60;
 	private static BufferedImage[] roomComponents;
 	private static ArrayList<BoardObject> boardObjects;
-	private static Room currentRoom;
-
-
-	private JFrame frame;
+	public static Room currentRoom;
+	public static GameController controller= new GameController();
+	public static PlayerCharacter test;
+	
+	public static JFrame frame;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		
-		GameController controller=new GameController();
-		currentRoom= controller.getCurrentRoom();
-		boardObjects=currentRoom.getObjects();
-		PlayerCharacter test =controller.getPlayer();
-		roomComponents=GameIO.loadRoomComponents();
-		//Timer timer = new Timer(500,new gameListener());//brb fixing this.
-			
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GameWindow window = new GameWindow();
-					
-					window.frame.pack();
-					window.frame.setVisible(true);
-					
-					test.move('u', currentRoom);
-					boardObjects.add(0, test);					
-					test.move('l', currentRoom);
-					boardObjects.add(0, test);		
-					//timer.start();
-					
-					test.move('l', currentRoom);
-					boardObjects.add(0, test);		
-					//timer.start();
-					window.frame.repaint();
-					test.move('d', currentRoom);
-					boardObjects.add(0, test);	
-					//timer.start();
-					window.frame.repaint();
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});		
-	}//closes main
+//	public static void main(String[] args) {
+//		
+//		GameController controller=new GameController();
+//		currentRoom= controller.getCurrentRoom();
+//		boardObjects=currentRoom.getObjects();
+//		PlayerCharacter test =controller.getPlayer();
+//		roomComponents=GameIO.loadRoomComponents();
+//		//Timer timer = new Timer(500,new gameListener());//brb fixing this.
+//			
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					GameWindow window = new GameWindow();
+//					
+//					window.frame.pack();
+//					window.frame.setVisible(true);
+//					
+//					test.move('u', currentRoom);
+//					boardObjects.add(0, test);					
+//					test.move('l', currentRoom);
+//					boardObjects.add(0, test);		
+//					//timer.start();
+//					
+//					test.move('l', currentRoom);
+//					boardObjects.add(0, test);		
+//					//timer.start();
+//					window.frame.repaint();
+//					test.move('d', currentRoom);
+//					boardObjects.add(0, test);	
+//					//timer.start();
+//					window.frame.repaint();
+//					
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});		
+//	}//closes main
 	
 	
 	
@@ -82,6 +83,11 @@ public class GameWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		currentRoom= controller.getCurrentRoom();
+		boardObjects=currentRoom.getObjects();
+		test =controller.getPlayer();
+		roomComponents=GameIO.loadRoomComponents();
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setPreferredSize(new Dimension(605,628)); // When resizable is true, X value off by 16, y by 39 because of the window.
@@ -94,6 +100,8 @@ public class GameWindow {
 		JPanel panel = new RoomPanel();
 		frame.getContentPane().add(panel, "Room");
 		//frame.getContentPane().add(panel2, "Inventory");
+		frame.pack();
+		frame.setVisible(true);
 		
 	}
 	
