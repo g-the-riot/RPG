@@ -13,6 +13,8 @@ public class Test implements ActionListener{
 	
 		public static void main(String[] args){
 			
+			
+			
 			GameWindow a = new GameWindow();
 //			Timer timer= new Timer(15000, new Test());
 //			timer.setInitialDelay(1500);

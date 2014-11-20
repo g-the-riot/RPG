@@ -2,6 +2,7 @@ package RPG;
 
 import java.awt.Graphics;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import java.awt.BorderLayout;
@@ -73,6 +74,9 @@ public class GameWindow {
 			cl = new CardLayout();
 			cards = new JPanel(cl);		
 		frame.setContentPane(cards);
+		
+		ImageIcon img = new ImageIcon("Assets/mob.png");
+		frame.setIconImage(img.getImage());
 		
 		BorderLayout bl=new BorderLayout();
 		
