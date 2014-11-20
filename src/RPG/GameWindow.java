@@ -9,10 +9,13 @@ import javax.swing.SwingConstants;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 
 import javax.swing.JPanel;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 
 public class GameWindow {
@@ -20,12 +23,13 @@ public class GameWindow {
 	private static final int px=60;
 	private static BufferedImage[] roomComponents;
 	private static ArrayList<BoardObject> boardObjects;
-	private static ArrayList<JLabel> inventory;
 	public static Room currentRoom;
 	public static GameController controller= new GameController();
 	public static JPanel cards; 
 	public static CardLayout cl;
 	public JPanel panel2;
+	public static Font bigFont;
+	public static Font normalFont;
 	
 	
 	public static JFrame frame;
@@ -34,6 +38,22 @@ public class GameWindow {
 		initialize();
 		cl = new CardLayout();
 		cards = new JPanel(cl);
+		try{
+			bigFont=Font.createFont(Font.TRUETYPE_FONT, new File("Assets/8BITWONDER.TTF")).deriveFont((float)60);
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(bigFont);
+			}
+		catch(Exception e){
+			System.out.println("Didn't happen buddy.");
+		}
+		try{
+			normalFont=Font.createFont(Font.TRUETYPE_FONT, new File("Assets/8BITWONDER.TTF")).deriveFont((float)20);
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(normalFont);
+			}
+		catch(Exception e){
+			System.out.println("Didn't happen buddy.");
+		}
 	
 		frame = new JFrame("My Super Great Game");
 		frame.setResizable(false);
@@ -44,17 +64,9 @@ public class GameWindow {
 		frame.setContentPane(cards);
 		
 		JPanel panel = new RoomPanel();
-		panel2= new InventoryPanel();
-		panel2.setBackground(Color.BLACK);
-//		for(int i=0; i<controller.getPlayer().inventory.size(); i++){
-//			
-//			System.out.println(controller.getPlayer().inventory.get(i).getName());
-//			inventory.add(new JLabel((controller.getPlayer().inventory.get(i)).getName()));
-//		}
-//		for(int i=0; i<inventory.size(); i++){
-//			panel2.add(inventory.get(i));
-//		}
 		
+		panel2= new InventoryPanel();	
+		panel2.setBackground(Color.black);
 		cards.add(panel, "Room");
 		cards.add(panel2, "Inventory");
 		
@@ -62,25 +74,12 @@ public class GameWindow {
 		frame.setVisible(true);
 	}
 	
-	//okay the inventory thing probably doesn't work, but for right now we're going to go for it.
-	
-	private void setInventory(){
-		for(int i=0; i<controller.getPlayer().inventory.size(); i++){
-			if(controller.getPlayer().inventory.get(i).getName()!=inventory.get(i).getText()){
-				inventory.add(new JLabel(inventory.get(i).getName()));
-			}
-		}
-		for(int i=0; i<inventory.size(); i++){
-			panel2.add(inventory.get(i));
-		}
-	}
-	
-
 	private void initialize() {
 		
 		currentRoom= controller.getCurrentRoom();
 		boardObjects=currentRoom.getObjects();
 		roomComponents=GameIO.loadRoomComponents();
+
 		
 	}
 	
@@ -104,9 +103,14 @@ public class GameWindow {
 	public class InventoryPanel extends JPanel{
 		
 		public void paintComponent(Graphics g){
+			
 			super.paintComponent(g);
+			g.setColor(Color.white);
+			g.setFont(GameWindow.bigFont);
+			g.drawString("Inventory",25,70);
 			
 		}
+		
 	}
 	
 	public class RoomPanel extends JPanel
