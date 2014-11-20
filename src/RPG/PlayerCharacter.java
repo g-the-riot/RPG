@@ -65,7 +65,10 @@ public class PlayerCharacter extends AbstractCharacter {
  }
  
  @Override
- public void pickUp(Pickup p){};
+ public void pickUp(Pickup p){
+	 inventory.add(p);
+	 System.out.println(getName()+" just got a "+p.getName());
+ };
  
  @Override
  public void takeTurn(Room r){
@@ -98,13 +101,29 @@ public class PlayerCharacter extends AbstractCharacter {
 			 r.getObjects().set(makeAChoice-1, q);
 			 currentAP--;
 		 }
-		 else{
+		 else if(menuChoice==3){
 			 GameWindow.cl.show(GameWindow.cards, "Inventory");
 			 System.out.println("Woah! Look at all your stuff!");
 			 System.out.println("Hit Enter to go back.");
 			 input.next();
 			 GameWindow.cl.show(GameWindow.cards, "Room");
 			 //TODO: create an inventory implementation.
+		 }
+		 else{
+			 boolean pickedUp=false;
+			 for(int i=0;i<r.getObjects().size();i++){				 
+				 if(r.getObjects().get(i) instanceof Pickup){
+					 if(getLocation().equals(r.getObjects().get(i).getLocation())){
+						 pickUp((Pickup)r.getObjects().get(i));
+						 r.getObjects().remove(i);
+						 currentAP--;
+						 pickedUp=true;
+					 }// and you're standing on it.  pick it up
+				 }//if the thing on the board is a pickup				
+			 }
+			 if(!pickedUp){
+				 System.out.println("There's nothing to pick up!");
+			 }
 		 }
 		 GameWindow.frame.repaint();
 	 }
@@ -122,7 +141,7 @@ public class PlayerCharacter extends AbstractCharacter {
 	 System.out.println("1. Move");
 	 System.out.println("2. Attack");
 	 System.out.println("3. Inventory");
- 
+	 System.out.println("4. Pick up");
  
 	 return input.nextInt();
  }

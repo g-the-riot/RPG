@@ -1,12 +1,8 @@
 package RPG;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.awt.Point;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 /**Relevant methods from Point:
   * getX()
   * getY()
@@ -58,15 +54,9 @@ abstract class BoardObject{
     	 */
      }
      
-     public Image createImage(){
-    	    BufferedImage bufferedImage = null;
-    	    try {
- 			   bufferedImage = ImageIO.read(new File(imgPath));
- 			} 
-    	    catch (IOException e) {
- 			}
-    	    return bufferedImage;
-    	  }
+    public Image createImage(){
+    	 return GameIO.createImage(imgPath);
+    }
 
 	public int getIndex() {
 		return index;

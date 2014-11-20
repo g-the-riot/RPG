@@ -1,5 +1,6 @@
 package RPG;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -72,6 +73,16 @@ public class GameIO{
           c = new Mob(0,0,name,level, weapon);//junk data in for position
      }
      return c;   
+ }
+ 
+ public static Image createImage(String imgPath){
+	    BufferedImage bufferedImage = null;
+	    try {
+		   bufferedImage = ImageIO.read(new File(imgPath));
+		} 
+	    catch (IOException e) {
+		}
+	    return bufferedImage;
  }
  
  public static BufferedImage[] loadRoomComponents(){

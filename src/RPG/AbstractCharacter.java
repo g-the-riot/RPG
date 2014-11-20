@@ -22,6 +22,10 @@ public abstract class AbstractCharacter extends BoardObject implements Character
       return super.getName();
  }
  
+ public int maxHP(){
+	 return maxHp;
+ }
+ 
  public int hp() {
       return hp;
       

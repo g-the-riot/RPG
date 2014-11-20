@@ -93,7 +93,7 @@ public class Mob extends AbstractCharacter {
 			 direction='d';
 		 }
 	 }
-	 	 
+	 System.out.println("The mob has decided to move "+direction);
 	 return direction;
  }
  

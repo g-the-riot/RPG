@@ -3,8 +3,6 @@ package RPG;
 import java.awt.Graphics;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -28,17 +26,16 @@ public class GameWindow {
 	public static GameController controller= new GameController();
 	public static JPanel cards; 
 	public static CardLayout cl;
-	public JPanel panel2;
 	public static Font bigFont;
 	public static Font normalFont;
+	public static Font smallFont;
 	
 	
 	public static JFrame frame;
 
 	public GameWindow() {
 		initialize();
-		cl = new CardLayout();
-		cards = new JPanel(cl);
+		
 		try{
 			bigFont=Font.createFont(Font.TRUETYPE_FONT, new File("Assets/8BITWONDER.TTF")).deriveFont((float)60);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -47,6 +44,16 @@ public class GameWindow {
 		catch(Exception e){
 			System.out.println("Didn't happen buddy.");
 		}
+		
+		try{
+			smallFont=Font.createFont(Font.TRUETYPE_FONT, new File("Assets/8BITWONDER.TTF")).deriveFont((float)15);
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(smallFont);
+			}
+		catch(Exception e){
+			System.out.println("Didn't happen buddy.");
+		}
+		
 		try{
 			normalFont=Font.createFont(Font.TRUETYPE_FONT, new File("Assets/8BITWONDER.TTF")).deriveFont((float)20);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -55,23 +62,51 @@ public class GameWindow {
 		catch(Exception e){
 			System.out.println("Didn't happen buddy.");
 		}
-	
+		
+
 		frame = new JFrame("My Super Great Game");
 		frame.setResizable(false);
-		frame.setPreferredSize(new Dimension(605,628)); // When resizable is true, X value off by 16, y by 39 because of the window.
+		frame.setPreferredSize(new Dimension(605,748)); // When resizable is true, X value off by 16, y by 39 because of the window.
 		//when false x is off by 5, y by 28)
-	
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			cl = new CardLayout();
+			cards = new JPanel(cl);		
 		frame.setContentPane(cards);
 		
-		JPanel room = new RoomPanel();
+		BorderLayout bl=new BorderLayout();
+		
+		JPanel room = new JPanel(bl);
+		bl.setHgap(0);
+		bl.setVgap(0);
+		room.setPreferredSize(new Dimension(600,720));
+			JPanel roomA = new RoomPanel();
+			roomA.setPreferredSize(new Dimension(600, 600));
+			
+			JPanel roomB = new StatusPanel();
+			roomB.setBackground(Color.black);
+			roomB.setPreferredSize(new Dimension(600,60));
+			
+			JPanel roomC = new MenuPanel();
+			roomC.setPreferredSize(new Dimension(600,60));
+			roomC.setBackground(Color.black);
+		
+		room.add(roomB, BorderLayout.NORTH);
+		room.add(roomA, BorderLayout.CENTER);
+		room.add(roomC, BorderLayout.SOUTH);
+		
 		
 		JPanel inv = new JPanel();
 		inv.setBackground(Color.black);
+		inv.setPreferredSize(new Dimension(600,720));
 			JPanel invA= new InventoryName();
-			invA.setSize(new Dimension(600, 150));
+			invA.setPreferredSize(new Dimension(600, 150));
 			invA.setBackground(Color.black);
+			
+			JPanel invB = new JPanel();
+			invB.setPreferredSize(new Dimension(600,570));
+			invB.setBackground(Color.black);
 		inv.add(invA, BorderLayout.NORTH);
+		inv.add(invB, BorderLayout.CENTER);
 		//come back to this nonsense later, I guess.
 		
 		cards.add(room, "Room");
@@ -105,7 +140,31 @@ public class GameWindow {
 	 * @author gtheriot
 	 *
 	 */
+	public class StatusPanel extends JPanel{
+		public void paintComponent(Graphics g){
+			super.paintComponent(g);
+			g.setColor(Color.white);
+			g.setFont(GameWindow.normalFont);
+			g.drawString(boardObjects.get(0).getName(),5,1*px-10);
+			g.drawString(controller.getCurrentRoom().id,4*px-30, 1*px-10);
+			g.drawString((((PlayerCharacter)boardObjects.get(0)).hp()+" * "+((PlayerCharacter)boardObjects.get(0)).maxHP()),8*px-25,1*px-10);
+			
+		}
+	}
 	
+	public class MenuPanel extends JPanel{
+		
+		public void paintComponent(Graphics g){
+			super.paintComponent(g);
+			g.setColor(Color.white);
+			g.setFont(GameWindow.smallFont);
+			g.drawString("Move", 1*px-5, 1*px-40);
+			g.drawString("Attack",  3*px-5, 1*px-40);
+			g.drawString("Inventory", 5*px, 1*px-40);
+			g.drawString("Pick Up", 8*px-5, 1*px-40);
+			
+		}
+	}
 	
 	public class InventoryName extends JPanel{
 		
@@ -123,7 +182,7 @@ public class GameWindow {
 	public class RoomPanel extends JPanel
 	{
 	  //may need to have an array of images that this can access...  
-	  
+	  @Override
 	  public void paintComponent(Graphics g){
 		  
 		  if(controller.getCurrentRoom()!=currentRoom){
@@ -159,9 +218,12 @@ public class GameWindow {
 			  }//and that's the tiles
 		  }
 	     
-		  for(int i=0;i<boardObjects.size();i++){
+		  for(int i=1;i<boardObjects.size();i++){
 			  g.drawImage(boardObjects.get(i).createImage(),(int)boardObjects.get(i).getLocation().getX()*px,(int)boardObjects.get(i).getLocation().getY()*px, this);
 		  }
+		  
+		  g.drawImage(boardObjects.get(0).createImage(),(int)boardObjects.get(0).getLocation().getX()*px,(int)boardObjects.get(0).getLocation().getY()*px, this);
+		  //draws player character on top (he's always in position 0).
 	  }
 	}
 }
