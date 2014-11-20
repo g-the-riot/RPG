@@ -15,11 +15,13 @@ public class GameController {
 			(WeaponCreator.createWeapon()),
 			(WeaponCreator.createWeapon()),};
 	private Room currentRoom;
+	private String lastRoomID;
 	private PlayerCharacter player;
 	private ArrayList<BoardObject> currentObjects;
 	
 	public GameController () {
 		setCurrentRoom(rooms[0]);
+		lastRoomID="Outside";
 		init();
 	}
  
@@ -34,12 +36,16 @@ public class GameController {
 	}
  
 	public void createCharacter(String name){
-		System.out.println(rooms[0]);
-		System.out.println(rooms[0].doors[0]);
-		System.out.println(rooms[0].doors[0].getLocation());
-		System.out.println(rooms[0].doors[0].getLocation().getX());
-		int x = (int)rooms[0].doors[0].getLocation().getX();
-		int y = (int)rooms[0].doors[0].getLocation().getY();
+		Door lastDoor=null;
+		
+		for(int i=0; i<currentRoom.doors.length;i++){
+			if(currentRoom.doors[i].getName().equals(lastRoomID)){
+				lastDoor=currentRoom.doors[i];
+			}			
+		}
+		
+		int x = (int)lastDoor.getLocation().getX();
+		int y = (int)lastDoor.getLocation().getY();
 		if(x==0){
 			x+=1;
 		}

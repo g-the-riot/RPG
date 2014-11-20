@@ -56,7 +56,9 @@ public class PlayerCharacter extends AbstractCharacter {
  }
  
  public void attack(Character q) {
-      q.takeDamage(getWeapon().damage());
+	 System.out.println(getName()+" is attacking "+((AbstractCharacter)q).getName()+"!");
+     q.takeDamage(getWeapon().damage());
+     System.out.println(((AbstractCharacter)q).getName()+" has "+((AbstractCharacter)q).hp()+" left!");
  }
  
  public void drop(Pickup p){
@@ -91,9 +93,9 @@ public class PlayerCharacter extends AbstractCharacter {
 				 }
 			 }
 			 int makeAChoice=input.nextInt();
-			 Mob q=(Mob)r.getObjects().get(makeAChoice);
+			 Mob q=(Mob)r.getObjects().get(makeAChoice-1);
 			 attack(q);
-			 r.getObjects().set(makeAChoice, q);
+			 r.getObjects().set(makeAChoice-1, q);
 			 currentAP--;
 		 }
 		 else{

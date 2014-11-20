@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -63,12 +64,18 @@ public class GameWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setContentPane(cards);
 		
-		JPanel panel = new RoomPanel();
+		JPanel room = new RoomPanel();
 		
-		panel2= new InventoryPanel();	
-		panel2.setBackground(Color.black);
-		cards.add(panel, "Room");
-		cards.add(panel2, "Inventory");
+		JPanel inv = new JPanel();
+		inv.setBackground(Color.black);
+			JPanel invA= new InventoryName();
+			invA.setSize(new Dimension(600, 150));
+			invA.setBackground(Color.black);
+		inv.add(invA, BorderLayout.NORTH);
+		//come back to this nonsense later, I guess.
+		
+		cards.add(room, "Room");
+		cards.add(inv, "Inventory");
 		
 		frame.pack();
 		frame.setVisible(true);
@@ -100,7 +107,7 @@ public class GameWindow {
 	 */
 	
 	
-	public class InventoryPanel extends JPanel{
+	public class InventoryName extends JPanel{
 		
 		public void paintComponent(Graphics g){
 			

@@ -29,7 +29,9 @@ public class Mob extends AbstractCharacter {
 
  
  public void attack(Character q) {
-  System.out.println("The mob is attacking "+q.name());
+	 System.out.println("Mob "+getName()+" is attacking "+((AbstractCharacter)q).getName()+"!");
+	 System.out.println(((AbstractCharacter)q).getName()+" has "+((AbstractCharacter)q).hp()+" left!");
+     q.takeDamage(getWeapon().damage());
  }
  
  @Override

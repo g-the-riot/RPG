@@ -6,13 +6,10 @@ public class Door extends BoardObject{
 	//Name should be the ID of the room that this door connects to.
 	
 	private boolean locked;
-	private boolean goneThru;
-	
-	
+		
 	public Door (int x, int y, String name){
 		super(x, y, name, setPath(x,y)); //the null is the path to the image for the door
 		locked=true;
-		goneThru=false;		
 	}
 	
 	private static String setPath(int x, int y){
@@ -36,8 +33,5 @@ public class Door extends BoardObject{
 		locked=false;
 	}
 	
-	public void goneThru(){
-		goneThru=true;
-	}
 
 }

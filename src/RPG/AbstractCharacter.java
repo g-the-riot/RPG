@@ -49,6 +49,7 @@ public abstract class AbstractCharacter extends BoardObject implements Character
  public void takeDamage(int damage) {
       //handling the error case may obfuscate a problem in the client
       damage = Math.abs(damage);
+      System.out.println(damage+" HP of damage to "+getName());
       if(damage >= hp) {
            hp = 0;
       }
