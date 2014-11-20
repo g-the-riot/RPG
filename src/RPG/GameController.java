@@ -17,6 +17,7 @@ public class GameController {
 	private Room currentRoom;
 	private String lastRoomID;
 	private PlayerCharacter player;
+	private int menuChoicePointer=1;
 	private ArrayList<BoardObject> currentObjects;
 	
 	public GameController () {
@@ -96,6 +97,14 @@ public class GameController {
 
 	private void setCurrentRoom(Room currentRoom) {
 		this.currentRoom = currentRoom;
+	}
+
+	public int getMenuChoicePointer() {
+		return menuChoicePointer;
+	}
+
+	public void setMenuChoicePointer(int menuChoicePointer) {
+		this.menuChoicePointer = menuChoicePointer;
 	}
  
 	//Auxilliary methods

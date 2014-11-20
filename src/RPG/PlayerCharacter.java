@@ -79,7 +79,8 @@ public class PlayerCharacter extends AbstractCharacter {
 	 do{
 		 System.out.println("You Currently have "+currentAP+" Action Points.");
 		 int menuChoice = menu();
-	 
+		 GameWindow.controller.setMenuChoicePointer(menuChoice);
+		 GameWindow.frame.repaint();
 		 if(menuChoice==1){
 			 System.out.println("Choose: U/D/L/R");
 			 char direction =input.next().charAt(0);

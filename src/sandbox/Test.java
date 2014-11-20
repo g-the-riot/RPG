@@ -1,29 +1,12 @@
 package sandbox;
 
-import java.awt.EventQueue;
-import java.awt.Graphics;
-
-import javax.swing.JFrame;
-import javax.swing.Timer;
-
-import java.awt.CardLayout;
-import java.awt.Dimension;
-
-import javax.swing.JPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 
-import javax.imageio.ImageIO;
 
 import RPG.GameWindow;
 
-import java.io.IOException;
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 
 
 public class Test implements ActionListener{

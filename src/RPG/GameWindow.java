@@ -23,6 +23,7 @@ public class GameWindow {
 	private static BufferedImage[] roomComponents;
 	private static ArrayList<BoardObject> boardObjects;
 	public static Room currentRoom;
+	public static BufferedImage pointerUp=(BufferedImage)GameIO.createImage("Assets/pointer.png");
 	public static GameController controller= new GameController();
 	public static JPanel cards; 
 	public static CardLayout cl;
@@ -94,8 +95,10 @@ public class GameWindow {
 		room.add(roomA, BorderLayout.CENTER);
 		room.add(roomC, BorderLayout.SOUTH);
 		
-		
-		JPanel inv = new JPanel();
+		BorderLayout bl2=new BorderLayout();
+		JPanel inv = new JPanel(bl2);
+		bl2.setHgap(0);
+		bl2.setVgap(0);
 		inv.setBackground(Color.black);
 		inv.setPreferredSize(new Dimension(600,720));
 			JPanel invA= new InventoryName();
@@ -162,6 +165,18 @@ public class GameWindow {
 			g.drawString("Attack",  3*px-5, 1*px-40);
 			g.drawString("Inventory", 5*px, 1*px-40);
 			g.drawString("Pick Up", 8*px-5, 1*px-40);
+			if(controller.getMenuChoicePointer()==1){
+				g.drawImage(pointerUp,1*px+10,1*px-35, this);
+			}
+			else if(controller.getMenuChoicePointer()==2){
+				g.drawImage(pointerUp,3*px+25 ,1*px-35, this);
+			}
+			else if(controller.getMenuChoicePointer()==3){
+				g.drawImage(pointerUp, 6*px-5, 1*px-35, this);
+			}
+			else if(controller.getMenuChoicePointer()==4){
+				g.drawImage(pointerUp, 8*px+25, 1*px-35, this);
+			}
 			
 		}
 	}
