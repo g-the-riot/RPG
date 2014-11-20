@@ -29,7 +29,7 @@ public class Mob extends AbstractCharacter {
 
  
  public void attack(Character q) {
-  // Need to implement this still!
+  System.out.println("The mob is attacking "+q.name());
  }
  
  @Override
@@ -45,24 +45,19 @@ public class Mob extends AbstractCharacter {
 					 PlayerCharacter q=(PlayerCharacter) AITarget;
 					 attack(q);
 					 r.getObjects().set(0, q);
-				 }//closes if
+					 }//closes if
 				 else{
 					 AbstractWeapon q= (AbstractWeapon) AITarget;
 					 pickUp((Pickup)q);
-					 for(int i=0; i<r.getObjects().size();i++){
-						 if(r.getObjects().get(i).getName().equals(q.getName())){
-							 r.getObjects().remove(i);
-							 //this is imperfect - it will remove all objects of the same name on the board when one is picked up, buuut
-							 //whaddayagonnado?
-						 }
-					 }
+					 r.getObjects().remove(AITarget.getIndex());
 					 targetComplete=true;
-				 }//closes else
+					 }//closes else
 			 }//closes what happens if the target is within range.
 			 else{
-				 move(checkDirection(AITarget), r);
-				 currentAP--;
+				 if(move(checkDirection(AITarget), r)){
+				 }
 			 }
+			 currentAP--;
 		 }
 		 else{
 			 AITarget=setAITarget(r); //if the mob picks up an item it needs a new target.
@@ -139,9 +134,11 @@ public class Mob extends AbstractCharacter {
 		 if(r.getObjects().get(i) instanceof AbstractWeapon){
 			 if(this.getLocation().distance(r.getObjects().get(i).getLocation())<this.getLocation().distance(AITarget.getLocation())){
 				 AITarget=r.getObjects().get(i);
+				 AITarget.setIndex(i);
 			 }
 		 }//if a weapon is closer to the Mob than the player character, it will go for that first.
 	 }
+	 System.out.println("The Mob is Targeting"+AITarget);
 	 
 	 return AITarget;
  }
@@ -149,5 +146,6 @@ public class Mob extends AbstractCharacter {
  @Override
  public void pickUp(Pickup p){
 	 this.changeWeapon((AbstractWeapon)p);
+	 System.out.println("The mob has picked up a "+p);
  };
 }

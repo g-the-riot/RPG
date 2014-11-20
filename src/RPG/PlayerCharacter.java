@@ -8,7 +8,7 @@ public class PlayerCharacter extends AbstractCharacter {
  private int xp;
  
  private static final int HP_INCREMENT = 100;
- private static ArrayList<Pickup> inventory = new ArrayList<Pickup>();
+ public  ArrayList<Pickup> inventory = new ArrayList<Pickup>();
  
  // "Default constructor" - use this for a new character
  public PlayerCharacter(int x, int y, String name, AbstractWeapon w) {
@@ -72,13 +72,15 @@ public class PlayerCharacter extends AbstractCharacter {
 	 int currentAP=this.getActionPoints();
 	 
 	 do{
+		 System.out.println("You Currently have "+currentAP+" Action Points.");
 		 int menuChoice = menu();
 	 
 		 if(menuChoice==1){
 			 System.out.println("Choose: U/D/L/R");
 			 char direction =input.next().charAt(0);
-			 move(direction, r);
-			 currentAP--;
+			 if(move(direction, r)){
+				 currentAP--;
+			 }
 		 }
 		 else if(menuChoice==2){
 			 System.out.println("Which enemy?");
@@ -95,6 +97,11 @@ public class PlayerCharacter extends AbstractCharacter {
 			 currentAP--;
 		 }
 		 else{
+			 GameWindow.cl.show(GameWindow.cards, "Inventory");
+			 System.out.println("Woah! Look at all your stuff!");
+			 System.out.println("Hit Enter to go back.");
+			 input.next();
+			 GameWindow.cl.show(GameWindow.cards, "Room");
 			 //TODO: create an inventory implementation.
 		 }
 		 GameWindow.frame.repaint();

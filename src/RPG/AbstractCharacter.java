@@ -75,15 +75,17 @@ public abstract class AbstractCharacter extends BoardObject implements Character
   * distance(Point p)
   * equals() -AVOID COLLISIONS
   * */
- public void move(char d, Room r){
-      //Okay, so the controller is going to have to keep the current room (from an array of rooms) and pass it to this method when it's invoked.
+ public boolean move(char d, Room r){
+	 
+	  boolean valid=false;	
       int newX=(int)super.getLocation().getX();
       int newY=(int)super.getLocation().getY();
       
       if(d=='u'){
            newY-=1;
-           if(newY>=0&&newY<=r.y-1){
+           if(newY>=0&&newY<=r.y-2){
                 super.getLocation().move(newX,newY);
+                valid=true;
            }
            else{
                 System.out.println("You can't move that direction!");
@@ -91,8 +93,10 @@ public abstract class AbstractCharacter extends BoardObject implements Character
       }
       else if(d=='d'){
            newY+=1;
-           if(newY>=0&&newY<=r.y-1){
+           System.out.println(newY);
+           if(newY>=0&&newY<=r.y-2){
                 super.getLocation().move(newX,newY);
+                valid=true;
            }
            else{
                 System.out.println("You can't move that direction!");
@@ -100,8 +104,9 @@ public abstract class AbstractCharacter extends BoardObject implements Character
       }
       else if(d=='l'){
            newX-=1;
-           if(newX>=0&&newX<=r.x-1){
+           if(newX>=0&&newX<=r.x-2){
                 super.getLocation().move(newX,newY);
+                valid=true;
            }
            else{
                 System.out.println("You can't move that direction!");
@@ -109,13 +114,15 @@ public abstract class AbstractCharacter extends BoardObject implements Character
       }
       else if(d=='r'){
            newX+=1;
-           if(newX>0&&newX<=r.x-1){
-           super.getLocation().move(newX,newY);
+           if(newX>0&&newX<=r.x-2){
+        	   super.getLocation().move(newX,newY);
+        	   valid=true;
            }
            else{
                 System.out.println("You can't move that direction!");
            }
       }
+      return valid;
  };
  
  public abstract void attack(Character q);

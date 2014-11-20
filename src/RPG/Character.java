@@ -30,5 +30,5 @@ public interface Character {
 
  public void takeTurn(Room r);
  
- public void move(char d, Room r);
+ public boolean move(char d, Room r);
 }

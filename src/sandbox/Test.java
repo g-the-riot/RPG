@@ -31,7 +31,6 @@ public class Test implements ActionListener{
 		public static void main(String[] args){
 			
 			GameWindow a = new GameWindow();
-			GameWindow.test.move('u',GameWindow.currentRoom);
 //			Timer timer= new Timer(15000, new Test());
 //			timer.setInitialDelay(1500);
 //			timer.start();
@@ -51,7 +50,7 @@ public class Test implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
 			
 				GameWindow.frame.repaint();
-				GameWindow.test.move('l',GameWindow.currentRoom);
+		
 			}//closes method
 		}//closes gameListener
 	
