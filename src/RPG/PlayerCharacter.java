@@ -83,6 +83,7 @@ public class PlayerCharacter extends AbstractCharacter {
 //		 GameWindow.controller.setMenuChoicePointer(menuChoice);
 //		 GameWindow.frame.repaint();
 		 if(menuChoice==1){
+			 GameWindow.controller.setCurrentRound(GameController.MOVE);
 			 System.out.println("Choose: U/D/L/R");
 			 getValidMoves(r);
 			 char direction =getDirection();
@@ -138,7 +139,7 @@ public class PlayerCharacter extends AbstractCharacter {
  
  private char getDirection(){
 	 do{
-		 System.out.println("Waiting...");
+		 System.out.print("");
 	 }
 	 while(!GameWindow.controller.isMenuChoiceMade());
 	 GameWindow.controller.setMenuChoiceMade(false);
@@ -146,6 +147,7 @@ public class PlayerCharacter extends AbstractCharacter {
  }
  
  public boolean move(char d, Room r){
+	 
 	 ArrayList<Point> validPoints=getValidMoves(r);
 	  boolean valid=false;	
       int newX=(int)super.getLocation().getX();
@@ -252,8 +254,9 @@ public class PlayerCharacter extends AbstractCharacter {
 }
  
  private int menu(){
+	 GameWindow.controller.setCurrentRound(GameController.MENU);
 	 do{
-		 System.out.println("Waiting...");
+		 System.out.print("");
 	 }
 	 while(!GameWindow.controller.isMenuChoiceMade());
 	 GameWindow.controller.setMenuChoiceMade(false);

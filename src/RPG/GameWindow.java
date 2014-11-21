@@ -281,7 +281,25 @@ public class GameWindow {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
+			
+			System.out.println(GameWindow.controller.getCurrentRound());
 			int key = e.getKeyCode();
+			if(GameWindow.controller.getCurrentRound().equals(GameController.MENU)){
+				menuEvent(key);
+			}
+			else if(GameWindow.controller.getCurrentRound().equals(GameController.MOVE)){
+				moveEvent(key);
+			}
+		}//closes keypressed THIS IS THE IMPORTANT ONE
+
+		@Override
+		public void keyReleased(KeyEvent e) {			
+			System.out.println("Ya Released it!");
+		}
+		
+		public void menuEvent(int key){
+			
+			System.out.println("I'm a key event in menu!");
 			
 			if (key == KeyEvent.VK_LEFT||key==KeyEvent.VK_KP_LEFT) {
 				int menu=0;
@@ -292,10 +310,9 @@ public class GameWindow {
 					menu=GameWindow.getMakeChoicePointer()-1;
 				}
 				GameWindow.setMakeChoicePointer(menu);
-				GameWindow.setMenuDirection('l');
 				GameWindow.frame.repaint();
 			}
-			if (key == KeyEvent.VK_RIGHT) {
+			if (key == KeyEvent.VK_RIGHT||key ==KeyEvent.VK_KP_RIGHT) {
 				int menu=0;
 				if(GameWindow.getMakeChoicePointer()==4){
 					menu=1;
@@ -304,34 +321,48 @@ public class GameWindow {
 					menu=GameWindow.getMakeChoicePointer()+1;
 				}
 				GameWindow.setMakeChoicePointer(menu);
-				GameWindow.setMenuDirection('r');
 				GameWindow.frame.repaint();
-		       
-		    }
+	       
+			}
+	    
+			if(key==KeyEvent.VK_ENTER||key==KeyEvent.VK_SPACE){
+				GameWindow.controller.setMenuChoice(getMakeChoicePointer());
+				GameWindow.controller.setMenuChoiceMade(true);
+				System.out.println("You Hit Enter or Space.");
+			}
+			
+			
+		}//menu event
+	
+		public void moveEvent(int key){
+			System.out.println("I'm a key event in move!");
+			
+			if (key == KeyEvent.VK_LEFT||key==KeyEvent.VK_KP_LEFT) {
+				GameWindow.setMenuDirection('l');
+			}
+			if (key == KeyEvent.VK_RIGHT||key ==KeyEvent.VK_KP_RIGHT) {
+				GameWindow.setMenuDirection('r');       
+			}
 
-		    if (key == KeyEvent.VK_UP) {
-		    	GameWindow.setMenuDirection('u');
-		    }
+			if (key == KeyEvent.VK_UP||key==KeyEvent.VK_KP_UP) {
+				GameWindow.setMenuDirection('u');
+			}
 
-		    if (key == KeyEvent.VK_DOWN) {
-		    	GameWindow.setMenuDirection('d');
-		    }
-		    
-		    if(key==KeyEvent.VK_ENTER||key==KeyEvent.VK_SPACE){
-		    	GameWindow.controller.setMenuChoice(getMakeChoicePointer());
-		    	GameWindow.controller.setMenuDirection(GameWindow.getMenuDirection());
-		    	GameWindow.controller.setMenuChoiceMade(true);
-		    	System.out.println("You Hit Enter or Space.");
-		    }
-		    
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {			
-			System.out.println("Ya Released it!");
-		}
+			if (key == KeyEvent.VK_DOWN||key==KeyEvent.VK_KP_DOWN) {
+				GameWindow.setMenuDirection('d');
+			}
+	    
+			if(key==KeyEvent.VK_ENTER||key==KeyEvent.VK_SPACE){
+				GameWindow.controller.setMenuChoice(getMakeChoicePointer());
+				GameWindow.controller.setMenuDirection(GameWindow.getMenuDirection());
+				GameWindow.controller.setMenuChoiceMade(true);
+				System.out.println("You Hit Enter or Space.");
+			}
 		
-		
+		}//close moveEvent
+	
+	
+	
 	}
 }
 

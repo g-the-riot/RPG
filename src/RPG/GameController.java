@@ -20,6 +20,10 @@ public class GameController {
 	private int menuChoice;
 	private char menuDirection;
 	private boolean menuChoiceMade=false;
+	private String currentRound;
+	public static final String MENU="Menu";
+	public static final String MOVE="Move";
+	public static final String ATTACK="Attack";
 	private PlayerCharacter q;
 	private ArrayList<BoardObject> currentObjects;
 	
@@ -127,6 +131,14 @@ public class GameController {
 
 	public void setMenuDirection(char menuDirection) {
 		this.menuDirection = menuDirection;
+	}
+
+	public String getCurrentRound() {
+		return currentRound;
+	}
+
+	public void setCurrentRound(String currentRound) {
+		this.currentRound = currentRound;
 	}
  
 	//Auxilliary methods
