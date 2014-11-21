@@ -1,5 +1,8 @@
 package RPG;
 
+import java.awt.Point;
+import java.util.ArrayList;
+
 public abstract class AbstractCharacter extends BoardObject implements Character {
      
      
@@ -81,54 +84,80 @@ public abstract class AbstractCharacter extends BoardObject implements Character
   * equals() -AVOID COLLISIONS
   * */
  public boolean move(char d, Room r){
-	 
+	 ArrayList<Point> validPoints=getValidMoves(r);
 	  boolean valid=false;	
       int newX=(int)super.getLocation().getX();
       int newY=(int)super.getLocation().getY();
       
       if(d=='u'){
            newY-=1;
-           if(newY>=0&&newY<=r.y-2){
-                super.getLocation().move(newX,newY);
-                valid=true;
-           }
-           else{
-                System.out.println("You can't move that direction!");
-           }
       }
       else if(d=='d'){
            newY+=1;
-           System.out.println(newY);
-           if(newY>=0&&newY<=r.y-2){
-                super.getLocation().move(newX,newY);
-                valid=true;
-           }
-           else{
-                System.out.println("You can't move that direction!");
-           }
       }
       else if(d=='l'){
            newX-=1;
-           if(newX>=0&&newX<=r.x-2){
-                super.getLocation().move(newX,newY);
-                valid=true;
-           }
-           else{
-                System.out.println("You can't move that direction!");
-           }
       }
       else if(d=='r'){
            newX+=1;
-           if(newX>0&&newX<=r.x-2){
-        	   super.getLocation().move(newX,newY);
-        	   valid=true;
+      }
+      for(int i=0;i<validPoints.size();i++){
+    	  if(newX==(int)validPoints.get(i).getX()&&newY==(int)validPoints.get(i).getY()){
+    		  super.getLocation().move(newX,newY);
+    		  valid=true;
+    	  }
+      }
+      return valid;
+ };
+ 
+ public ArrayList<Point> getValidMoves(Room r){
+	 
+	  ArrayList<Point> valid = new ArrayList<Point>();
+	  
+      int newX=(int)super.getLocation().getX();
+      int newY=(int)super.getLocation().getY();
+      int dy;
+      int dx;
+      
+      dy=newY-1;
+           if(dy>=0&&dy<=r.y-2){
+                valid.add(new Point(newX,dy));
+                r.getObjects().add(new MenuItem(newX, dy, "arrowup", MenuItem.ARROWUP));
            }
            else{
                 System.out.println("You can't move that direction!");
            }
-      }
+
+      dy=newY+1;
+           if(dy>=0&&dy<=r.y-2){
+        	   valid.add(new Point(newX,dy));
+        	   r.getObjects().add(new MenuItem(newX, dy, "arrowdown", MenuItem.ARROWDOWN));
+           }
+           else{
+                System.out.println("You can't move that direction!");
+           }
+      dx=newX-1;
+           if(dx>=0&&dx<=r.x-2){
+        	   valid.add(new Point(dx,newY));
+        	   r.getObjects().add(new MenuItem(dx, newY, "arrowleft", MenuItem.ARROWLEFT));
+           }
+           else{
+                System.out.println("You can't move that direction!");
+                
+           }
+      
+      dx= newX+1;
+           if(dx>0&&dx<=r.x-2){
+        	   valid.add(new Point(dx,newY));
+        	   r.getObjects().add(new MenuItem(dx, newY, "arrowright", MenuItem.ARROWRIGHT));
+           }
+           else{
+                System.out.println("You can't move that direction!");
+           }
+           GameWindow.frame.repaint();
       return valid;
- };
+	 
+ }
  
  public abstract void attack(Character q);
 

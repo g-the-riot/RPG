@@ -83,6 +83,7 @@ public class PlayerCharacter extends AbstractCharacter {
 //		 GameWindow.frame.repaint();
 		 if(menuChoice==1){
 			 System.out.println("Choose: U/D/L/R");
+			 super.getValidMoves(r);
 			 char direction =input.next().charAt(0);
 			 if(move(direction, r)){
 				 currentAP--;
@@ -139,6 +140,7 @@ public class PlayerCharacter extends AbstractCharacter {
 		 System.out.println("Waiting...");
 	 }
 	 while(!GameWindow.controller.isMenuChoiceMade());
+	 GameWindow.controller.setMenuChoiceMade(false);
  	 return GameWindow.controller.getMenuChoice();
  }
  

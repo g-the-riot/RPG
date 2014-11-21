@@ -1,5 +1,4 @@
 package RPG;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 
@@ -18,6 +17,7 @@ abstract class BoardObject{
      private String name;
      private String imgPath;
      private int index;
+
      
      public BoardObject(int x, int y, String name, String imgPath){
           this.location=new Point(x,y);
@@ -42,16 +42,6 @@ abstract class BoardObject{
      
      public String getImgPath(){
     	 return imgPath;    	 
-     }
-     
-     public void draw(Graphics g){
-    	 /**
-    	 Image img=createImage();
-    	 g.drawImage(img,(int)location.getX(),(int)(location).getY(),null);
-    	 
-    	 This is totally the right idea, but it's not the right implementation.  Need to figure this out.
-    	 * 
-    	 */
      }
      
     public Image createImage(){

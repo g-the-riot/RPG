@@ -22,9 +22,9 @@ import java.util.ArrayList;
 
 public class GameWindow {
 	
-	private static final int px=60;
-	private static BufferedImage[] roomComponents;
-	private static ArrayList<BoardObject> boardObjects;
+	private final int px=60;
+	private BufferedImage[] roomComponents;
+	private ArrayList<BoardObject> boardObjects;
 	public static Room currentRoom;
 	public static BufferedImage pointerUp=(BufferedImage)GameIO.createImage("Assets/pointer.png");
 	public static GameController controller= new GameController();
@@ -137,7 +137,6 @@ public class GameWindow {
 
 		
 	}
-	
 	
 	
 	public static int getMakeChoicePointer() {
@@ -261,7 +260,6 @@ public class GameWindow {
 		  //draws player character on top (he's always in position 0).
 	  }
 	}
-
 	
 	class GameListener implements KeyListener {
 

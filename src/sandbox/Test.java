@@ -31,7 +31,7 @@ public class Test implements ActionListener{
 		@Override
 			public void actionPerformed(ActionEvent e) {
 			
-				GameWindow.frame.repaint();
+				GameWindow.controller.takeTurn();
 		
 			}//closes method
 		}//closes gameListener
