@@ -14,11 +14,13 @@ import java.awt.GraphicsEnvironment;
 
 import javax.swing.JPanel;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
-public class GameWindow {
+public class GameWindow implements ActionListener {
 	
 	private static final int px=60;
 	private static BufferedImage[] roomComponents;
@@ -65,7 +67,7 @@ public class GameWindow {
 			System.out.println("Didn't happen buddy.");
 		}
 		
-
+	
 		frame = new JFrame("My Super Great Game");
 		frame.setResizable(false);
 		frame.setPreferredSize(new Dimension(605,748)); // When resizable is true, X value off by 16, y by 39 because of the window.
@@ -75,8 +77,10 @@ public class GameWindow {
 			cards = new JPanel(cl);		
 		frame.setContentPane(cards);
 		
+		
 		ImageIcon img = new ImageIcon("Assets/mob.png");
 		frame.setIconImage(img.getImage());
+	
 		
 		BorderLayout bl=new BorderLayout();
 		
@@ -94,6 +98,7 @@ public class GameWindow {
 			JPanel roomC = new MenuPanel();
 			roomC.setPreferredSize(new Dimension(600,60));
 			roomC.setBackground(Color.black);
+			roomC.addKeyListener(new GameListener());
 		
 		room.add(roomB, BorderLayout.NORTH);
 		room.add(roomA, BorderLayout.CENTER);
@@ -244,6 +249,12 @@ public class GameWindow {
 		  g.drawImage(boardObjects.get(0).createImage(),(int)boardObjects.get(0).getLocation().getX()*px,(int)boardObjects.get(0).getLocation().getY()*px, this);
 		  //draws player character on top (he's always in position 0).
 	  }
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		System.out.println("Ya Did it!");
+		
 	}
 }
 
