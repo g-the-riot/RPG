@@ -294,12 +294,10 @@ public class GameWindow {
 
 		@Override
 		public void keyReleased(KeyEvent e) {			
-			System.out.println("Ya Released it!");
 		}
 		
 		public void menuEvent(int key){
 			
-			System.out.println("I'm a key event in menu!");
 			
 			if (key == KeyEvent.VK_LEFT||key==KeyEvent.VK_KP_LEFT) {
 				int menu=0;
@@ -335,7 +333,6 @@ public class GameWindow {
 		}//menu event
 	
 		public void moveEvent(int key){
-			System.out.println("I'm a key event in move!");
 			
 			if (key == KeyEvent.VK_LEFT||key==KeyEvent.VK_KP_LEFT) {
 				GameWindow.setMenuDirection('l');
@@ -351,6 +348,8 @@ public class GameWindow {
 			if (key == KeyEvent.VK_DOWN||key==KeyEvent.VK_KP_DOWN) {
 				GameWindow.setMenuDirection('d');
 			}
+			deselectArrow();
+			selectArrow();
 	    
 			if(key==KeyEvent.VK_ENTER||key==KeyEvent.VK_SPACE){
 				GameWindow.controller.setMenuChoice(getMakeChoicePointer());
@@ -360,8 +359,66 @@ public class GameWindow {
 			}
 		
 		}//close moveEvent
+		
+		public void deselectArrow(){
+			for(int i=0;i<GameWindow.controller.getCurrentRoom().getObjects().size();i++){
+				if(GameWindow.controller.getCurrentRoom().getObjects().get(i) instanceof MenuItem){
+					if(GameWindow.controller.getCurrentRoom().getObjects().get(i).getName().equals(MenuItem.ARROWUPSELECTED)){
+						int x=(int)GameWindow.controller.getCurrentRoom().getObjects().get(i).getLocation().getX();
+						int y=(int)GameWindow.controller.getCurrentRoom().getObjects().get(i).getLocation().getY();
+						GameWindow.controller.getCurrentRoom().getObjects().set(i, new MenuItem(x,y,MenuItem.ARROWUP,MenuItem.ARROWUP));
+					}
+					else if(GameWindow.controller.getCurrentRoom().getObjects().get(i).getName().equals(MenuItem.ARROWDOWNSELECTED)){
+						int x=(int)GameWindow.controller.getCurrentRoom().getObjects().get(i).getLocation().getX();
+						int y=(int)GameWindow.controller.getCurrentRoom().getObjects().get(i).getLocation().getY();
+						GameWindow.controller.getCurrentRoom().getObjects().set(i, new MenuItem(x,y,MenuItem.ARROWDOWN,MenuItem.ARROWDOWN));
+					}
+					else if(GameWindow.controller.getCurrentRoom().getObjects().get(i).getName().equals(MenuItem.ARROWLEFTSELECTED)){
+						int x=(int)GameWindow.controller.getCurrentRoom().getObjects().get(i).getLocation().getX();
+						int y=(int)GameWindow.controller.getCurrentRoom().getObjects().get(i).getLocation().getY();
+						GameWindow.controller.getCurrentRoom().getObjects().set(i, new MenuItem(x,y,MenuItem.ARROWLEFT,MenuItem.ARROWLEFT));
+					}
+					else if(GameWindow.controller.getCurrentRoom().getObjects().get(i).getName().equals(MenuItem.ARROWRIGHTSELECTED)){
+						int x=(int)GameWindow.controller.getCurrentRoom().getObjects().get(i).getLocation().getX();
+						int y=(int)GameWindow.controller.getCurrentRoom().getObjects().get(i).getLocation().getY();
+						GameWindow.controller.getCurrentRoom().getObjects().set(i, new MenuItem(x,y,MenuItem.ARROWRIGHT,MenuItem.ARROWRIGHT));
+					}
+					
+				}
+			}
+			GameWindow.frame.repaint();
+		}
 	
-	
+		public void selectArrow(){
+			String target;
+			String highlight;
+			
+			if(GameWindow.getMenuDirection()=='u'){
+				target=MenuItem.ARROWUP;
+				highlight=MenuItem.ARROWUPSELECTED;
+			}
+			else if(GameWindow.getMenuDirection()=='l'){
+				target=MenuItem.ARROWLEFT;
+				highlight=MenuItem.ARROWLEFTSELECTED;
+			}
+			else if(GameWindow.getMenuDirection()=='d'){
+				target=MenuItem.ARROWDOWN;
+				highlight=MenuItem.ARROWDOWNSELECTED;
+			}
+			else{
+				target=MenuItem.ARROWRIGHT;
+				highlight=MenuItem.ARROWRIGHTSELECTED;
+			}
+			
+			for(int i=0;i<GameWindow.controller.getCurrentRoom().getObjects().size();i++){
+				if(GameWindow.controller.getCurrentRoom().getObjects().get(i).getName().equals(target)){
+					int x=(int)GameWindow.controller.getCurrentRoom().getObjects().get(i).getLocation().getX();
+					int y=(int)GameWindow.controller.getCurrentRoom().getObjects().get(i).getLocation().getY();
+					GameWindow.controller.getCurrentRoom().getObjects().set(i, new MenuItem(x,y,highlight,highlight));
+				}
+			}
+			GameWindow.frame.repaint();
+		}
 	
 	}
 }

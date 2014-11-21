@@ -2,7 +2,7 @@ package RPG;
 
 import java.awt.Point;
 
-public class Mob extends AbstractCharacter {
+public class Mob extends AbstractCharacter implements BoardHazard{
  
  private static final int HP_INCREMENT = 200;
  //public static boolean timeFreeze=false;
@@ -150,5 +150,10 @@ public class Mob extends AbstractCharacter {
  public void pickUp(Pickup p){
 	 this.changeWeapon((AbstractWeapon)p);
 	 System.out.println("The mob has picked up a "+p);
- };
+ }
+
+@Override
+public boolean passThru() {
+	return false;
+};
 }

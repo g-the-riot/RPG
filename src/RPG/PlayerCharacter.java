@@ -216,7 +216,7 @@ public class PlayerCharacter extends AbstractCharacter {
      dy=newY-1;
           if(dy>=0&&dy<=r.y-2){
                valid.add(new Point(newX,dy));
-               r.getObjects().add(new MenuItem(newX, dy, "arrowup", MenuItem.ARROWUP));
+               r.getObjects().add(new MenuItem(newX, dy, MenuItem.ARROWUP, MenuItem.ARROWUP));
           }
           else{
                System.out.println("You can't move that direction!");
@@ -225,7 +225,7 @@ public class PlayerCharacter extends AbstractCharacter {
      dy=newY+1;
           if(dy>=0&&dy<=r.y-2){
        	   valid.add(new Point(newX,dy));
-       	   r.getObjects().add(new MenuItem(newX, dy, "arrowdown", MenuItem.ARROWDOWN));
+       	   r.getObjects().add(new MenuItem(newX, dy, MenuItem.ARROWDOWN, MenuItem.ARROWDOWN));
           }
           else{
                System.out.println("You can't move that direction!");
@@ -233,7 +233,7 @@ public class PlayerCharacter extends AbstractCharacter {
      dx=newX-1;
           if(dx>=0&&dx<=r.x-2){
        	   valid.add(new Point(dx,newY));
-       	   r.getObjects().add(new MenuItem(dx, newY, "arrowleft", MenuItem.ARROWLEFT));
+       	   r.getObjects().add(new MenuItem(dx, newY, MenuItem.ARROWLEFT, MenuItem.ARROWLEFT));
           }
           else{
                System.out.println("You can't move that direction!");
@@ -243,7 +243,7 @@ public class PlayerCharacter extends AbstractCharacter {
      dx= newX+1;
           if(dx>0&&dx<=r.x-2){
        	   valid.add(new Point(dx,newY));
-       	   r.getObjects().add(new MenuItem(dx, newY, "arrowright", MenuItem.ARROWRIGHT));
+       	   r.getObjects().add(new MenuItem(dx, newY, MenuItem.ARROWRIGHT, MenuItem.ARROWRIGHT));
           }
           else{
                System.out.println("You can't move that direction!");
