@@ -17,7 +17,8 @@ public class GameController {
 	private Room currentRoom;
 	private String lastRoomID;
 	private PlayerCharacter player;
-	private int menuChoicePointer=1;
+	private int menuChoice;
+	private boolean menuChoiceMade=false;
 	private ArrayList<BoardObject> currentObjects;
 	
 	public GameController () {
@@ -99,12 +100,20 @@ public class GameController {
 		this.currentRoom = currentRoom;
 	}
 
-	public int getMenuChoicePointer() {
-		return menuChoicePointer;
+	public int getMenuChoice() {
+		return menuChoice;
 	}
 
-	public void setMenuChoicePointer(int menuChoicePointer) {
-		this.menuChoicePointer = menuChoicePointer;
+	public void setMenuChoice(int menuChoice) {
+		this.menuChoice = menuChoice;
+	}
+
+	public boolean isMenuChoiceMade() {
+		return menuChoiceMade;
+	}
+
+	public void setMenuChoiceMade(boolean menuChoiceMade) {
+		this.menuChoiceMade = menuChoiceMade;
 	}
  
 	//Auxilliary methods

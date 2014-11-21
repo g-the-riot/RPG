@@ -63,6 +63,7 @@ public class Mob extends AbstractCharacter {
 		 }
 		 else{
 			 AITarget=setAITarget(r); //if the mob picks up an item it needs a new target.
+			 targetComplete=false;
 		 }
 		 GameWindow.frame.repaint();
 	 }

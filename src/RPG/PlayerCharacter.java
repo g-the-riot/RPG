@@ -79,8 +79,8 @@ public class PlayerCharacter extends AbstractCharacter {
 	 do{
 		 System.out.println("You Currently have "+currentAP+" Action Points.");
 		 int menuChoice = menu();
-		 GameWindow.controller.setMenuChoicePointer(menuChoice);
-		 GameWindow.frame.repaint();
+//		 GameWindow.controller.setMenuChoicePointer(menuChoice);
+//		 GameWindow.frame.repaint();
 		 if(menuChoice==1){
 			 System.out.println("Choose: U/D/L/R");
 			 char direction =input.next().charAt(0);
@@ -136,15 +136,12 @@ public class PlayerCharacter extends AbstractCharacter {
  
  private int menu(){
 	 
-	 Scanner input = new Scanner(System.in);
-	 
-	 System.out.println("Make a choice:");
-	 System.out.println("1. Move");
-	 System.out.println("2. Attack");
-	 System.out.println("3. Inventory");
-	 System.out.println("4. Pick up");
- 
-	 return input.nextInt();
+	 do{}
+		while(!GameWindow.controller.isMenuChoiceMade());
+	 int choice=GameWindow.controller.getMenuChoice();
+
+	  
+	 return choice;
  }
  
 }

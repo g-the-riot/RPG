@@ -14,13 +14,13 @@ import java.awt.GraphicsEnvironment;
 
 import javax.swing.JPanel;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
-public class GameWindow implements ActionListener {
+public class GameWindow {
 	
 	private static final int px=60;
 	private static BufferedImage[] roomComponents;
@@ -33,13 +33,13 @@ public class GameWindow implements ActionListener {
 	public static Font bigFont;
 	public static Font normalFont;
 	public static Font smallFont;
-	
+	private static int makeChoicePointer;
 	
 	public static JFrame frame;
 
 	public GameWindow() {
 		initialize();
-		
+		makeChoicePointer=1;
 		try{
 			bigFont=Font.createFont(Font.TRUETYPE_FONT, new File("Assets/8BITWONDER.TTF")).deriveFont((float)60);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -98,6 +98,7 @@ public class GameWindow implements ActionListener {
 			JPanel roomC = new MenuPanel();
 			roomC.setPreferredSize(new Dimension(600,60));
 			roomC.setBackground(Color.black);
+			roomC.setFocusable(true);
 			roomC.addKeyListener(new GameListener());
 		
 		room.add(roomB, BorderLayout.NORTH);
@@ -139,6 +140,16 @@ public class GameWindow implements ActionListener {
 	
 	
 	
+	public static int getMakeChoicePointer() {
+		return makeChoicePointer;
+	}
+
+	public static void setMakeChoicePointer(int makeChoicePointer) {
+		GameWindow.makeChoicePointer = makeChoicePointer;
+	}
+
+
+
 	/**
 	 * [0] tile
 	 * [1] Corner NW (0,0)
@@ -174,16 +185,16 @@ public class GameWindow implements ActionListener {
 			g.drawString("Attack",  3*px-5, 1*px-40);
 			g.drawString("Inventory", 5*px, 1*px-40);
 			g.drawString("Pick Up", 8*px-5, 1*px-40);
-			if(controller.getMenuChoicePointer()==1){
+			if(GameWindow.getMakeChoicePointer()==1){
 				g.drawImage(pointerUp,1*px+10,1*px-35, this);
 			}
-			else if(controller.getMenuChoicePointer()==2){
+			else if(GameWindow.getMakeChoicePointer()==2){
 				g.drawImage(pointerUp,3*px+25 ,1*px-35, this);
 			}
-			else if(controller.getMenuChoicePointer()==3){
+			else if(GameWindow.getMakeChoicePointer()==3){
 				g.drawImage(pointerUp, 6*px-5, 1*px-35, this);
 			}
-			else if(controller.getMenuChoicePointer()==4){
+			else if(GameWindow.getMakeChoicePointer()==4){
 				g.drawImage(pointerUp, 8*px+25, 1*px-35, this);
 			}
 			
@@ -251,9 +262,54 @@ public class GameWindow implements ActionListener {
 	  }
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		System.out.println("Ya Did it!");
+	
+	class GameListener implements KeyListener {
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			int key = e.getKeyCode();
+			System.out.println("Ya Did it!");
+			char choice='j';
+			
+			if (key == KeyEvent.VK_LEFT||key==KeyEvent.VK_KP_LEFT) {
+				choice='l';
+				// (a % b + b) % b
+				int a=GameWindow.getMakeChoicePointer();
+				int b=-1;
+				int c=(a%b+b)%b;
+				System.out.println(b);
+				GameWindow.setMakeChoicePointer(choice);
+				GameWindow.frame.repaint();
+			}
+			if (key == KeyEvent.VK_RIGHT) {
+				int a=GameWindow.getMakeChoicePointer();
+				int b=1;
+				int c=(a%b+b)%b;
+				System.out.println(b);
+				GameWindow.setMakeChoicePointer(choice);
+				GameWindow.frame.repaint();
+		       choice='r';
+		    }
+
+		    if (key == KeyEvent.VK_UP) {
+		       choice='u';
+		    }
+
+		    if (key == KeyEvent.VK_DOWN) {
+		       choice='d';
+		    }
+		    
+		    
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {			
+		}
+		
 		
 	}
 }
