@@ -267,47 +267,56 @@ public class GameWindow {
 
 		@Override
 		public void keyTyped(KeyEvent e) {
-			int key = e.getKeyCode();
-			System.out.println("Ya Did it!");
-			char choice='j';
-			
-			if (key == KeyEvent.VK_LEFT||key==KeyEvent.VK_KP_LEFT) {
-				choice='l';
-				// (a % b + b) % b
-				int a=GameWindow.getMakeChoicePointer();
-				int b=-1;
-				int c=(a%b+b)%b;
-				System.out.println(b);
-				GameWindow.setMakeChoicePointer(choice);
-				GameWindow.frame.repaint();
-			}
-			if (key == KeyEvent.VK_RIGHT) {
-				int a=GameWindow.getMakeChoicePointer();
-				int b=1;
-				int c=(a%b+b)%b;
-				System.out.println(b);
-				GameWindow.setMakeChoicePointer(choice);
-				GameWindow.frame.repaint();
-		       choice='r';
-		    }
-
-		    if (key == KeyEvent.VK_UP) {
-		       choice='u';
-		    }
-
-		    if (key == KeyEvent.VK_DOWN) {
-		       choice='d';
-		    }
-		    
-		    
+					    
 		}
 
 		@Override
 		public void keyPressed(KeyEvent e) {
+			int key = e.getKeyCode();
+			
+			if (key == KeyEvent.VK_LEFT||key==KeyEvent.VK_KP_LEFT) {
+				int menu=0;
+				if(GameWindow.getMakeChoicePointer()==1){
+					menu=4;
+				}
+				else{
+					menu=GameWindow.getMakeChoicePointer()-1;
+				}
+				GameWindow.setMakeChoicePointer(menu);
+				GameWindow.frame.repaint();
+			}
+			if (key == KeyEvent.VK_RIGHT) {
+				int menu=0;
+				if(GameWindow.getMakeChoicePointer()==4){
+					menu=1;
+				}
+				else{
+					menu=GameWindow.getMakeChoicePointer()+1;
+				}
+				GameWindow.setMakeChoicePointer(menu);
+				GameWindow.frame.repaint();
+		       
+		    }
+
+		    if (key == KeyEvent.VK_UP) {
+		      
+		    }
+
+		    if (key == KeyEvent.VK_DOWN) {
+		     
+		    }
+		    
+		    if(key==KeyEvent.VK_ENTER||key==KeyEvent.VK_SPACE){
+		    	GameWindow.controller.setMenuChoice(getMakeChoicePointer());
+		    	GameWindow.controller.setMenuChoiceMade(true);
+		    	System.out.println("You Hit Enter or Space.");
+		    }
+		    
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e) {			
+			System.out.println("Ya Released it!");
 		}
 		
 		

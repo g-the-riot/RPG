@@ -19,6 +19,7 @@ public class GameController {
 	private PlayerCharacter player;
 	private int menuChoice;
 	private boolean menuChoiceMade=false;
+	private PlayerCharacter q;
 	private ArrayList<BoardObject> currentObjects;
 	
 	public GameController () {
@@ -67,13 +68,16 @@ public class GameController {
 		return player;
 	}
 
+	public PlayerCharacter getQ(){
+		return q;
+	}
  
 	public void takeTurn() {
 		
 		for(int i=0;i<currentObjects.size();i++){
 			
 			if(currentObjects.get(i) instanceof PlayerCharacter){
-				PlayerCharacter q=(PlayerCharacter)currentObjects.get(i);
+				q=(PlayerCharacter)currentObjects.get(i);
 				q.takeTurn(currentRoom);
 				currentObjects.set(i, q);
 			}

@@ -135,13 +135,11 @@ public class PlayerCharacter extends AbstractCharacter {
  };
  
  private int menu(){
-	 
-	 do{}
-		while(!GameWindow.controller.isMenuChoiceMade());
-	 int choice=GameWindow.controller.getMenuChoice();
-
-	  
-	 return choice;
+	 do{
+		 System.out.println("Waiting...");
+	 }
+	 while(!GameWindow.controller.isMenuChoiceMade());
+ 	 return GameWindow.controller.getMenuChoice();
  }
  
 }

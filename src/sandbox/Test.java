@@ -23,7 +23,7 @@ public class Test implements ActionListener{
 //			timer.start();
 //			GameWindow.test.move('l',GameWindow.currentRoom);
 //			timer.start();
-			//GameWindow.controller.takeTurn();
+			GameWindow.controller.takeTurn();
 			
 		}
 		
