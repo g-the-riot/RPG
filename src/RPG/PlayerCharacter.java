@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.JPanel;
+
 public class PlayerCharacter extends AbstractCharacter {
 
  private int xp;
@@ -107,10 +109,11 @@ public class PlayerCharacter extends AbstractCharacter {
 		 }
 		 else if(menuChoice==3){
 			 GameWindow.cl.show(GameWindow.cards, "Inventory");
+			 GameWindow.getInventoryPanel().requestFocus();
 			 System.out.println("Woah! Look at all your stuff!");
 			 System.out.println("Hit Enter to go back.");
-			 input.next();
-			 GameWindow.cl.show(GameWindow.cards, "Room");
+//			 input.next();
+//			 GameWindow.cl.show(GameWindow.cards, "Room");
 			 //TODO: create an inventory implementation.
 		 }
 		 else{

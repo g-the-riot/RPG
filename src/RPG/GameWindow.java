@@ -33,6 +33,8 @@ public class GameWindow {
 	public static Font bigFont;
 	public static Font normalFont;
 	public static Font smallFont;
+	private static InventoryList invB;
+	private static MenuPanel roomC;
 	private static int makeChoicePointer;
 	private static char menuDirection;
 	
@@ -88,6 +90,7 @@ public class GameWindow {
 		JPanel room = new JPanel(bl);
 		bl.setHgap(0);
 		bl.setVgap(0);
+	
 		room.setPreferredSize(new Dimension(600,720));
 			JPanel roomA = new RoomPanel();
 			roomA.setPreferredSize(new Dimension(600, 600));
@@ -96,7 +99,7 @@ public class GameWindow {
 			roomB.setBackground(Color.black);
 			roomB.setPreferredSize(new Dimension(600,60));
 			
-			JPanel roomC = new MenuPanel();
+			roomC = new MenuPanel();
 			roomC.setPreferredSize(new Dimension(600,60));
 			roomC.setBackground(Color.black);
 			roomC.setFocusable(true);
@@ -116,11 +119,13 @@ public class GameWindow {
 			invA.setPreferredSize(new Dimension(600, 150));
 			invA.setBackground(Color.black);
 			
-			JPanel invB = new JPanel();
+			invB = new InventoryList();
 			invB.setPreferredSize(new Dimension(600,570));
 			invB.setBackground(Color.black);
+			invB.setFocusable(true);
+			invB.addKeyListener(new InventoryListener());
 		inv.add(invA, BorderLayout.NORTH);
-		inv.add(invB, BorderLayout.CENTER);
+		inv.add(invB, BorderLayout.SOUTH);
 		//come back to this nonsense later, I guess.
 		
 		cards.add(room, "Room");
@@ -128,6 +133,14 @@ public class GameWindow {
 		
 		frame.pack();
 		frame.setVisible(true);
+	}
+	
+	public static InventoryList getInventoryPanel(){
+		return invB;
+	}
+	
+	public static MenuPanel getRoomPanel(){
+		return roomC;
 	}
 	
 	private void initialize() {
@@ -211,6 +224,49 @@ public class GameWindow {
 		}
 	}
 	
+	public class InventoryList extends JPanel{
+		
+		BufferedImage pointerRight=(BufferedImage)GameIO.createImage("Assets/pointerright.png");
+		
+		private static final int nameShift=45;
+		private static final int itemPointerX=20;
+		private int ypointer=0;
+		
+		public void paintComponent(Graphics g){
+			
+			super.paintComponent(g);
+			g.setColor(Color.white);
+			g.setFont(GameWindow.normalFont);
+			
+			if(ypointer<GameWindow.controller.getPlayer().inventory.size()){
+				g.drawImage(pointerRight,itemPointerX,ypointer*nameShift+itemPointerX,this);
+			}
+			
+			if(ypointer==-1){
+				g.drawImage(pointerRight,itemPointerX,560,this);
+			}
+			
+			for(int i=0;i<GameWindow.controller.getPlayer().inventory.size();i++){
+				String a=GameWindow.controller.getPlayer().inventory.get(i).getName();
+				String b=GameWindow.controller.getPlayer().inventory.get(i).equals(GameWindow.controller.getPlayer().getWeapon())?a+" (E)":a;
+				g.drawString(b,60,nameShift*i+nameShift);
+			}
+			
+			g.drawString("Back", 560, itemPointerX+45);
+		}
+		
+		public int getYPointer(){
+			return ypointer;
+		}
+		
+		public void setYPointer(int y){
+			ypointer=y;
+		}
+		
+		
+		
+	}
+	
 	public class InventoryName extends JPanel{
 		
 		public void paintComponent(Graphics g){
@@ -272,6 +328,66 @@ public class GameWindow {
 	  }
 	}
 	
+	class InventoryListener implements KeyListener{
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			
+			int key = e.getKeyCode();
+			
+			System.out.println("Listening from Inventory!");
+
+			if (key == KeyEvent.VK_LEFT||key==KeyEvent.VK_KP_LEFT) {
+				int dy=GameWindow.getInventoryPanel().getYPointer()-1;
+				if(dy<GameWindow.controller.getPlayer().inventory.size()){
+					GameWindow.getInventoryPanel().setYPointer(dy);
+				}
+				
+				GameWindow.frame.repaint();
+				
+			}
+			if (key == KeyEvent.VK_RIGHT||key ==KeyEvent.VK_KP_RIGHT) {
+				int dy=GameWindow.getInventoryPanel().getYPointer()+1;
+				if(dy<GameWindow.controller.getPlayer().inventory.size()){
+					GameWindow.getInventoryPanel().setYPointer(dy);
+				}
+				GameWindow.frame.repaint();
+				      
+			}
+
+			if (key == KeyEvent.VK_UP||key==KeyEvent.VK_KP_UP) {
+				int dy=GameWindow.getInventoryPanel().getYPointer()-1;
+				if(dy<GameWindow.controller.getPlayer().inventory.size()){
+					GameWindow.getInventoryPanel().setYPointer(dy);
+				}
+				GameWindow.frame.repaint();
+				
+			}
+
+			if (key == KeyEvent.VK_DOWN||key==KeyEvent.VK_KP_DOWN) {
+				int dy=GameWindow.getInventoryPanel().getYPointer()+1;
+				if(dy<GameWindow.controller.getPlayer().inventory.size()){
+					GameWindow.getInventoryPanel().setYPointer(dy);
+				}
+				GameWindow.frame.repaint();
+			}
+			
+		}
+
+		@Override
+		public void keyReleased(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyTyped(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
 	class GameListener implements KeyListener {
 
 		@Override
@@ -281,6 +397,7 @@ public class GameWindow {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
+			System.out.println("Listening from GameListener");
 			
 			System.out.println(GameWindow.controller.getCurrentRound());
 			int key = e.getKeyCode();

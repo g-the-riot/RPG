@@ -19,20 +19,20 @@ public class WeaponCreator{
           int index = randumb.nextInt(4);
           
           if(index==EXPLOSIVE){
-               w=new Explosive(randumb.nextInt(8)+1,randumb.nextInt(8)+1,"Boom");
+               w=new Explosive(randumb.nextInt(8)+1,randumb.nextInt(8)+1,"Din O Might");
           }
           
           else if(index==BLADE){
-               w=new Blade(randumb.nextInt(8)+1,randumb.nextInt(8)+1,"Shring");
+               w=new Blade(randumb.nextInt(8)+1,randumb.nextInt(8)+1,"Very Sharp Needle");
           }
           else if(index==FOOD){
-               w=new Food(randumb.nextInt(8)+1,randumb.nextInt(8)+1,"Yum");
+               w=new Food(randumb.nextInt(8)+1,randumb.nextInt(8)+1,"Stale Bread");
           }
           else if(index==MAGIC){
-               w=new Magic(randumb.nextInt(8)+1,randumb.nextInt(8)+1,"HocusPocus");
+               w=new Magic(randumb.nextInt(8)+1,randumb.nextInt(8)+1,"Arcane Tome");
           }
           else{
-               w=new Projectile(randumb.nextInt(8)+1,randumb.nextInt(8)+1,"Fwip");
+               w=new Projectile(randumb.nextInt(8)+1,randumb.nextInt(8)+1,"Nerf Gun");
           }
           
           return w;
