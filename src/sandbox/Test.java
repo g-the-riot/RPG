@@ -24,6 +24,8 @@ public class Test implements ActionListener{
 //			GameWindow.test.move('l',GameWindow.currentRoom);
 //			timer.start();
 			GameWindow.controller.takeTurn();
+			GameWindow.controller.takeTurn();
+			GameWindow.controller.takeTurn();
 			
 		}
 		

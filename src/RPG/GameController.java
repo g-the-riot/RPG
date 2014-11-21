@@ -18,6 +18,7 @@ public class GameController {
 	private String lastRoomID;
 	private PlayerCharacter player;
 	private int menuChoice;
+	private char menuDirection;
 	private boolean menuChoiceMade=false;
 	private PlayerCharacter q;
 	private ArrayList<BoardObject> currentObjects;
@@ -118,6 +119,14 @@ public class GameController {
 
 	public void setMenuChoiceMade(boolean menuChoiceMade) {
 		this.menuChoiceMade = menuChoiceMade;
+	}
+
+	public char getMenuDirection() {
+		return menuDirection;
+	}
+
+	public void setMenuDirection(char menuDirection) {
+		this.menuDirection = menuDirection;
 	}
  
 	//Auxilliary methods

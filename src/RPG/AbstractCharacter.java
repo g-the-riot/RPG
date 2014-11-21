@@ -122,7 +122,6 @@ public abstract class AbstractCharacter extends BoardObject implements Character
       dy=newY-1;
            if(dy>=0&&dy<=r.y-2){
                 valid.add(new Point(newX,dy));
-                r.getObjects().add(new MenuItem(newX, dy, "arrowup", MenuItem.ARROWUP));
            }
            else{
                 System.out.println("You can't move that direction!");
@@ -131,7 +130,6 @@ public abstract class AbstractCharacter extends BoardObject implements Character
       dy=newY+1;
            if(dy>=0&&dy<=r.y-2){
         	   valid.add(new Point(newX,dy));
-        	   r.getObjects().add(new MenuItem(newX, dy, "arrowdown", MenuItem.ARROWDOWN));
            }
            else{
                 System.out.println("You can't move that direction!");
@@ -139,7 +137,6 @@ public abstract class AbstractCharacter extends BoardObject implements Character
       dx=newX-1;
            if(dx>=0&&dx<=r.x-2){
         	   valid.add(new Point(dx,newY));
-        	   r.getObjects().add(new MenuItem(dx, newY, "arrowleft", MenuItem.ARROWLEFT));
            }
            else{
                 System.out.println("You can't move that direction!");
@@ -149,12 +146,10 @@ public abstract class AbstractCharacter extends BoardObject implements Character
       dx= newX+1;
            if(dx>0&&dx<=r.x-2){
         	   valid.add(new Point(dx,newY));
-        	   r.getObjects().add(new MenuItem(dx, newY, "arrowright", MenuItem.ARROWRIGHT));
            }
            else{
                 System.out.println("You can't move that direction!");
            }
-           GameWindow.frame.repaint();
       return valid;
 	 
  }

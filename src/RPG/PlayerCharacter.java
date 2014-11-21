@@ -1,5 +1,6 @@
 package RPG;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -83,8 +84,8 @@ public class PlayerCharacter extends AbstractCharacter {
 //		 GameWindow.frame.repaint();
 		 if(menuChoice==1){
 			 System.out.println("Choose: U/D/L/R");
-			 super.getValidMoves(r);
-			 char direction =input.next().charAt(0);
+			 getValidMoves(r);
+			 char direction =getDirection();
 			 if(move(direction, r)){
 				 currentAP--;
 			 }
@@ -134,6 +135,121 @@ public class PlayerCharacter extends AbstractCharacter {
 	 input.close();
 	 
  };
+ 
+ private char getDirection(){
+	 do{
+		 System.out.println("Waiting...");
+	 }
+	 while(!GameWindow.controller.isMenuChoiceMade());
+	 GameWindow.controller.setMenuChoiceMade(false);
+	 return GameWindow.controller.getMenuDirection();
+ }
+ 
+ public boolean move(char d, Room r){
+	 ArrayList<Point> validPoints=getValidMoves(r);
+	  boolean valid=false;	
+      int newX=(int)super.getLocation().getX();
+      int newY=(int)super.getLocation().getY();
+      
+      if(d=='u'){
+           newY-=1;
+      }
+      else if(d=='d'){
+           newY+=1;
+      }
+      else if(d=='l'){
+           newX-=1;
+      }
+      else if(d=='r'){
+           newX+=1;
+      }
+      for(int i=0;i<validPoints.size();i++){
+    	  if(newX==(int)validPoints.get(i).getX()&&newY==(int)validPoints.get(i).getY()){
+    		  super.getLocation().move(newX,newY);
+    		  valid=true;
+    	  }
+      }
+      
+      removeMenuItems(r);
+      
+      GameWindow.frame.repaint();
+      //getting rid of my arrows.
+      
+      return valid;
+ };
+ 
+ public void removeMenuItems(Room r){
+	 int menuItems=0;
+	 
+	 for(int i=0;i<r.getObjects().size();i++){
+   	  if(r.getObjects().get(i) instanceof MenuItem){
+   		  menuItems++;
+   	  }
+     }
+	 
+	 if(menuItems>0){
+		 do{
+			 for(int i=0;i<r.getObjects().size();i++){
+		    	  if(r.getObjects().get(i) instanceof MenuItem){
+		    		  r.getObjects().remove(i);
+		    		  menuItems--;
+		    	  }
+		      }
+		 }
+		 while(menuItems>0);
+		 
+	 }
+ }
+ 
+ @Override
+ public ArrayList<Point> getValidMoves(Room r){
+	 
+	  ArrayList<Point> valid = new ArrayList<Point>();
+	  
+     int newX=(int)super.getLocation().getX();
+     int newY=(int)super.getLocation().getY();
+     int dy;
+     int dx;
+     
+     dy=newY-1;
+          if(dy>=0&&dy<=r.y-2){
+               valid.add(new Point(newX,dy));
+               r.getObjects().add(new MenuItem(newX, dy, "arrowup", MenuItem.ARROWUP));
+          }
+          else{
+               System.out.println("You can't move that direction!");
+          }
+
+     dy=newY+1;
+          if(dy>=0&&dy<=r.y-2){
+       	   valid.add(new Point(newX,dy));
+       	   r.getObjects().add(new MenuItem(newX, dy, "arrowdown", MenuItem.ARROWDOWN));
+          }
+          else{
+               System.out.println("You can't move that direction!");
+          }
+     dx=newX-1;
+          if(dx>=0&&dx<=r.x-2){
+       	   valid.add(new Point(dx,newY));
+       	   r.getObjects().add(new MenuItem(dx, newY, "arrowleft", MenuItem.ARROWLEFT));
+          }
+          else{
+               System.out.println("You can't move that direction!");
+               
+          }
+     
+     dx= newX+1;
+          if(dx>0&&dx<=r.x-2){
+       	   valid.add(new Point(dx,newY));
+       	   r.getObjects().add(new MenuItem(dx, newY, "arrowright", MenuItem.ARROWRIGHT));
+          }
+          else{
+               System.out.println("You can't move that direction!");
+          }
+          GameWindow.frame.repaint();
+     return valid;
+	 
+}
  
  private int menu(){
 	 do{

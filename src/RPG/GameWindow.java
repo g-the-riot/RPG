@@ -34,6 +34,7 @@ public class GameWindow {
 	public static Font normalFont;
 	public static Font smallFont;
 	private static int makeChoicePointer;
+	private static char menuDirection;
 	
 	public static JFrame frame;
 
@@ -145,6 +146,16 @@ public class GameWindow {
 
 	public static void setMakeChoicePointer(int makeChoicePointer) {
 		GameWindow.makeChoicePointer = makeChoicePointer;
+	}
+
+
+
+	public static char getMenuDirection() {
+		return menuDirection;
+	}
+
+	public static void setMenuDirection(char menuDirection) {
+		GameWindow.menuDirection = menuDirection;
 	}
 
 
@@ -281,6 +292,7 @@ public class GameWindow {
 					menu=GameWindow.getMakeChoicePointer()-1;
 				}
 				GameWindow.setMakeChoicePointer(menu);
+				GameWindow.setMenuDirection('l');
 				GameWindow.frame.repaint();
 			}
 			if (key == KeyEvent.VK_RIGHT) {
@@ -292,20 +304,22 @@ public class GameWindow {
 					menu=GameWindow.getMakeChoicePointer()+1;
 				}
 				GameWindow.setMakeChoicePointer(menu);
+				GameWindow.setMenuDirection('r');
 				GameWindow.frame.repaint();
 		       
 		    }
 
 		    if (key == KeyEvent.VK_UP) {
-		      
+		    	GameWindow.setMenuDirection('u');
 		    }
 
 		    if (key == KeyEvent.VK_DOWN) {
-		     
+		    	GameWindow.setMenuDirection('d');
 		    }
 		    
 		    if(key==KeyEvent.VK_ENTER||key==KeyEvent.VK_SPACE){
 		    	GameWindow.controller.setMenuChoice(getMakeChoicePointer());
+		    	GameWindow.controller.setMenuDirection(GameWindow.getMenuDirection());
 		    	GameWindow.controller.setMenuChoiceMade(true);
 		    	System.out.println("You Hit Enter or Space.");
 		    }
