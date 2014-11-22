@@ -23,6 +23,7 @@ public class GameController {
 	private String currentRound;
 	public static final String MENU="Menu";
 	public static final String MOVE="Move";
+	public static final String INVENTORYMAIN="InventoryMain";
 	public static final String ATTACK="Attack";
 	private PlayerCharacter q;
 	private ArrayList<BoardObject> currentObjects;

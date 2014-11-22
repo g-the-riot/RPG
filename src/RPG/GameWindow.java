@@ -192,7 +192,8 @@ public class GameWindow {
 			g.setColor(Color.white);
 			g.setFont(GameWindow.normalFont);
 			g.drawString(boardObjects.get(0).getName(),5,1*px-10);
-			g.drawString(controller.getCurrentRoom().id,4*px-30, 1*px-10);
+			g.drawString((((PlayerCharacter)boardObjects.get(0)).getCurrentAP()+" Actions"),4*px-30, 1*px-10);
+//			g.drawString(controller.getCurrentRoom().id,4*px-30, 1*px-10);
 			g.drawString((((PlayerCharacter)boardObjects.get(0)).hp()+" * "+((PlayerCharacter)boardObjects.get(0)).maxHP()),8*px-25,1*px-10);
 			
 		}
@@ -243,7 +244,7 @@ public class GameWindow {
 			}
 			
 			if(ypointer==-1){
-				g.drawImage(pointerRight,itemPointerX,560,this);
+				g.drawImage(pointerRight,itemPointerX,510,this);
 			}
 			
 			for(int i=0;i<GameWindow.controller.getPlayer().inventory.size();i++){
@@ -252,7 +253,7 @@ public class GameWindow {
 				g.drawString(b,60,nameShift*i+nameShift);
 			}
 			
-			g.drawString("Back", 560, itemPointerX+45);
+			g.drawString("Back", itemPointerX+45,540);
 		}
 		
 		public int getYPointer(){
@@ -336,40 +337,89 @@ public class GameWindow {
 			int key = e.getKeyCode();
 			
 			System.out.println("Listening from Inventory!");
+			int dy=0;
 
 			if (key == KeyEvent.VK_LEFT||key==KeyEvent.VK_KP_LEFT) {
-				int dy=GameWindow.getInventoryPanel().getYPointer()-1;
-				if(dy<GameWindow.controller.getPlayer().inventory.size()){
-					GameWindow.getInventoryPanel().setYPointer(dy);
+				dy=GameWindow.getInventoryPanel().getYPointer();
+				System.out.println("The value of dy before modification is :"+dy);
+				if(dy==0){
+					dy=-1;
 				}
+				else if(dy==-1){
+					dy=GameWindow.controller.getPlayer().inventory.size()-1;
+				}
+				else{
+					dy-=1;
+				}
+				System.out.println("The value of dy after pressing left is :"+dy);
+				GameWindow.getInventoryPanel().setYPointer(dy);				
 				
 				GameWindow.frame.repaint();
 				
 			}
-			if (key == KeyEvent.VK_RIGHT||key ==KeyEvent.VK_KP_RIGHT) {
-				int dy=GameWindow.getInventoryPanel().getYPointer()+1;
-				if(dy<GameWindow.controller.getPlayer().inventory.size()){
-					GameWindow.getInventoryPanel().setYPointer(dy);
+			
+			if (key == KeyEvent.VK_UP||key==KeyEvent.VK_KP_UP) {
+				dy=GameWindow.getInventoryPanel().getYPointer();
+				System.out.println("The value of dy before modification is :"+dy);
+				if(dy==0){
+					dy=-1;
 				}
+				else if(dy==-1){
+					dy=GameWindow.controller.getPlayer().inventory.size()-1;
+				}
+				else{
+					dy-=1;
+				}
+				System.out.println("The value of dy after pressing up is :"+dy);
+				GameWindow.getInventoryPanel().setYPointer(dy);
+				
+				GameWindow.frame.repaint();
+				
+			}
+			
+			if (key == KeyEvent.VK_RIGHT||key ==KeyEvent.VK_KP_RIGHT) {
+				dy=GameWindow.getInventoryPanel().getYPointer();
+				System.out.println("The value of dy before modification is :"+dy);
+				if(dy==GameWindow.controller.getPlayer().inventory.size()-1){
+					dy=-1;
+				}
+				else if(dy==-1){
+					dy=0;
+				}
+				else{
+					dy+=1;
+				}
+				System.out.println("The value of dy after pressing right is :"+dy);
+
+				GameWindow.getInventoryPanel().setYPointer(dy);
 				GameWindow.frame.repaint();
 				      
 			}
 
-			if (key == KeyEvent.VK_UP||key==KeyEvent.VK_KP_UP) {
-				int dy=GameWindow.getInventoryPanel().getYPointer()-1;
-				if(dy<GameWindow.controller.getPlayer().inventory.size()){
-					GameWindow.getInventoryPanel().setYPointer(dy);
-				}
-				GameWindow.frame.repaint();
-				
-			}
+
 
 			if (key == KeyEvent.VK_DOWN||key==KeyEvent.VK_KP_DOWN) {
-				int dy=GameWindow.getInventoryPanel().getYPointer()+1;
-				if(dy<GameWindow.controller.getPlayer().inventory.size()){
-					GameWindow.getInventoryPanel().setYPointer(dy);
+				dy=GameWindow.getInventoryPanel().getYPointer();
+				System.out.println("The value of dy before modification is :"+dy);
+				if(dy==GameWindow.controller.getPlayer().inventory.size()-1){
+					dy=-1;
 				}
+				else if(dy==-1){
+					dy=0;
+				}
+				else{
+					dy+=1;
+				}
+				System.out.println("The value of dy after pressing down is :"+dy);
+				GameWindow.getInventoryPanel().setYPointer(dy);
 				GameWindow.frame.repaint();
+			}
+			
+			if(key==KeyEvent.VK_ENTER||key==KeyEvent.VK_SPACE){
+				System.out.println("The value of dy being entered is :"+GameWindow.getInventoryPanel().getYPointer());
+				GameWindow.controller.setMenuChoice(GameWindow.getInventoryPanel().getYPointer());
+				GameWindow.controller.setMenuChoiceMade(true);
+				System.out.println("You Hit Enter or Space.");
 			}
 			
 		}

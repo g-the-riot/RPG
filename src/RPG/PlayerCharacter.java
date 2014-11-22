@@ -11,6 +11,7 @@ public class PlayerCharacter extends AbstractCharacter {
  private int xp;
  
  private static final int HP_INCREMENT = 100;
+ private int currentAP;
  public  ArrayList<Pickup> inventory = new ArrayList<Pickup>();
  
  // "Default constructor" - use this for a new character
@@ -51,6 +52,10 @@ public class PlayerCharacter extends AbstractCharacter {
       return xp;
  }
  
+ public int getCurrentAP(){
+	 return currentAP;
+ }
+ 
  
  public void gainXP (int xp) {
       xp = Math.abs(xp);
@@ -75,9 +80,8 @@ public class PlayerCharacter extends AbstractCharacter {
  
  @Override
  public void takeTurn(Room r){
-	 Scanner input = new Scanner(System.in);
 
-	 int currentAP=this.getActionPoints();
+	 currentAP=this.getActionPoints();
 	 
 	 do{
 		 System.out.println("You Currently have "+currentAP+" Action Points.");
@@ -85,67 +89,87 @@ public class PlayerCharacter extends AbstractCharacter {
 //		 GameWindow.controller.setMenuChoicePointer(menuChoice);
 //		 GameWindow.frame.repaint();
 		 if(menuChoice==1){
-			 GameWindow.controller.setCurrentRound(GameController.MOVE);
-			 System.out.println("Choose: U/D/L/R");
-			 getValidMoves(r);
-			 char direction =getDirection();
-			 if(move(direction, r)){
-				 currentAP--;
-			 }
+			 moveMenu(r);
 		 }
 		 else if(menuChoice==2){
-			 System.out.println("Which enemy?");
-			 for(int i=0; i<r.getObjects().size(); i++){
-				 if(r.getObjects().get(i) instanceof Mob){
-					 Mob q = (Mob)r.getObjects().get(i);
-					 System.out.println((i+1)+".) "+q.getName());
-				 }
-			 }
-			 int makeAChoice=input.nextInt();
-			 Mob q=(Mob)r.getObjects().get(makeAChoice-1);
-			 attack(q);
-			 r.getObjects().set(makeAChoice-1, q);
-			 currentAP--;
+			 attackMenu(r);
 		 }
 		 else if(menuChoice==3){
-			 GameWindow.cl.show(GameWindow.cards, "Inventory");
-			 GameWindow.getInventoryPanel().requestFocus();
-			 System.out.println("Woah! Look at all your stuff!");
-			 System.out.println("Hit Enter to go back.");
-//			 input.next();
-//			 GameWindow.cl.show(GameWindow.cards, "Room");
-			 //TODO: create an inventory implementation.
+			inventoryMenu();
 		 }
 		 else{
-			 boolean pickedUp=false;
-			 for(int i=0;i<r.getObjects().size();i++){				 
-				 if(r.getObjects().get(i) instanceof Pickup){
-					 if(getLocation().equals(r.getObjects().get(i).getLocation())){
-						 pickUp((Pickup)r.getObjects().get(i));
-						 r.getObjects().remove(i);
-						 currentAP--;
-						 pickedUp=true;
-					 }// and you're standing on it.  pick it up
-				 }//if the thing on the board is a pickup				
-			 }
-			 if(!pickedUp){
-				 System.out.println("There's nothing to pick up!");
-			 }
+			pickupMenu(r);
 		 }
 		 GameWindow.frame.repaint();
 	 }
 	 while(currentAP>0);
-	 
-	 input.close();
+	
 	 
  };
  
- private char getDirection(){
-	 do{
-		 System.out.print("");
+ private void attackMenu(Room r){
+	 System.out.println("Which enemy?");
+	 for(int i=0; i<r.getObjects().size(); i++){
+		 if(r.getObjects().get(i) instanceof Mob){
+			 Mob q = (Mob)r.getObjects().get(i);
+			 System.out.println((i+1)+".) "+q.getName());
+		 }
 	 }
-	 while(!GameWindow.controller.isMenuChoiceMade());
-	 GameWindow.controller.setMenuChoiceMade(false);
+	 int makeAChoice=input.nextInt();
+	 Mob q=(Mob)r.getObjects().get(makeAChoice-1);
+	 attack(q);
+	 r.getObjects().set(makeAChoice-1, q);
+	 currentAP--;
+ }
+ 
+ private void moveMenu(Room r){
+	 GameWindow.controller.setCurrentRound(GameController.MOVE);
+	 System.out.println("Choose: U/D/L/R");
+	 getValidMoves(r);
+	 char direction =getDirection();
+	 if(move(direction, r)){
+		 currentAP--;
+	 }
+ }
+ 
+ private void inventoryMenu(){
+	 GameWindow.controller.setCurrentRound(GameController.INVENTORYMAIN);
+	 GameWindow.cl.show(GameWindow.cards, "Inventory");
+	 GameWindow.getInventoryPanel().requestFocus();
+	 waitForInput();
+	 int input=GameWindow.controller.getMenuChoice();
+	 System.out.println("The choice is "+input);
+	 Pickup p;
+	 if(input<inventory.size()&&input>=0){
+		p=inventory.get(input); 
+	 } 
+	 else if(input==-1){
+		 GameWindow.cl.show(GameWindow.cards, "Room");
+		 System.out.println("I have allegedly told it to shift back to room now");
+		 GameWindow.getRoomPanel().requestFocus();
+	 }
+
+ }
+ 
+ private void pickupMenu(Room r){
+	 boolean pickedUp=false;
+	 for(int i=0;i<r.getObjects().size();i++){				 
+		 if(r.getObjects().get(i) instanceof Pickup){
+			 if(getLocation().equals(r.getObjects().get(i).getLocation())){
+				 pickUp((Pickup)r.getObjects().get(i));
+				 r.getObjects().remove(i);
+				 currentAP--;
+				 pickedUp=true;
+			 }// and you're standing on it.  pick it up
+		 }//if the thing on the board is a pickup				
+	 }
+	 if(!pickedUp){
+		 System.out.println("There's nothing to pick up!");
+	 }
+ }
+ 
+ private char getDirection(){
+	 waitForInput();
 	 return GameWindow.controller.getMenuDirection();
  }
  
@@ -258,12 +282,16 @@ public class PlayerCharacter extends AbstractCharacter {
  
  private int menu(){
 	 GameWindow.controller.setCurrentRound(GameController.MENU);
+	 waitForInput();
+ 	 return GameWindow.controller.getMenuChoice();
+ }
+ 
+ private void waitForInput(){
 	 do{
 		 System.out.print("");
 	 }
 	 while(!GameWindow.controller.isMenuChoiceMade());
 	 GameWindow.controller.setMenuChoiceMade(false);
- 	 return GameWindow.controller.getMenuChoice();
  }
  
 }
