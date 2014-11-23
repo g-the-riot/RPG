@@ -6,7 +6,9 @@ public interface Pickup{
      
      public String getName();
      
-     public void use();
+     public void use(AbstractCharacter q);
+     
+     public boolean isItKeyItem();
          
 }
 

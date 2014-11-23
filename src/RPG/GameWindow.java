@@ -192,7 +192,9 @@ public class GameWindow {
 			g.setColor(Color.white);
 			g.setFont(GameWindow.normalFont);
 			g.drawString(boardObjects.get(0).getName(),5,1*px-10);
-			g.drawString((((PlayerCharacter)boardObjects.get(0)).getCurrentAP()+" Actions"),4*px-30, 1*px-10);
+			int ap=((PlayerCharacter)boardObjects.get(0)).getCurrentAP();
+			String AP=ap>1?ap+" Actions":ap+" Action";
+			g.drawString((AP),4*px-30, 1*px-10);
 //			g.drawString(controller.getCurrentRoom().id,4*px-30, 1*px-10);
 			g.drawString((((PlayerCharacter)boardObjects.get(0)).hp()+" * "+((PlayerCharacter)boardObjects.get(0)).maxHP()),8*px-25,1*px-10);
 			
@@ -239,13 +241,7 @@ public class GameWindow {
 			g.setColor(Color.white);
 			g.setFont(GameWindow.normalFont);
 			
-			if(ypointer<GameWindow.controller.getPlayer().inventory.size()){
-				g.drawImage(pointerRight,itemPointerX,ypointer*nameShift+itemPointerX,this);
-			}
-			
-			if(ypointer==-1){
-				g.drawImage(pointerRight,itemPointerX,510,this);
-			}
+			drawPointer(g);
 			
 			for(int i=0;i<GameWindow.controller.getPlayer().inventory.size();i++){
 				String a=GameWindow.controller.getPlayer().inventory.get(i).getName();
@@ -254,6 +250,46 @@ public class GameWindow {
 			}
 			
 			g.drawString("Back", itemPointerX+45,540);
+			
+			if(GameWindow.controller.getCurrentRound().equals(GameController.INVENTORYSUB)){
+				g.drawImage(GameIO.createImage("Assets/inventorymessage.png"),itemPointerX+5,450, this);
+				g.setFont(GameWindow.smallFont);
+				g.drawString("Use", 85, 475);
+				g.drawString("Equip", 225,475);
+				g.drawString("Look",350,475);
+				g.drawString("Drop",500,475);
+				drawPointer(g);
+			}
+		}
+		
+		public void drawPointer(Graphics g){
+			
+			if(GameWindow.controller.getCurrentRound().equals(GameController.INVENTORYMAIN)){
+				
+				if(ypointer<GameWindow.controller.getPlayer().inventory.size()){
+					g.drawImage(pointerRight,itemPointerX,ypointer*nameShift+itemPointerX,this);
+				}
+				
+				if(ypointer==-1){
+					g.drawImage(pointerRight,itemPointerX,510,this);
+				}
+			}
+			
+			else if(GameWindow.controller.getCurrentRound().equals(GameController.INVENTORYSUB)){
+				
+				if(ypointer==0){
+					g.drawImage(pointerRight,50,445, this);
+				}
+				else if(ypointer==1){
+					g.drawImage(pointerRight,190,445, this);
+				}
+				else if(ypointer==2){
+					g.drawImage(pointerRight,315,445, this);
+				}
+				else{
+					g.drawImage(pointerRight,465,445, this);
+				}
+			}
 		}
 		
 		public int getYPointer(){
@@ -262,71 +298,8 @@ public class GameWindow {
 		
 		public void setYPointer(int y){
 			ypointer=y;
-		}
+		}	
 		
-		
-		
-	}
-	
-	public class InventoryName extends JPanel{
-		
-		public void paintComponent(Graphics g){
-			
-			super.paintComponent(g);
-			g.setColor(Color.white);
-			g.setFont(GameWindow.bigFont);
-			g.drawString("Inventory",25,70);
-			
-		}
-		
-	}
-	
-	public class RoomPanel extends JPanel
-	{
-	  //may need to have an array of images that this can access...  
-	  @Override
-	  public void paintComponent(Graphics g){
-		  
-		  if(controller.getCurrentRoom()!=currentRoom){
-			  initialize();
-		  }
-		
-		  super.paintComponent(g);
-		  //drawImage(Image img, int x, int y, ImageObserver observer) //for now, just set imageobserver to this.
-		  g.drawImage(roomComponents[1],0*px,0*px,this);
-		  g.drawImage(roomComponents[3],(currentRoom.x-1)*px,0*px,this);
-		  g.drawImage(roomComponents[5],(currentRoom.x-1)*px,(currentRoom.y-1)*px,this);
-		  g.drawImage(roomComponents[7],0*px,(currentRoom.y-1)*px,this);
-	    
-		  for(int j=1;j<(currentRoom.y-1);j++){
-			  g.drawImage(roomComponents[8],0*px,j*px,this);
-		  }
-	    
-		  for(int j=1;j<(currentRoom.y-1);j++){
-			  g.drawImage(roomComponents[4],(currentRoom.x-1)*px,j*px,this);
-		  }
-	    
-		  for(int i=1;i<(currentRoom.x-1);i++){
-			  g.drawImage(roomComponents[2],i*px,0*px,this);
-		  }
-	    
-		  for(int i=1;i<(currentRoom.x-1);i++){
-			  g.drawImage(roomComponents[6],i*px,(currentRoom.y-1)*px,this);
-		  }
-	    
-		  for(int i=1;i<(currentRoom.x-1);i++){
-			  for(int j=1;j<(currentRoom.y-1);j++){
-				  g.drawImage(roomComponents[0],i*px,j*px,this);
-			  }//and that's the tiles
-		  }
-	     
-		  for(int i=1;i<boardObjects.size();i++){
-			  g.drawImage(boardObjects.get(i).createImage(),(int)boardObjects.get(i).getLocation().getX()*px,(int)boardObjects.get(i).getLocation().getY()*px, this);
-		  }
-		  
-		  g.drawImage(boardObjects.get(0).createImage(),(int)boardObjects.get(0).getLocation().getX()*px,(int)boardObjects.get(0).getLocation().getY()*px, this);
-		  //draws player character on top (he's always in position 0).
-	  }
 	}
 	
 	class InventoryListener implements KeyListener{
@@ -337,6 +310,54 @@ public class GameWindow {
 			int key = e.getKeyCode();
 			
 			System.out.println("Listening from Inventory!");
+			
+			if(GameWindow.controller.getCurrentRound().equals(GameController.INVENTORYMAIN)){
+				inventoryMain(key);
+			}
+			
+			else if(GameWindow.controller.getCurrentRound().equals(GameController.INVENTORYSUB)){
+				inventorySub(key);
+			}
+			
+			
+		}
+		
+		public void inventorySub(int key){
+			
+			int menu=GameWindow.getInventoryPanel().getYPointer();
+			if (key == KeyEvent.VK_LEFT||key==KeyEvent.VK_KP_LEFT) {
+				if(GameWindow.getInventoryPanel().getYPointer()==0){
+					menu=3;
+				}
+				else{
+					menu=GameWindow.getInventoryPanel().getYPointer()-1;
+				}
+				System.out.println("The new value is "+menu);
+				GameWindow.getInventoryPanel().setYPointer(menu);
+				GameWindow.frame.repaint();
+			}
+			if (key == KeyEvent.VK_RIGHT||key ==KeyEvent.VK_KP_RIGHT) {
+				if(GameWindow.getInventoryPanel().getYPointer()==3){
+					menu=0;
+				}
+				else{
+					menu=GameWindow.getInventoryPanel().getYPointer()+1;
+				}
+				System.out.println("The new value is "+menu);
+				GameWindow.getInventoryPanel().setYPointer(menu);
+				GameWindow.frame.repaint();
+	       
+			}
+	    
+			if(key==KeyEvent.VK_ENTER||key==KeyEvent.VK_SPACE){
+				GameWindow.controller.setMenuChoice(GameWindow.getInventoryPanel().getYPointer());
+				GameWindow.controller.setMenuChoiceMade(true);
+				System.out.println("You Hit Enter or Space.");
+			}
+		}
+		
+		public void inventoryMain(int key){
+			
 			int dy=0;
 
 			if (key == KeyEvent.VK_LEFT||key==KeyEvent.VK_KP_LEFT) {
@@ -421,7 +442,6 @@ public class GameWindow {
 				GameWindow.controller.setMenuChoiceMade(true);
 				System.out.println("You Hit Enter or Space.");
 			}
-			
 		}
 
 		@Override
@@ -437,6 +457,77 @@ public class GameWindow {
 		}
 		
 	}
+	
+	public class InventoryName extends JPanel{
+		
+		public void paintComponent(Graphics g){
+			
+			super.paintComponent(g);
+			g.setColor(Color.white);
+			g.setFont(GameWindow.bigFont);
+			g.drawString("Inventory",25,70);
+			
+		}
+		
+	}
+	
+	public class RoomPanel extends JPanel
+	{
+	  //may need to have an array of images that this can access...  
+	  @Override
+	  public void paintComponent(Graphics g){
+		  
+		  if(controller.getCurrentRoom()!=currentRoom){
+			  initialize();
+		  }
+		
+		  super.paintComponent(g);
+		  //drawImage(Image img, int x, int y, ImageObserver observer) //for now, just set imageobserver to this.
+		  g.drawImage(roomComponents[1],0*px,0*px,this);
+		  g.drawImage(roomComponents[3],(currentRoom.x-1)*px,0*px,this);
+		  g.drawImage(roomComponents[5],(currentRoom.x-1)*px,(currentRoom.y-1)*px,this);
+		  g.drawImage(roomComponents[7],0*px,(currentRoom.y-1)*px,this);
+	    
+		  for(int j=1;j<(currentRoom.y-1);j++){
+			  g.drawImage(roomComponents[8],0*px,j*px,this);
+		  }
+	    
+		  for(int j=1;j<(currentRoom.y-1);j++){
+			  g.drawImage(roomComponents[4],(currentRoom.x-1)*px,j*px,this);
+		  }
+	    
+		  for(int i=1;i<(currentRoom.x-1);i++){
+			  g.drawImage(roomComponents[2],i*px,0*px,this);
+		  }
+	    
+		  for(int i=1;i<(currentRoom.x-1);i++){
+			  g.drawImage(roomComponents[6],i*px,(currentRoom.y-1)*px,this);
+		  }
+	    
+		  for(int i=1;i<(currentRoom.x-1);i++){
+			  for(int j=1;j<(currentRoom.y-1);j++){
+				  g.drawImage(roomComponents[0],i*px,j*px,this);
+			  }//and that's the tiles
+		  }
+	     
+		  for(int i=1;i<boardObjects.size();i++){
+			  g.drawImage(boardObjects.get(i).createImage(),(int)boardObjects.get(i).getLocation().getX()*px,(int)boardObjects.get(i).getLocation().getY()*px, this);
+		  }
+		  //this sometimes throws an exception while moving. not sure what's going o
+		  
+		  g.drawImage(boardObjects.get(0).createImage(),(int)boardObjects.get(0).getLocation().getX()*px,(int)boardObjects.get(0).getLocation().getY()*px, this);
+		  //draws player character on top (he's always in position 0).
+		  
+		  if(GameWindow.controller.isNewSystemMessage()){
+			  g.drawImage(GameIO.createImage("Assets/systemmessage.png"), 25,250, this);
+			  g.setColor(Color.white);
+			  g.setFont(smallFont);
+			  g.drawString(GameWindow.controller.getSystemMessage(), 35, 295);
+		  }
+	  }
+	}
+	
+
 	
 	class GameListener implements KeyListener {
 
@@ -456,6 +547,13 @@ public class GameWindow {
 			}
 			else if(GameWindow.controller.getCurrentRound().equals(GameController.MOVE)){
 				moveEvent(key);
+			}
+			if(GameWindow.controller.getCurrentRound().equals(GameController.INVENTORYSUB)){
+				if(key==KeyEvent.VK_ENTER||key==KeyEvent.VK_SPACE){
+					GameWindow.controller.setMenuChoice(getMakeChoicePointer());
+					GameWindow.controller.setMenuChoiceMade(true);
+					System.out.println("You Hit Enter or Space.");
+				}
 			}
 		}//closes keypressed THIS IS THE IMPORTANT ONE
 

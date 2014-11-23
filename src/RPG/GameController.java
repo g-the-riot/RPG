@@ -17,6 +17,8 @@ public class GameController {
 	private Room currentRoom;
 	private String lastRoomID;
 	private PlayerCharacter player;
+	private boolean newSystemMessage=false;
+	private String systemMessage;
 	private int menuChoice;
 	private char menuDirection;
 	private boolean menuChoiceMade=false;
@@ -24,6 +26,7 @@ public class GameController {
 	public static final String MENU="Menu";
 	public static final String MOVE="Move";
 	public static final String INVENTORYMAIN="InventoryMain";
+	public static final String INVENTORYSUB="inventorySubMenu";
 	public static final String ATTACK="Attack";
 	private PlayerCharacter q;
 	private ArrayList<BoardObject> currentObjects;
@@ -140,6 +143,23 @@ public class GameController {
 
 	public void setCurrentRound(String currentRound) {
 		this.currentRound = currentRound;
+	}
+
+	public String getSystemMessage() {
+		return systemMessage;
+	}
+
+	public void setSystemMessage(String systemMessage) {
+		setNewSystemMessage(true);
+		this.systemMessage = systemMessage;
+	}
+
+	public boolean isNewSystemMessage() {
+		return newSystemMessage;
+	}
+
+	public void setNewSystemMessage(boolean newSystemMessage) {
+		this.newSystemMessage = newSystemMessage;
 	}
  
 	//Auxilliary methods

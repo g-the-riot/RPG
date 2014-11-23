@@ -7,6 +7,7 @@ import java.util.Random;
 public abstract class AbstractWeapon extends BoardObject implements Weapon, Pickup {
 
      private int damage;
+     private boolean keyItem;
      
      
      public AbstractWeapon(String name, String imgPath, int damage) {
@@ -32,6 +33,18 @@ public abstract class AbstractWeapon extends BoardObject implements Weapon, Pick
           return ("with a name of "+name());
      }
      
+     public boolean isItKeyItem(){
+    	 return keyItem;
+     };
+     
+     public void setKeyItem(boolean k){
+    	 this.keyItem=k;
+     }
+     
+     public String look(){
+    	 return "\nDoes "+damage()+" HP of Damage!";
+     }
+     
 }
 
 class Explosive extends AbstractWeapon{
@@ -52,34 +65,41 @@ class Explosive extends AbstractWeapon{
      }
      
      @Override
-     public void use(){}
+     public void use(AbstractCharacter q){}
      
      @Override
      public String look(){
-          return null;
+          return ("Some dangerous looking "+getName());
      }
      
      @Override
-     public Point[] getRange(Point p){
+     public ArrayList<Point> getRange(Point p){
     	 ArrayList<Point> range = new ArrayList<Point>();
+    	 int x=(int)p.getX();
+    	 int y=(int)p.getY();
     	 
-    	 if((p.getX()-1)!=0){
+    	 
+    	 if((x-1)!=0){
+    		 System.out.println("The point "+(x-1)+","+y+" is in range.");
     		range.add(new Point((int)p.getX()-1,(int)p.getY()));
     	 }
     	 
-    	 if((p.getX()+1)!=9){
+    	 if((x+1)!=9){
+    		 System.out.println("The point "+(x+1)+","+y+" is in range.");
     		range.add(new Point((int)p.getX()+1,(int)p.getY()));
     	 }
     	 
-    	 if((p.getY()-1)!=0){
+    	 if((y-1)!=0){
+    		 System.out.println("The point "+x+","+(y-1)+" is in range.");
     		range.add(new Point((int)p.getX(),(int)p.getY()-1));
     	 }
     	 
-    	 if((p.getY()+1)!=9){
+    	 if((y+1)!=9){
+    		 System.out.println("The point"+x+","+(y+1)+" is in range.");
     		range.add(new Point((int)p.getX(),(int)p.getY()+1));
     	 }    	  	
     	 
-    	 return range.toArray(new Point[range.size()]);	 
+    	 return range;	 
      }
 }
 
@@ -101,34 +121,41 @@ class Blade extends AbstractWeapon{
      }
      
      @Override
-     public void use(){}
+     public void use(AbstractCharacter q){}
      
      @Override
      public String look(){
-          return null;
+          return ("A really sharp "+getName()+super.look());
      }
      
      @Override
-     public Point[] getRange(Point p){
+     public ArrayList<Point> getRange(Point p){
     	 ArrayList<Point> range = new ArrayList<Point>();
+    	 int x=(int)p.getX();
+    	 int y=(int)p.getY();
     	 
-    	 if((p.getX()-1)!=0){
+    	 
+    	 if((x-1)!=0){
+    		 System.out.println("The point "+(x-1)+","+y+" is in range.");
     		range.add(new Point((int)p.getX()-1,(int)p.getY()));
     	 }
     	 
-    	 if((p.getX()+1)!=9){
+    	 if((x+1)!=9){
+    		 System.out.println("The point "+(x+1)+","+y+" is in range.");
     		range.add(new Point((int)p.getX()+1,(int)p.getY()));
     	 }
     	 
-    	 if((p.getY()-1)!=0){
+    	 if((y-1)!=0){
+    		 System.out.println("The point "+x+","+(y-1)+" is in range.");
     		range.add(new Point((int)p.getX(),(int)p.getY()-1));
     	 }
     	 
-    	 if((p.getY()+1)!=9){
+    	 if((y+1)!=9){
+    		 System.out.println("The point"+x+","+(y+1)+" is in range.");
     		range.add(new Point((int)p.getX(),(int)p.getY()+1));
     	 }    	  	
     	 
-    	 return range.toArray(new Point[range.size()]);	 
+    	 return range;	 
      }
 }
 
@@ -150,47 +177,65 @@ class Magic extends AbstractWeapon{
      }
      
      @Override
-     public void use(){}
+     public void use(AbstractCharacter q){}
      
      @Override
      public String look(){
-          return null;
+          return ("A dusty book called "+getName()+super.look());
      }
      
      @Override
-     public Point[] getRange(Point p){
+     public ArrayList<Point> getRange(Point p){
     	 ArrayList<Point> range = new ArrayList<Point>();
+    	 int x=(int)p.getX();
+    	 int y=(int)p.getY();
     	 
-    	 if((p.getX()-1)!=0){
+    	 
+    	 if((x-1)!=0){
+    		 System.out.println("The point "+(x-1)+","+y+" is in range.");
     		range.add(new Point((int)p.getX()-1,(int)p.getY()));
     	 }
     	 
-    	 if((p.getX()+1)!=9){
+    	 if((x+1)!=9){
+    		 System.out.println("The point "+(x+1)+","+y+" is in range.");
     		range.add(new Point((int)p.getX()+1,(int)p.getY()));
     	 }
     	 
-    	 if((p.getY()-1)!=0){
+    	 if((y-1)!=0){
+    		 System.out.println("The point "+x+","+(y-1)+" is in range.");
     		range.add(new Point((int)p.getX(),(int)p.getY()-1));
     	 }
     	 
-    	 if((p.getY()+1)!=9){
+    	 if((y+1)!=9){
+    		 System.out.println("The point"+x+","+(y+1)+" is in range.");
     		range.add(new Point((int)p.getX(),(int)p.getY()+1));
     	 }    	  	
     	 
-    	 return range.toArray(new Point[range.size()]);	 
+    	 return range;	 
      }
 }
 
 class Food extends AbstractWeapon{
 	
-
+	private boolean rotten=false;
      
      public Food (String name){
           super(name, "Assets/pickup.png", 2);
+          Random randumb=new Random();
+          if(randumb.nextInt(10)==1){
+        	  this.rotten=true;
+        	  super.setName(super.getName()+" (Rotten)");
+          }
      }
      
      public Food (int x, int y, String name){
          super(x,y, name, "Assets/pickup.png", 2);
+         Random randumb=new Random();
+         if(randumb.nextInt(10)==1){
+        	 this.rotten=true;
+        	 super.setName(super.getName()+" (Rotten)");
+       	  
+         }
     }
      
      @Override
@@ -199,35 +244,66 @@ class Food extends AbstractWeapon{
      }
      
      @Override
-     public void use(){}
+     public int damage() {
+    	 int damage=super.damage();
+    	 
+    	 if(isRotten()){
+    		 damage-=2;
+    	 }
+    	 
+         return damage;
+    }
+     
+     @Override
+     public void use(AbstractCharacter q){
+    	 if(isRotten()){
+    		 q.takeDamage(super.damage()*10);
+    	 }
+    	 else{
+    		 q.gainHp(damage()*10);
+    	 }
+    	 GameWindow.controller.setSystemMessage(q.getName()+" ate the "+getName()+"\n and "+(isRotten()?"lost ":"gained ")+(isRotten()?super.damage()*10:damage()*10)+" HP!");
+     }
      
      @Override
      public String look(){
-          return null;
+          return ("A mouthwatering "+getName()+super.look());
      }
      
      @Override
-     public Point[] getRange(Point p){
+     public ArrayList<Point> getRange(Point p){
     	 ArrayList<Point> range = new ArrayList<Point>();
+    	 int x=(int)p.getX();
+    	 int y=(int)p.getY();
     	 
-    	 if((p.getX()-1)!=0){
+    	 
+    	 if((x-1)!=0){
+    		 System.out.println("The point "+(x-1)+","+y+" is in range.");
     		range.add(new Point((int)p.getX()-1,(int)p.getY()));
     	 }
     	 
-    	 if((p.getX()+1)!=9){
+    	 if((x+1)!=9){
+    		 System.out.println("The point "+(x+1)+","+y+" is in range.");
     		range.add(new Point((int)p.getX()+1,(int)p.getY()));
     	 }
     	 
-    	 if((p.getY()-1)!=0){
+    	 if((y-1)!=0){
+    		 System.out.println("The point "+x+","+(y-1)+" is in range.");
     		range.add(new Point((int)p.getX(),(int)p.getY()-1));
     	 }
     	 
-    	 if((p.getY()+1)!=9){
+    	 if((y+1)!=9){
+    		 System.out.println("The point"+x+","+(y+1)+" is in range.");
     		range.add(new Point((int)p.getX(),(int)p.getY()+1));
     	 }    	  	
     	 
-    	 return range.toArray(new Point[range.size()]);	 
+    	 return range;	 
      }
+
+	public boolean isRotten() {
+		return rotten;
+	}
+
 }
 
 class Projectile extends AbstractWeapon{
@@ -248,34 +324,41 @@ class Projectile extends AbstractWeapon{
      }
      
      @Override
-     public void use(){}
+     public void use(AbstractCharacter q){}
      
      @Override
      public String look(){
-          return null;
+          return ("A scary looking "+getName()+super.look());
      }
      
      @Override
-     public Point[] getRange(Point p){
+     public ArrayList<Point> getRange(Point p){
     	 ArrayList<Point> range = new ArrayList<Point>();
+    	 int x=(int)p.getX();
+    	 int y=(int)p.getY();
     	 
-    	 if((p.getX()-1)!=0){
+    	 
+    	 if((x-1)!=0){
+    		 System.out.println("The point "+(x-1)+","+y+" is in range.");
     		range.add(new Point((int)p.getX()-1,(int)p.getY()));
     	 }
     	 
-    	 if((p.getX()+1)!=9){
+    	 if((x+1)!=9){
+    		 System.out.println("The point "+(x+1)+","+y+" is in range.");
     		range.add(new Point((int)p.getX()+1,(int)p.getY()));
     	 }
     	 
-    	 if((p.getY()-1)!=0){
+    	 if((y-1)!=0){
+    		 System.out.println("The point "+x+","+(y-1)+" is in range.");
     		range.add(new Point((int)p.getX(),(int)p.getY()-1));
     	 }
     	 
-    	 if((p.getY()+1)!=9){
+    	 if((y+1)!=9){
+    		 System.out.println("The point"+x+","+(y+1)+" is in range.");
     		range.add(new Point((int)p.getX(),(int)p.getY()+1));
     	 }    	  	
     	 
-    	 return range.toArray(new Point[range.size()]);	 
+    	 return range;	 
      }
 }
 
@@ -291,6 +374,7 @@ class Fists extends AbstractWeapon{
      
      public Fists(){
           super("Your Bare Hands", "Assets/pickup.png", 1);
+          setKeyItem(true);
      }
      
      @Override
@@ -299,35 +383,42 @@ class Fists extends AbstractWeapon{
      }
      
      @Override
-     public void use(){
+     public void use(AbstractCharacter q){
           System.out.println(options[new Random().nextInt(options.length)]);
      }
      
      @Override
      public String look(){
-          return options[new Random().nextInt(options.length)];
+          return options[new Random().nextInt(options.length)]+super.look();
      }
      
      @Override
-     public Point[] getRange(Point p){
+     public ArrayList<Point> getRange(Point p){
     	 ArrayList<Point> range = new ArrayList<Point>();
+    	 int x=(int)p.getX();
+    	 int y=(int)p.getY();
     	 
-    	 if((p.getX()-1)!=0){
+    	 
+    	 if((x-1)!=0){
+    		 System.out.println("The point "+(x-1)+","+y+" is in range.");
     		range.add(new Point((int)p.getX()-1,(int)p.getY()));
     	 }
     	 
-    	 if((p.getX()+1)!=9){
+    	 if((x+1)!=9){
+    		 System.out.println("The point "+(x+1)+","+y+" is in range.");
     		range.add(new Point((int)p.getX()+1,(int)p.getY()));
     	 }
     	 
-    	 if((p.getY()-1)!=0){
+    	 if((y-1)!=0){
+    		 System.out.println("The point "+x+","+(y-1)+" is in range.");
     		range.add(new Point((int)p.getX(),(int)p.getY()-1));
     	 }
     	 
-    	 if((p.getY()+1)!=9){
+    	 if((y+1)!=9){
+    		 System.out.println("The point"+x+","+(y+1)+" is in range.");
     		range.add(new Point((int)p.getX(),(int)p.getY()+1));
     	 }    	  	
     	 
-    	 return range.toArray(new Point[range.size()]);	 
+    	 return range;	 
      }
 }

@@ -56,6 +56,9 @@ public class PlayerCharacter extends AbstractCharacter {
 	 return currentAP;
  }
  
+ public void setCurrentAP(int ap){
+	 currentAP=ap;
+ }
  
  public void gainXP (int xp) {
       xp = Math.abs(xp);
@@ -70,6 +73,11 @@ public class PlayerCharacter extends AbstractCharacter {
  }
  
  public void drop(Pickup p){
+	 
+	 ((BoardObject)p).getLocation().move((int)getLocation().getX(), (int)getLocation().getY());
+	 
+	 GameWindow.controller.getCurrentRoom().getObjects().add((BoardObject)p);
+	 inventory.remove(((BoardObject)p).getIndex());
  }
  
  @Override
@@ -108,18 +116,54 @@ public class PlayerCharacter extends AbstractCharacter {
  };
  
  private void attackMenu(Room r){
-	 System.out.println("Which enemy?");
-	 for(int i=0; i<r.getObjects().size(); i++){
-		 if(r.getObjects().get(i) instanceof Mob){
-			 Mob q = (Mob)r.getObjects().get(i);
-			 System.out.println((i+1)+".) "+q.getName());
-		 }
+	 ArrayList<Point> range=getWeapon().getRange(getLocation()); //an array of points that are in range.
+	 
+	 for(int i=0;i<range.size();i++){
+		 System.out.println(range.get(i)+" is in range!");
 	 }
-	 int makeAChoice=input.nextInt();
-	 Mob q=(Mob)r.getObjects().get(makeAChoice-1);
-	 attack(q);
-	 r.getObjects().set(makeAChoice-1, q);
-	 currentAP--;
+	 
+	 boolean validMove=false;
+	 int index=0;
+	 for(int i=0; i<r.getObjects().size(); i++){
+		 System.out.println("Checking if "+r.getObjects().get(i).getName()+" is a mob");
+		 if(r.getObjects().get(i) instanceof Mob){
+			 Mob q = (Mob)r.getObjects().get(i);//gets a list of mobs in the room
+			 System.out.println("Found a mob!");
+			 System.out.println("The mob is located at "+q.getLocation());
+			 for(int j=0;j<range.size();j++){
+			 	if(range.get(j).equals(q.getLocation())){
+			 		System.out.println("Testing locations");
+			 		q.setIndex(index+1); //an index of >0 is a flag that shows us they're in range.
+			 		validMove=true;
+			 		System.out.println("a Mob is in range!");
+			 	}
+			 }//closes for(checking range)
+		 }//closes if
+	 }//closes for (checking for mobs)
+	 System.out.println("ValidMove"+(validMove?"is":"is not")+"true");
+	 if(validMove){
+		 waitForInput();
+		 int choice=GameWindow.controller.getMenuChoice();
+		 Mob q=null;
+		 for(int i=0;i<r.getObjects().size();i++){
+			 if(r.getObjects().get(i).getIndex()==choice){
+				 q=(Mob)r.getObjects().get(i);
+				 q.setIndex(i);
+				 System.out.println("a Mob is in range!");
+			 }
+		 }
+		 
+		 attack(q);
+		 r.getObjects().set(q.getIndex(), q);
+		 currentAP--;
+	 	}
+	 else{
+		 GameWindow.controller.setSystemMessage("Nobody's in range, dude!");
+		 GameWindow.frame.repaint();
+		 waitForInput();
+		 GameWindow.controller.setNewSystemMessage(false);
+		 GameWindow.frame.repaint();
+	 }
  }
  
  private void moveMenu(Room r){
@@ -140,15 +184,73 @@ public class PlayerCharacter extends AbstractCharacter {
 	 int input=GameWindow.controller.getMenuChoice();
 	 System.out.println("The choice is "+input);
 	 Pickup p;
+	 
 	 if(input<inventory.size()&&input>=0){
-		p=inventory.get(input); 
+		p=inventory.get(input);
+		((BoardObject)p).setIndex(input);
+		System.out.println("What do you want to do?");
+		System.out.println("1) Use");
+		System.out.println("2) Equip");
+		System.out.println("3) Look");
+		System.out.println("4) Drop");
+		inventorySubMenu(p);
+		GameWindow.cl.show(GameWindow.cards, "Room");
+		System.out.println("I have allegedly told it to shift back to room now");
+		GameWindow.getRoomPanel().requestFocus();
+		waitForInput();
+		GameWindow.controller.setNewSystemMessage(false);
+		GameWindow.frame.repaint();
 	 } 
 	 else if(input==-1){
 		 GameWindow.cl.show(GameWindow.cards, "Room");
 		 System.out.println("I have allegedly told it to shift back to room now");
 		 GameWindow.getRoomPanel().requestFocus();
 	 }
-
+ }
+ 
+ private void inventorySubMenu(Pickup p){
+	 	GameWindow.controller.setCurrentRound(GameController.INVENTORYSUB);
+	 	GameWindow.getInventoryPanel().setYPointer(0);	
+	 	GameWindow.frame.repaint();
+		waitForInput();
+		int input=GameWindow.controller.getMenuChoice();
+		if(input==0){
+			if(!(p instanceof AbstractWeapon)||p instanceof Food){
+				p.use(this);
+				setCurrentAP(getCurrentAP()-1);
+				//Each use method should set the system message itself.
+			}
+			else{
+				GameWindow.controller.setSystemMessage("What? Like eat this weapon? No.  Use equip, dude.");
+				System.out.println(GameWindow.controller.getSystemMessage());
+			}
+		}
+		else if(input==1){
+			if(p instanceof AbstractWeapon){
+				changeWeapon((AbstractWeapon)p);
+				GameWindow.controller.setSystemMessage(getName()+" equipped the "+p.getName());
+				System.out.println(GameWindow.controller.getSystemMessage());
+			}
+			else{
+				GameWindow.controller.setSystemMessage("Sorry! Rad as it would be, you can't equip "+p.getName());
+				System.out.println(GameWindow.controller.getSystemMessage());
+			}
+		}
+		else if(input==2){
+			GameWindow.controller.setSystemMessage(p.look());
+			System.out.println(GameWindow.controller.getSystemMessage());
+		}
+		else{
+			if(p.isItKeyItem()){
+				GameWindow.controller.setSystemMessage("No dude, that's way too important!");
+				System.out.println(GameWindow.controller.getSystemMessage());
+			}
+			else{
+				drop(p);
+				GameWindow.controller.setSystemMessage("You gingerly place the item at your feet.");
+				System.out.println(GameWindow.controller.getSystemMessage());
+			}
+		}
  }
  
  private void pickupMenu(Room r){
@@ -241,7 +343,7 @@ public class PlayerCharacter extends AbstractCharacter {
      int dx;
      
      dy=newY-1;
-          if(dy>=0&&dy<=r.y-2){
+          if(dy>0&&dy<=r.y-2){
                valid.add(new Point(newX,dy));
                r.getObjects().add(new MenuItem(newX, dy, MenuItem.ARROWUP, MenuItem.ARROWUP));
           }
@@ -250,7 +352,7 @@ public class PlayerCharacter extends AbstractCharacter {
           }
 
      dy=newY+1;
-          if(dy>=0&&dy<=r.y-2){
+          if(dy>0&&dy<=r.y-2){
        	   valid.add(new Point(newX,dy));
        	   r.getObjects().add(new MenuItem(newX, dy, MenuItem.ARROWDOWN, MenuItem.ARROWDOWN));
           }
@@ -258,7 +360,7 @@ public class PlayerCharacter extends AbstractCharacter {
                System.out.println("You can't move that direction!");
           }
      dx=newX-1;
-          if(dx>=0&&dx<=r.x-2){
+          if(dx>0&&dx<=r.x-2){
        	   valid.add(new Point(dx,newY));
        	   r.getObjects().add(new MenuItem(dx, newY, MenuItem.ARROWLEFT, MenuItem.ARROWLEFT));
           }
