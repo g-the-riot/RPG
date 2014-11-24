@@ -22,9 +22,10 @@ public final class TestRoom extends Room {
 
 	@Override
 	public void setMobs() {
-		super.mobs=new Mob[1];
+		super.mobs=new Mob[2];
 		//x , y, name, level, weapon
-		mobs[0]=new Mob(5, 7, "Michael", 1, WeaponCreator.createWeapon());
+		mobs[0]=new Mob(5, 7, "Mob Barker", 1, WeaponCreator.createWeapon());
+		mobs[1]=new Mob(6, 8, "Vorn the Destroyer", 1, WeaponCreator.createWeapon());
 	}
 
 }

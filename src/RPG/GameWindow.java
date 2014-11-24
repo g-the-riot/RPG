@@ -211,19 +211,22 @@ public class GameWindow {
 			g.drawString("Attack",  3*px-5, 1*px-40);
 			g.drawString("Inventory", 5*px, 1*px-40);
 			g.drawString("Pick Up", 8*px-5, 1*px-40);
-			if(GameWindow.getMakeChoicePointer()==1){
-				g.drawImage(pointerUp,1*px+10,1*px-35, this);
-			}
-			else if(GameWindow.getMakeChoicePointer()==2){
-				g.drawImage(pointerUp,3*px+25 ,1*px-35, this);
-			}
-			else if(GameWindow.getMakeChoicePointer()==3){
-				g.drawImage(pointerUp, 6*px-5, 1*px-35, this);
-			}
-			else if(GameWindow.getMakeChoicePointer()==4){
-				g.drawImage(pointerUp, 8*px+25, 1*px-35, this);
-			}
 			
+			if(!GameWindow.controller.getCurrentRound().equals(GameController.ATTACK)){
+			
+				if(GameWindow.getMakeChoicePointer()==1){
+					g.drawImage(pointerUp,1*px+10,1*px-35, this);
+				}
+				else if(GameWindow.getMakeChoicePointer()==2){
+					g.drawImage(pointerUp,3*px+25 ,1*px-35, this);
+				}
+				else if(GameWindow.getMakeChoicePointer()==3){
+					g.drawImage(pointerUp, 6*px-5, 1*px-35, this);
+				}
+				else if(GameWindow.getMakeChoicePointer()==4){
+					g.drawImage(pointerUp, 8*px+25, 1*px-35, this);
+				}
+			}
 		}
 	}
 	
@@ -513,7 +516,33 @@ public class GameWindow {
 		  for(int i=1;i<boardObjects.size();i++){
 			  g.drawImage(boardObjects.get(i).createImage(),(int)boardObjects.get(i).getLocation().getX()*px,(int)boardObjects.get(i).getLocation().getY()*px, this);
 		  }
-		  //this sometimes throws an exception while moving. not sure what's going o
+		  //this sometimes throws an exception while moving. not sure what's going on
+		  
+		  if(GameWindow.controller.getCurrentRound().equals(GameController.ATTACK)){
+			  Room r=GameWindow.controller.getCurrentRoom();
+			  int x=0;
+			  int y=0;
+			  for(int i=0;i<r.getObjects().size();i++){
+				  System.out.println("I've found a "+r.getObjects().get(i).getName());
+					 if(r.getObjects().get(i) instanceof Mob){
+						 System.out.println("I've found a Mob! For realsies!");
+						 System.out.println("His index is: "+r.getObjects().get(i).getIndex());
+						 System.out.println("The current makeChoicePointer is"+ GameWindow.getMakeChoicePointer());
+						 if(r.getObjects().get(i).getIndex()==GameWindow.getMakeChoicePointer()){
+							 System.out.println(r.getObjects().get(i).getName()+"has an index of"+r.getObjects().get(i).getIndex()+"and point at"+r.getObjects().get(i).getLocation());
+							 System.out.println("the value of x before the change is: "+x);
+							 x=(int)r.getObjects().get(i).getLocation().getX();
+							 System.out.println("the value of x after the change is: "+x);
+							 
+							 System.out.println("the value of y before the change is: "+y);
+							 y=(int)r.getObjects().get(i).getLocation().getY();
+							 System.out.println("the value of y after the change is: "+y);
+						 }
+					 }
+				 }//closes for
+			  System.out.println("the point being drawn is"+x+","+y); 
+			  g.drawImage(GameIO.createImage("Assets/reticule.png"),x*px,y*px,this);
+		  }
 		  
 		  g.drawImage(boardObjects.get(0).createImage(),(int)boardObjects.get(0).getLocation().getX()*px,(int)boardObjects.get(0).getLocation().getY()*px, this);
 		  //draws player character on top (he's always in position 0).
@@ -548,6 +577,10 @@ public class GameWindow {
 			else if(GameWindow.controller.getCurrentRound().equals(GameController.MOVE)){
 				moveEvent(key);
 			}
+			else if(GameWindow.controller.getCurrentRound().equals(GameController.ATTACK)){
+				attackEvent(key);
+			}
+			
 			if(GameWindow.controller.getCurrentRound().equals(GameController.INVENTORYSUB)){
 				if(key==KeyEvent.VK_ENTER||key==KeyEvent.VK_SPACE){
 					GameWindow.controller.setMenuChoice(getMakeChoicePointer());
@@ -559,6 +592,65 @@ public class GameWindow {
 
 		@Override
 		public void keyReleased(KeyEvent e) {			
+		}
+		
+		public void attackEvent(int key){
+			int targets=0;
+			int currentlyTargeting=1;
+			Room r=GameWindow.controller.getCurrentRoom();
+			 for(int i=0;i<r.getObjects().size();i++){
+				 if(r.getObjects().get(i) instanceof Mob){
+					 if(r.getObjects().get(i).getIndex()>0){
+						 targets++;
+					 }
+				 }
+			 }//gets me out of for
+
+			 if (key == KeyEvent.VK_LEFT||key==KeyEvent.VK_KP_LEFT) {
+				 if(currentlyTargeting==1){
+					 currentlyTargeting=targets;
+				 }
+				 else{
+					 currentlyTargeting-=1;
+				 }
+				 GameWindow.setMakeChoicePointer(currentlyTargeting);
+			 }
+			 
+			 if (key == KeyEvent.VK_UP||key==KeyEvent.VK_KP_UP) {
+				 if(currentlyTargeting==1){
+					 currentlyTargeting=targets;
+				 }
+				 else{
+					 currentlyTargeting-=1;
+				 }
+				 GameWindow.setMakeChoicePointer(currentlyTargeting);
+			 }	
+			 if (key == KeyEvent.VK_RIGHT||key ==KeyEvent.VK_KP_RIGHT) {
+				 if(currentlyTargeting==targets){
+					 currentlyTargeting=1;
+				 }
+				 else{
+					 currentlyTargeting+=1;
+				 }
+				 GameWindow.setMakeChoicePointer(currentlyTargeting);
+			 }
+			 
+			 if (key == KeyEvent.VK_DOWN||key==KeyEvent.VK_KP_DOWN) {
+				 if(currentlyTargeting==targets){
+					 currentlyTargeting=1;
+				 }
+				 else{
+					 currentlyTargeting+=1;
+				 }
+				 GameWindow.setMakeChoicePointer(currentlyTargeting);
+			 }
+			 
+			if(key==KeyEvent.VK_ENTER||key==KeyEvent.VK_SPACE){
+				GameWindow.controller.setMenuChoice(getMakeChoicePointer());
+				GameWindow.controller.setMenuChoiceMade(true);
+				System.out.println("You Hit Enter or Space.");
+			}
+			GameWindow.frame.repaint();
 		}
 		
 		public void menuEvent(int key){

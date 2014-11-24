@@ -116,6 +116,8 @@ public class PlayerCharacter extends AbstractCharacter {
  };
  
  private void attackMenu(Room r){
+	 GameWindow.controller.setCurrentRound(GameController.ATTACK);
+	 GameWindow.setMakeChoicePointer(1);
 	 ArrayList<Point> range=getWeapon().getRange(getLocation()); //an array of points that are in range.
 	 
 	 for(int i=0;i<range.size();i++){
@@ -135,6 +137,7 @@ public class PlayerCharacter extends AbstractCharacter {
 			 		System.out.println("Testing locations");
 			 		q.setIndex(index+1); //an index of >0 is a flag that shows us they're in range.
 			 		validMove=true;
+			 		index++;
 			 		System.out.println("a Mob is in range!");
 			 	}
 			 }//closes for(checking range)
@@ -142,6 +145,7 @@ public class PlayerCharacter extends AbstractCharacter {
 	 }//closes for (checking for mobs)
 	 System.out.println("ValidMove"+(validMove?"is":"is not")+"true");
 	 if(validMove){
+		 GameWindow.frame.repaint();
 		 waitForInput();
 		 int choice=GameWindow.controller.getMenuChoice();
 		 Mob q=null;
@@ -154,7 +158,15 @@ public class PlayerCharacter extends AbstractCharacter {
 		 }
 		 
 		 attack(q);
+		 
 		 r.getObjects().set(q.getIndex(), q);
+		 
+		 for(int i=0; i<r.getObjects().size(); i++){
+			 if(r.getObjects().get(i) instanceof Mob){
+				 r.getObjects().get(i).setIndex(0);
+			 }//closes if
+		 }//closes for (checking for mobs)
+		 
 		 currentAP--;
 	 	}
 	 else{

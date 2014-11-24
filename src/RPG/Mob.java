@@ -1,6 +1,7 @@
 package RPG;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 public class Mob extends AbstractCharacter implements BoardHazard{
  
@@ -103,10 +104,10 @@ public class Mob extends AbstractCharacter implements BoardHazard{
 	 boolean inRange=false;
 	 
 	 if(AITarget instanceof PlayerCharacter){
-		 Point[] range=this.getWeapon().getRange(this.getLocation());
+		 ArrayList<Point> range=this.getWeapon().getRange(this.getLocation());
 		 
-		 for(int i=0; i<range.length;i++){
-		 	if(AITarget.getLocation().equals(range[i])){
+		 for(int i=0; i<range.size();i++){
+		 	if(AITarget.getLocation().equals(range.get(i))){
 		 		do{
 		 			inRange=true;
 		 		}

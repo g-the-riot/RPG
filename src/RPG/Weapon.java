@@ -1,6 +1,7 @@
 package RPG;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 public interface Weapon {
 
@@ -10,7 +11,7 @@ public interface Weapon {
      
      public int damage();
      
-     public Point[] getRange(Point p);
+     public ArrayList<Point> getRange(Point p);
      //returns X,Y values of tiles that are in range of the weapon.
      
 }

@@ -23,6 +23,7 @@ abstract class BoardObject{
           this.location=new Point(x,y);
           this.name=name;
           this.imgPath=imgPath;
+          this.index=9999;
      }
      
      public BoardObject(String name, String imgPath){
