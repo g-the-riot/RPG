@@ -2,9 +2,6 @@ package RPG;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Scanner;
-
-import javax.swing.JPanel;
 
 public class PlayerCharacter extends AbstractCharacter {
 
@@ -228,7 +225,10 @@ public class PlayerCharacter extends AbstractCharacter {
 		int input=GameWindow.controller.getMenuChoice();
 		if(input==0){
 			if(!(p instanceof AbstractWeapon)||p instanceof Food){
-				p.use(this);
+				p.use((AbstractCharacter)this);
+				if(!p.isItReusable()){
+					inventory.remove(((BoardObject)p).getIndex());
+				}
 				setCurrentAP(getCurrentAP()-1);
 				//Each use method should set the system message itself.
 			}

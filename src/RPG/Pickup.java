@@ -9,6 +9,8 @@ public interface Pickup{
      public void use(AbstractCharacter q);
      
      public boolean isItKeyItem();
+     
+     public boolean isItReusable();
          
 }
 

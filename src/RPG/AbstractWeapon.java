@@ -7,7 +7,8 @@ import java.util.Random;
 public abstract class AbstractWeapon extends BoardObject implements Weapon, Pickup {
 
      private int damage;
-     private boolean keyItem;
+     private boolean keyItem=false;
+     private boolean reusable=true;
      
      
      public AbstractWeapon(String name, String imgPath, int damage) {
@@ -18,6 +19,14 @@ public abstract class AbstractWeapon extends BoardObject implements Weapon, Pick
      public AbstractWeapon(int x, int y, String name, String imgPath, int damage) {
           super(x , y , name, imgPath);
           this.damage=damage;
+     }
+     
+     public boolean isItReusable(){
+    	 return this.reusable;
+     }
+     
+     public void setReusable(boolean reusable){
+    	 this.reusable=reusable;
      }
      
      public String name() {
@@ -65,7 +74,9 @@ class Explosive extends AbstractWeapon{
      }
      
      @Override
-     public void use(AbstractCharacter q){}
+     public void use(AbstractCharacter q){
+    	 
+     }
      
      @Override
      public String look(){
@@ -224,6 +235,7 @@ class Food extends AbstractWeapon{
           Random randumb=new Random();
           if(randumb.nextInt(10)==1){
         	  this.rotten=true;
+        	  setReusable(false);
         	  super.setName(super.getName()+" (Rotten)");
           }
      }

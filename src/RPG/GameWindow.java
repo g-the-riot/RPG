@@ -204,7 +204,24 @@ public class GameWindow {
 	public class MenuPanel extends JPanel{
 		
 		public void paintComponent(Graphics g){
+			
 			super.paintComponent(g);
+			
+			if(!GameWindow.controller.getCurrentRound().equals(GameController.ATTACK)){
+				printMenu(g);
+			}
+			else{
+				printAttack(g);
+			}
+			}
+		
+		public void printAttack(Graphics g){
+			g.setColor(Color.white);
+			g.setFont(GameWindow.normalFont);
+			g.drawString("Select an enemy to attack", 1*px+25, 1*px-20);
+		}
+		
+		public void printMenu(Graphics g){
 			g.setColor(Color.white);
 			g.setFont(GameWindow.smallFont);
 			g.drawString("Move", 1*px-5, 1*px-40);
@@ -212,7 +229,7 @@ public class GameWindow {
 			g.drawString("Inventory", 5*px, 1*px-40);
 			g.drawString("Pick Up", 8*px-5, 1*px-40);
 			
-			if(!GameWindow.controller.getCurrentRound().equals(GameController.ATTACK)){
+			
 			
 				if(GameWindow.getMakeChoicePointer()==1){
 					g.drawImage(pointerUp,1*px+10,1*px-35, this);
@@ -225,8 +242,8 @@ public class GameWindow {
 				}
 				else if(GameWindow.getMakeChoicePointer()==4){
 					g.drawImage(pointerUp, 8*px+25, 1*px-35, this);
-				}
-			}
+				
+		}
 		}
 	}
 	
@@ -605,7 +622,7 @@ public class GameWindow {
 					 }
 				 }
 			 }//gets me out of for
-
+			 System.out.println("The number of targets is:"+ targets);
 			 if (key == KeyEvent.VK_LEFT||key==KeyEvent.VK_KP_LEFT) {
 				 if(currentlyTargeting==1){
 					 currentlyTargeting=targets;
