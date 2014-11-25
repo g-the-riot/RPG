@@ -66,7 +66,20 @@ public class PlayerCharacter extends AbstractCharacter {
  public void attack(Character q) {
 	 System.out.println(getName()+" is attacking "+((AbstractCharacter)q).getName()+"!");
      q.takeDamage(getWeapon().damage());
-     System.out.println(((AbstractCharacter)q).getName()+" has "+((AbstractCharacter)q).hp()+" left!");
+     
+     GameWindow.controller.setSystemMessage(((AbstractCharacter)q).getName()+" has "+((AbstractCharacter)q).hp()+"HP left");
+     waitForInput();
+     GameWindow.controller.setNewSystemMessage(false);
+     if(q.isDead()){
+    	 for(int i=0;i<GameWindow.controller.getCurrentRoom().getObjects().size();i++){
+    		 if(GameWindow.controller.getCurrentRoom().getObjects().get(i).equals(q)){
+    			 System.out.println("I am removing "+((AbstractCharacter)GameWindow.controller.getCurrentRoom().getObjects().get(i)).getName());
+    			 GameWindow.controller.getCurrentRoom().getObjects().remove(i);		 
+    	 }
+    	 }
+    	 GameWindow.frame.repaint();
+     }
+     
  }
  
  public void drop(Pickup p){

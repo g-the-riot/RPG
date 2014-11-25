@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -133,6 +134,12 @@ public class GameWindow {
 		
 		frame.pack();
 		frame.setVisible(true);
+	}
+	
+	public static String inputName(){
+		JFrame inputFrame = new JFrame();
+		String input = JOptionPane.showInputDialog(inputFrame,"Enter your name!:");
+		return input;
 	}
 	
 	public static InventoryList getInventoryPanel(){

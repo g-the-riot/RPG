@@ -28,6 +28,7 @@ public class GameController {
 	public static final String INVENTORYMAIN="InventoryMain";
 	public static final String INVENTORYSUB="inventorySubMenu";
 	public static final String ATTACK="Attack";
+	private boolean gameComplete=false;
 	private PlayerCharacter q;
 	private ArrayList<BoardObject> currentObjects;
 	
@@ -42,9 +43,16 @@ public class GameController {
 	 */
 	
 	private void init(){
-		createCharacter("Joseph");
+		createCharacter(GameWindow.inputName());
 		currentRoom.setObjects(player, allItems);
 		currentObjects=currentRoom.getObjects();
+	}
+	
+	public void startGame(){
+		do{
+			takeTurn();
+		}
+		while(!gameComplete);
 	}
  
 	public void createCharacter(String name){

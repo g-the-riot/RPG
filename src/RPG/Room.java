@@ -11,6 +11,7 @@ public abstract class Room{
 	private boolean roomClear;
 	public Door[] doors;
 	protected Mob[] mobs;
+	int noOfMobs;
 	private ArrayList<BoardObject> roomObjects= new ArrayList<BoardObject>();
 	
 	public Room(int x, int y, String id){
@@ -19,6 +20,17 @@ public abstract class Room{
 		this.y=y;
 		this.id=id.toLowerCase();
 		roomClear=false;
+		setDoors();
+		setMobs();
+		noOfMobs=mobs.length;
+	}
+	
+	public int getNoOfMobs() {
+		return noOfMobs;
+	}
+
+	public void reduceNoOfMobs() {
+		this.noOfMobs--;
 	}
 	
 	public abstract void  setDoors();

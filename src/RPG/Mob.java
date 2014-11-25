@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Mob extends AbstractCharacter implements BoardHazard{
  
- private static final int HP_INCREMENT = 200;
+ private static final int HP_INCREMENT = 10;
  //public static boolean timeFreeze=false;
  
  //int x, int y, String name, int hp, int maxHp, int level, Weapon weapon, int actionPoints, String path
