@@ -148,7 +148,7 @@ public class PlayerCharacter extends AbstractCharacter {
 			 		q.setIndex(index+1); //an index of >0 is a flag that shows us they're in range.
 			 		validMove=true;
 			 		index++;
-			 		System.out.println("a Mob is in range!");
+			 		System.out.println(q.getName()+" is in range with a (set) index of "+q.getIndex());
 			 	}
 			 }//closes for(checking range)
 		 }//closes if
@@ -163,7 +163,7 @@ public class PlayerCharacter extends AbstractCharacter {
 			 if(r.getObjects().get(i).getIndex()==choice){
 				 q=(Mob)r.getObjects().get(i);
 				 q.setIndex(i);
-				 System.out.println("a Mob is in range!");
+				 System.out.println(q.getName()+" was selected for attack because it was at "+q.getIndex());
 			 }
 		 }
 		 

@@ -138,7 +138,7 @@ public class GameWindow {
 	
 	public static String inputName(){
 		JFrame inputFrame = new JFrame();
-		String input = JOptionPane.showInputDialog(inputFrame,"Enter your name!:");
+		String input = JOptionPane.showInputDialog(inputFrame,"Achoo! What's your naaaaaame:");
 		return input;
 	}
 	
